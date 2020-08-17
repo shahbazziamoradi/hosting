@@ -1,0 +1,12 @@
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.partial-login{
+    width: 250px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px .1px #12232b;
+    padding: 15px;
+    position: absolute;
+}

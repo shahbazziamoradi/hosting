@@ -1,0 +1,231 @@
+:root{
+    --primary: #007bff;
+    --primary-hover: #0069d9;
+    --primary-shadow: #007bff77;
+    --secondary: #6c757d;
+    --secondary-hover:#5a6268;
+    --secondary-shadow:#5a626877;
+    --success: #28a745;
+    --success-hover: #218838;
+    --success-shadow: #28a74577;
+    --info: #17a2b8;
+    --info-hover: #138496;
+    --info-shadow: #17a2b877;
+    --warning: #ffc107;
+    --warning-hover: #e0a800;
+    --warning-shadow: #ffc10777;
+    --danger: #dc3545;
+    --danger-hover: #c82333;
+    --danger-shadow: #c8233377;
+    --light: #f8f9fa;
+    --light-hover: #f8f9fa;
+    --light-shadow: #7e7e7e77;
+    --dark: #343a40;
+    --dark-hover: #23272b;
+    --dark-shadow: #343a4077;
+}
+
+button.cute-ui{
+    height: 35px;
+    width: 100%;
+    border-radius: 3px;
+    transition: all ease-in-out .2s;
+    cursor: pointer;
+    border: none;
+    outline: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.cute-ui.primary.fill{
+    background-color: var(--primary);
+    color: white;
+}
+
+button.cute-ui.primary.outline{
+    border:1px solid var(--primary);
+    background-color: transparent;
+    color:  var(--primary);
+}
+
+button.cute-ui.primary.fill:hover{
+    background-color: var(--primary-hover);
+}
+
+button.cute-ui.primary.outline:hover{
+    background-color: var(--primary);
+    color: white;
+}
+
+button.cute-ui.primary:focus{
+    box-shadow: 0px 0px 0 3px  var(--primary-shadow)
+}
+
+button.cute-ui.secondary.fill{
+    background-color: var(--secondary);
+    color: white;
+}
+
+button.cute-ui.secondary.outline{
+    border:1px solid var(--secondary);
+    background-color: transparent;
+    color:  var(--secondary);
+}
+
+button.cute-ui.secondary.fill:hover{
+    background-color: var(--secondary-hover);
+}
+
+button.cute-ui.secondary.outline:hover{
+    background-color: var(--secondary);
+    color: white;
+}
+
+button.cute-ui.secondary:focus{
+    box-shadow: 0px 0px 0 3px  var(--secondary-shadow)
+}
+
+button.cute-ui.success.fill{
+    background-color: var(--success);
+    color: white;
+}
+
+button.cute-ui.success.outline{
+    border:1px solid var(--success);
+    background-color: transparent;
+    color:  var(--success);
+}
+
+button.cute-ui.success.fill:hover{
+    background-color: var(--success-hover);
+}
+
+button.cute-ui.success.outline:hover{
+    background-color: var(--success);
+    color: white;
+}
+
+button.cute-ui.success:focus{
+    box-shadow: 0px 0px 0 3px  var(--success-shadow)
+}
+
+button.cute-ui.info.fill{
+    background-color: var(--info);
+    color: white;
+}
+
+button.cute-ui.info.outline{
+    border:1px solid var(--info);
+    background-color: transparent;
+    color:  var(--info);
+}
+
+button.cute-ui.info.fill:hover{
+    background-color: var(--info-hover);
+}
+
+button.cute-ui.info.outline:hover{
+    background-color: var(--info);
+    color: white;
+}
+
+button.cute-ui.info:focus{
+    box-shadow: 0px 0px 0 3px  var(--info-shadow)
+}
+
+button.cute-ui.warning.fill{
+    background-color: var(--warning);
+    color: #343a40;
+}
+
+button.cute-ui.warning.outline{
+    border:1px solid var(--warning);
+    background-color: transparent;
+    color:  var(--warning);
+}
+
+button.cute-ui.warning.fill:hover{
+    background-color: var(--warning-hover);
+}
+
+button.cute-ui.warning.outline:hover{
+    background-color: var(--warning);
+    color: #343a40;
+}
+
+button.cute-ui.warning:focus{
+    box-shadow: 0px 0px 0 3px  var(--warning-shadow)
+}
+
+button.cute-ui.danger.fill{
+    background-color: var(--danger);
+    color: white;
+}
+
+button.cute-ui.danger.outline{
+    border:1px solid var(--danger);
+    background-color: transparent;
+    color:  var(--danger);
+}
+
+button.cute-ui.danger.fill:hover{
+    background-color: var(--danger-hover);
+}
+
+button.cute-ui.danger.outline:hover{
+    background-color: var(--danger);
+    color: white;
+}
+
+button.cute-ui.danger:focus{
+    box-shadow: 0px 0px 0 3px  var(--danger-shadow)
+}
+
+button.cute-ui.light.fill{
+    background-color: var(--light);
+    color: #343a40;
+}
+
+button.cute-ui.light.outline{
+    border:1px solid var(--light);
+    background-color: transparent;
+    color: #343a40;
+}
+
+button.cute-ui.light.fill:hover{
+    background-color: var(--light-hover);
+}
+
+button.cute-ui.light.outline:hover{
+    background-color: var(--light);
+    color: #343a40;
+}
+
+button.cute-ui.light:focus{
+    box-shadow: 0px 0px 0 3px  var(--light-shadow)
+}
+
+button.cute-ui.dark.fill{
+    background-color: var(--dark);
+    color: white;
+}
+
+button.cute-ui.dark.outline{
+    border:1px solid var(--dark);
+    background-color: transparent;
+    color:  var(--dark);
+}
+
+button.cute-ui.dark.fill:hover{
+    background-color: var(--dark-hover);
+}
+
+button.cute-ui.dark.outline:hover{
+    background-color: var(--dark);
+    color: white;
+}
+
+button.cute-ui.dark:focus{
+    box-shadow: 0px 0px 0 3px  var(--dark-shadow)
+}
