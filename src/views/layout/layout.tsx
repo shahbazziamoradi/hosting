@@ -3,6 +3,7 @@ import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
 import './layout.css'
 import { Button } from '../../components/cute-ui/cuteUI';
+import { Routes } from '../../components/routing';
 
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',

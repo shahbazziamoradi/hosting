@@ -23,11 +23,13 @@ type buttonProps = {
     type?: buttonType,
     theme?: buttonTheme,
     children?: object | string,
-    onChange?: (e: string) => {}
+    onClick?: (e?: object) => void
 }
 
-export default function Button({ style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onChange = (e: string) => { return e; } }: buttonProps) {
+export default function Button({ style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onClick = () => { } }: buttonProps) {
     return (
-        <button className={`cute-ui ${type} ${theme}`} style={style}>{children}</button>
+        <button className={`cute-ui ${type} ${theme}`} style={style} onClick={(e) => {
+            onClick(e)
+        }}>{children}</button>
     )
 }

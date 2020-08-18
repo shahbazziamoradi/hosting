@@ -5,6 +5,8 @@ import './login.css'
 import { buttonType, buttonTheme } from '../../components/cute-ui/elements/button'
 import * as Icon from 'react-bootstrap-icons';
 import { Layout, Header, Body } from '../layout/layout'
+import { Route, Link } from 'react-router-dom';
+
 export function Login(props: object) {
     return (
         <Layout>
@@ -18,19 +20,18 @@ export function Login(props: object) {
 }
 
 export function PartialLogin(props: object) {
-    const [x, setX] = useState(0)
-    const [y, setY] = useState(0)
     return (
-        <div className='partial-login' style={{ left: x, top: y }} onDrag={(e) => {
-            setX(e.pageX);
-            setY(e.pageY)
-        }}>
-            {/* <Input title='نام کاربری'></Input>
+        <div className='partial-login'>
+            <Input title='نام کاربری'></Input>
             <Input type={inputType.password} title='کلمه عبور'></Input>
-            <Button type={buttonType.primary} theme={buttonTheme.outline} style={{ marginTop: 10 }}>
-                <Icon.BoxArrowInLeft size={20}></Icon.BoxArrowInLeft>
+            <Route render={({ history }) => (
+                <Button type={buttonType.primary} theme={buttonTheme.outline} style={{ marginTop: 10 }} onClick={() => {
+                    history.push('/call');
+                }}>
+                    <Icon.BoxArrowInLeft size={20}></Icon.BoxArrowInLeft>
                 ورود به سیستم
-            </Button> */}
+                </Button>
+            )} />
         </div>
     )
 }
