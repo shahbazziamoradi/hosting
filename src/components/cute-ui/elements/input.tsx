@@ -53,9 +53,9 @@ export function Input({ title, style, type = inputType.text, children = '', onCh
     return (
         <fieldset className={'cute-ui ' + labelClass}>
             <legend style={{ width: legendWidth }}>
-                <label id={id} className={labelClass}>{title}</label>
+                <label id={id} htmlFor={`input_${id}`} className={labelClass}>{title}</label>
             </legend>
-            <input type={type} className='cute-ui input' style={style} onChange={(e) => { setText(e.target.value); onChange(e.target.value) }} onBlur={() => {
+            <input type={type} id={`input_${id}`} className='cute-ui input' style={style} onChange={(e) => { setText(e.target.value); onChange(e.target.value) }} onBlur={() => {
                 if (text == '') {
                     setLabelClass('')
                     setLegendWidth(0)

@@ -30,6 +30,7 @@ fieldset.cute-ui>legend>label{
     font-size: 13px;
     transition: all .1s;
     margin-right: -4px;
+    cursor: text;
 }
 
 fieldset.cute-ui>legend>label.focus{
@@ -38,6 +39,7 @@ fieldset.cute-ui>legend>label.focus{
     margin-right: 4px;
     padding-right: 0px;
     color: #3d3d3d;
+    cursor: default;
 }
 
 fieldset.cute-ui>input{

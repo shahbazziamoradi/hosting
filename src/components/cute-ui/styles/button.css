@@ -59,7 +59,8 @@ button.cute-ui.primary.outline:hover:enabled{
 }
 
 button.cute-ui.primary:focus{
-    box-shadow: 0px 0px 0 3px  var(--primary-shadow)
+    box-shadow: 0px 0px 0 3px  var(--primary-shadow);
+    border: none;
 }
 
 button.cute-ui.secondary.fill{
@@ -83,7 +84,8 @@ button.cute-ui.secondary.outline:hover:enabled{
 }
 
 button.cute-ui.secondary:focus{
-    box-shadow: 0px 0px 0 3px  var(--secondary-shadow)
+    box-shadow: 0px 0px 0 3px  var(--secondary-shadow);
+    border: none;
 }
 
 button.cute-ui.success.fill{
@@ -107,7 +109,8 @@ button.cute-ui.success.outline:hover:enabled{
 }
 
 button.cute-ui.success:focus{
-    box-shadow: 0px 0px 0 3px  var(--success-shadow)
+    box-shadow: 0px 0px 0 3px  var(--success-shadow);
+    border: none;
 }
 
 button.cute-ui.info.fill{
@@ -131,7 +134,8 @@ button.cute-ui.info.outline:hover:enabled{
 }
 
 button.cute-ui.info:focus{
-    box-shadow: 0px 0px 0 3px  var(--info-shadow)
+    box-shadow: 0px 0px 0 3px  var(--info-shadow);
+    border: none;
 }
 
 button.cute-ui.warning.fill{
@@ -155,7 +159,8 @@ button.cute-ui.warning.outline:hover:enabled{
 }
 
 button.cute-ui.warning:focus{
-    box-shadow: 0px 0px 0 3px  var(--warning-shadow)
+    box-shadow: 0px 0px 0 3px  var(--warning-shadow);
+    border: none;
 }
 
 button.cute-ui.danger.fill{
@@ -179,7 +184,8 @@ button.cute-ui.danger.outline:hover:enabled{
 }
 
 button.cute-ui.danger:focus{
-    box-shadow: 0px 0px 0 3px  var(--danger-shadow)
+    box-shadow: 0px 0px 0 3px  var(--danger-shadow);
+    border: none;
 }
 
 button.cute-ui.light.fill{
@@ -203,7 +209,8 @@ button.cute-ui.light.outline:hover:enabled{
 }
 
 button.cute-ui.light:focus{
-    box-shadow: 0px 0px 0 3px  var(--light-shadow)
+    box-shadow: 0px 0px 0 3px  var(--light-shadow);
+    border: none;
 }
 
 button.cute-ui.dark.fill{
@@ -227,7 +234,8 @@ button.cute-ui.dark.outline:hover:enabled{
 }
 
 button.cute-ui.dark:focus{
-    box-shadow: 0px 0px 0 3px  var(--dark-shadow)
+    box-shadow: 0px 0px 0 3px  var(--dark-shadow);
+    border: none;
 }
 
 button.cute-ui:disabled{
