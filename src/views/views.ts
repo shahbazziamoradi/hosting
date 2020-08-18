@@ -1,4 +1,6 @@
 import { Login } from './accounts/login'
+import { Index } from './home/index'
 
 var Account = { Login }
-export { Account }
+var Home = { Index }
+export { Account, Home }

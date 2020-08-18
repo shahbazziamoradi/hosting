@@ -21,14 +21,15 @@ export enum buttonTheme {
 type buttonProps = {
     style?: object,
     type?: buttonType,
+    disabled?: boolean,
     theme?: buttonTheme,
     children?: object | string,
     onClick?: (e?: object) => void
 }
 
-export default function Button({ style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onClick = () => { } }: buttonProps) {
+export default function Button({ style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onClick = () => { }, disabled = false }: buttonProps) {
     return (
-        <button className={`cute-ui ${type} ${theme}`} style={style} onClick={(e) => {
+        <button disabled={disabled} className={`cute-ui ${type} ${theme}`} style={style} onClick={(e) => {
             onClick(e)
         }}>{children}</button>
     )

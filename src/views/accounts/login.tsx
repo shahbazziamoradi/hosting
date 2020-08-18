@@ -20,13 +20,21 @@ export function Login(props: object) {
 }
 
 export function PartialLogin(props: object) {
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     return (
         <div className='partial-login'>
-            <Input title='نام کاربری'></Input>
-            <Input type={inputType.password} title='کلمه عبور'></Input>
+            <Input title='نام کاربری' onChange={(e) => {
+                setUsername(e); console.log(e);
+            }}></Input>
+            <Input type={inputType.password} title='کلمه عبور' onChange={(e) => {
+                setPassword(e); console.log(e);
+            }}></Input>
             <Route render={({ history }) => (
-                <Button type={buttonType.primary} theme={buttonTheme.outline} style={{ marginTop: 10 }} onClick={() => {
-                    history.push('/call');
+                <Button disabled={(password && username) ? false : true} type={buttonType.primary} theme={buttonTheme.outline} style={{ marginTop: 10 }} onClick={() => {
+                    if (password && username) {
+                        history.push('/')
+                    }
                 }}>
                     <Icon.BoxArrowInLeft size={20}></Icon.BoxArrowInLeft>
                 ورود به سیستم

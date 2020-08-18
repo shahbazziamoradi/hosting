@@ -42,7 +42,7 @@ export function Header(props: headerProps) {
 type bodyProps = {
     className?: string,
     style?: object,
-    children?: object
+    children?: object | string
 }
 
 export function Body(props: bodyProps) {

@@ -49,11 +49,11 @@ button.cute-ui.primary.outline{
     color:  var(--primary);
 }
 
-button.cute-ui.primary.fill:hover{
+button.cute-ui.primary.fill:hover:enabled{
     background-color: var(--primary-hover);
 }
 
-button.cute-ui.primary.outline:hover{
+button.cute-ui.primary.outline:hover:enabled{
     background-color: var(--primary);
     color: white;
 }
@@ -73,11 +73,11 @@ button.cute-ui.secondary.outline{
     color:  var(--secondary);
 }
 
-button.cute-ui.secondary.fill:hover{
+button.cute-ui.secondary.fill:hover:enabled{
     background-color: var(--secondary-hover);
 }
 
-button.cute-ui.secondary.outline:hover{
+button.cute-ui.secondary.outline:hover:enabled{
     background-color: var(--secondary);
     color: white;
 }
@@ -97,11 +97,11 @@ button.cute-ui.success.outline{
     color:  var(--success);
 }
 
-button.cute-ui.success.fill:hover{
+button.cute-ui.success.fill:hover:enabled{
     background-color: var(--success-hover);
 }
 
-button.cute-ui.success.outline:hover{
+button.cute-ui.success.outline:hover:enabled{
     background-color: var(--success);
     color: white;
 }
@@ -121,11 +121,11 @@ button.cute-ui.info.outline{
     color:  var(--info);
 }
 
-button.cute-ui.info.fill:hover{
+button.cute-ui.info.fill:hover:enabled{
     background-color: var(--info-hover);
 }
 
-button.cute-ui.info.outline:hover{
+button.cute-ui.info.outline:hover:enabled{
     background-color: var(--info);
     color: white;
 }
@@ -145,11 +145,11 @@ button.cute-ui.warning.outline{
     color:  var(--warning);
 }
 
-button.cute-ui.warning.fill:hover{
+button.cute-ui.warning.fill:hover:enabled{
     background-color: var(--warning-hover);
 }
 
-button.cute-ui.warning.outline:hover{
+button.cute-ui.warning.outline:hover:enabled{
     background-color: var(--warning);
     color: #343a40;
 }
@@ -169,11 +169,11 @@ button.cute-ui.danger.outline{
     color:  var(--danger);
 }
 
-button.cute-ui.danger.fill:hover{
+button.cute-ui.danger.fill:hover:enabled{
     background-color: var(--danger-hover);
 }
 
-button.cute-ui.danger.outline:hover{
+button.cute-ui.danger.outline:hover:enabled{
     background-color: var(--danger);
     color: white;
 }
@@ -193,11 +193,11 @@ button.cute-ui.light.outline{
     color: #343a40;
 }
 
-button.cute-ui.light.fill:hover{
+button.cute-ui.light.fill:hover:enabled{
     background-color: var(--light-hover);
 }
 
-button.cute-ui.light.outline:hover{
+button.cute-ui.light.outline:hover:enabled{
     background-color: var(--light);
     color: #343a40;
 }
@@ -217,15 +217,20 @@ button.cute-ui.dark.outline{
     color:  var(--dark);
 }
 
-button.cute-ui.dark.fill:hover{
+button.cute-ui.dark.fill:hover:enabled{
     background-color: var(--dark-hover);
 }
 
-button.cute-ui.dark.outline:hover{
+button.cute-ui.dark.outline:hover:enabled{
     background-color: var(--dark);
     color: white;
 }
 
 button.cute-ui.dark:focus{
     box-shadow: 0px 0px 0 3px  var(--dark-shadow)
+}
+
+button.cute-ui:disabled{
+    opacity: .5;
+    cursor: default;
 }

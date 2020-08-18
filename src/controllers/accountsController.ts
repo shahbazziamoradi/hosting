@@ -22,4 +22,11 @@ export default class Account {
         }
         return new Promise(promise);
     }
+
+    static async isInRole(path: string): Promise<boolean> {
+        var promise = (resolve: any, reject: any) => {
+            resolve(true)
+        }
+        return new Promise(promise);
+    }
 }

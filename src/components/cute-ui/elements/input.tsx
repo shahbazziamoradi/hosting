@@ -31,9 +31,9 @@ type inputProps = {
     style?: object,
     type?: inputType,
     children?: string,
-    onChange?: (e: string) => {}
+    onChange?: (e: string) => void | string
 }
-export function Input({ title, style, type = inputType.text, children = '', onChange = (e: string) => { return e; } }: inputProps) {
+export function Input({ title, style, type = inputType.text, children = '', onChange = (e: string) => { } }: inputProps) {
     const id = Math.floor(Math.random() * (9999999 - 1000000) + 1000000).toString();
     const [labelClass, setLabelClass] = useState('');
     const [legendWidth, setLegendWidth] = useState(0.0);
@@ -55,7 +55,7 @@ export function Input({ title, style, type = inputType.text, children = '', onCh
             <legend style={{ width: legendWidth }}>
                 <label id={id} className={labelClass}>{title}</label>
             </legend>
-            <input type={type} className='cute-ui input' style={style} onChange={(e) => { setText(e.target.value); onChange(text) }} onBlur={() => {
+            <input type={type} className='cute-ui input' style={style} onChange={(e) => { setText(e.target.value); onChange(e.target.value) }} onBlur={() => {
                 if (text == '') {
                     setLabelClass('')
                     setLegendWidth(0)

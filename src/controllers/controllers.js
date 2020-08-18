@@ -1,5 +1,5 @@
-import { Login } from './accountsController'
+import Account from './accountsController'
 
 export {
-    Login
+    Account
 }

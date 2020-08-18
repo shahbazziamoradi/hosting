@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Private, Public } from './components/routing'
-import { Account } from './views/views';
+import { Account, Home } from './views/views';
 
 
 export default function App() {
   return (
     <Routes>
-      {/* <Private path="/" exact={true} component={Home} />
-      <Private path="/setting" component={Setting} />
+      <Private path="/" exact={true} component={Home.Index} />
+      {/*<Private path="/setting" component={Setting} />
       <Private path="/places" component={Places} />
       <Private path="/devices" component={Devices} />
       <Private path="/accessLists" component={AccessLists} />

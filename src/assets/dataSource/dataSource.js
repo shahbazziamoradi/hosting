@@ -1,6 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import { Actions } from 'react-native-router-flux';
-
 export default class dataSource {
     static host() {
         if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -20,7 +17,7 @@ export default class dataSource {
     }
     static getToken() {
         return new Promise((resolve, reject) => {
-            AsyncStorage.getItem('access_token').then((data) => {
+            storage.getItem('access_token').then((data) => {
                 resolve(data);
             }).catch((error) => {
                 reject(error);
@@ -29,25 +26,7 @@ export default class dataSource {
     }
     static setToken(token) {
         return new Promise((resolve, reject) => {
-            AsyncStorage.setItem('access_token', token).then((data) => {
-                resolve(data);
-            }).catch((error) => {
-                reject(error);
-            })
-        });
-    }
-    static getKey(key) {
-        return new Promise((resolve, reject) => {
-            AsyncStorage.getItem(key).then((data) => {
-                resolve(data);
-            }).catch((error) => {
-                reject(error);
-            })
-        });
-    }
-    static setKey(key, data) {
-        return new Promise((resolve, reject) => {
-            AsyncStorage.setItem(key, data).then((data) => {
+            storage.setItem('access_token', token).then((data) => {
                 resolve(data);
             }).catch((error) => {
                 reject(error);
@@ -77,7 +56,7 @@ export default class dataSource {
             });
             return postPromise;
         });
-        tokenPromise.catch((error) => { reject(error) });
+        // tokenPromise.catch((error) => { reject(error) });
     }
 
     static authentication(username, password) {
@@ -94,10 +73,10 @@ export default class dataSource {
     }
 }
 
-export class localStorage {
+export class storage {
     static getKey(key) {
         return new Promise((resolve, reject) => {
-            AsyncStorage.getItem(key).then((data) => {
+            localStorage.getItem(key).then((data) => {
                 resolve(data);
             }).catch((error) => {
                 reject(error);
@@ -106,7 +85,7 @@ export class localStorage {
     }
     static setKey(key, data) {
         return new Promise((resolve, reject) => {
-            AsyncStorage.setItem(key, data).then(() => {
+            storage.setItem(key, data).then(() => {
                 resolve();
             }).catch((error) => {
                 reject(error);
@@ -115,7 +94,7 @@ export class localStorage {
     }
     static removeKey(key) {
         return new Promise((resolve, reject) => {
-            AsyncStorage.removeItem(key).then(() => {
+            storage.removeItem(key).then(() => {
                 resolve();
             }).catch((error) => {
                 reject(error);
@@ -124,7 +103,7 @@ export class localStorage {
     }
     static removeKeys(keys) {
         return new Promise((resolve, reject) => {
-            AsyncStorage.multiRemove(keys).then(() => {
+            storage.multiRemove(keys).then(() => {
                 resolve();
             }).catch((error) => {
                 reject(error);

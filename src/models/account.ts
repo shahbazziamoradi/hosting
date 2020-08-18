@@ -1,5 +1,5 @@
-import dataSource, { localStorage } from '../assets/dataSource/dataSource';
-let ds = new dataSource();
+import dataSource, { storage } from '../assets/dataSource/dataSource';
+
 export class User {
     constructor() {
         this._name = '';
@@ -41,13 +41,13 @@ export class User {
     login(): Promise<number> {
         var loginPromise = (resolve: any, reject: any) => {
             if (this.isValid()) {
-                localStorage.removeKey('access_token');
+                storage.removeKey('access_token');
                 var promise = dataSource.authentication(this.username, this.password);
                 promise.then(async (data: any) => {
                     switch (data.status) {
                         case 200:
                             let jsonData = await data.json();
-                            localStorage.setKey('access_token', jsonData.token).then(() => {
+                            storage.setKey('access_token', jsonData.token).then(() => {
                                 resolve(data.status);
                                 return;
                             });
@@ -81,7 +81,7 @@ export class User {
 
     logout() {
         let logoutPromise = (resolve: any, reject: any) => {
-            var promise = localStorage.removeKey('access_token');
+            var promise = storage.removeKey('access_token');
             promise.then(() => {
                 resolve();
                 return;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect, BrowserRouter, useHistory } from 'react-router-dom'
+import { Account } from '../controllers/controllers';
 
 export function Routes(props) {
     return (
@@ -13,15 +14,15 @@ export function Routes(props) {
 
 export function Private(props) {
     const { component: Component, path, ...restProps } = props;
-    const [auth, setAuth] = useState(false);
+    const [auth, setAuth] = useState(true);
     const [checkAuth, setCheckAuth] = useState(true);
     useEffect(() => {
-        // AccountsApi.checkRole(path).then((response) => {
-        //     if (response) {
-        //         setAuth(true);
-        //     }
-        //     setCheckAuth(false);
-        // });
+        Account.isInRole(path).then((response) => {
+            // if (response) {
+            //     setAuth(true);
+            // }
+            // setCheckAuth(false);
+        });
     }, []);
     if (checkAuth) {
         return (<div>
