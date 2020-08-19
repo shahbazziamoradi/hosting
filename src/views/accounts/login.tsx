@@ -7,9 +7,9 @@ import * as Icon from 'react-bootstrap-icons';
 import { Layout, Header, Body } from '../layout/layout'
 import { Route, Link } from 'react-router-dom';
 
-export function Login(props: object) {
+export function Login(props: { authorize: boolean }) {
     return (
-        <Layout>
+        <Layout {...props}>
             <Body className='login'>
                 <PartialLogin>
 

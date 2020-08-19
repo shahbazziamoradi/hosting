@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
 import './layout.css'
@@ -13,16 +13,30 @@ export enum fonts {
     IranSans_Black = 'iransans_Black'
 }
 
+enum accessType {
+    public = 0,
+    private = 1
+}
+
 type LayoutProps = {
     style?: object,
-    children?: object
+    children?: object | string | Element,
+    access?: accessType
 }
-export function Layout({ style, children }: LayoutProps) {
+export function Layout({ style, children, access = accessType.private }: LayoutProps) {
+    const a = useRef();
+    a.
+        const[isAuthenticated, setAuthenticated] = useState(false);
+    const authorize = (e: boolean) => { setAuthenticated(e); }
     return (
-        <div className='layout'>
-            {children}
-            <Footer></Footer>
-        </div>
+        (access == accessType.public || (access == accessType.private && isAuthenticated)) ? (
+            <div className='layout'>
+                {children}
+                <Footer authorize={(access == accessType.public || (access == accessType.private && isAuthenticated))}></Footer>
+            </div>
+        ) : (
+                null
+            )
     )
 }
 
@@ -56,7 +70,8 @@ export function Body(props: bodyProps) {
 
 type footerProps = {
     style?: object,
-    children?: object
+    children?: object,
+    authorize: boolean
 }
 
 function Footer(props: footerProps) {
@@ -68,14 +83,16 @@ function Footer(props: footerProps) {
     return (
         <div className='layout-footer'>
             <div className='layout-footer-left'>
-                {/* <button className='layout-footer-options-button'>
-                    <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
+                {(props.authorize) ? (
+                    <button className='layout-footer-options-button'>
+                        <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
                     تنظیمات
-                </button>
-                <button className='layout-footer-options-button'>
-                    <Icon.BoxArrowInLeft fontSize={20} className='layout-footer-left-icon' />
+                    </button>
+                ) : (
+                        <button className='layout-footer-options-button'>
+                            <Icon.BoxArrowInLeft fontSize={20} className='layout-footer-left-icon' />
                     ورود به سیستم
-                </button> */}
+                        </button>)}
             </div>
             <div className='layout-footer-center'>
             </div>

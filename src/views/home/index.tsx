@@ -7,9 +7,10 @@ import * as Icon from 'react-bootstrap-icons';
 import { Layout, Header, Body } from '../layout/layout'
 import { Route, Link } from 'react-router-dom';
 
-export function Index(props: object) {
+export function Index(props: { authorize: boolean }) {
     return (
-        <Layout>
+        <Layout authorize={props.authorize}>
+            <Header></Header>
             <Body className='login'>
                 asdasd
             </Body>
