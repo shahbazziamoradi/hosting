@@ -1,0 +1,44 @@
+.cuteUi-popup{
+    background-color: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cuteUi-popup>.box{
+    width: auto;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 2px solid #eee;
+}
+
+.cuteUi-popup>.box>.header{
+    padding: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    border-bottom: 1px solid #eee;
+}
+
+.cuteUi-popup>.box>.header>.right,.cuteUi-popup>.box>.header>.left{
+    /* background-color: green; */
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuteUi-popup>.box>.header>.right{
+    flex-grow: 1;
+    height: 40px;
+    justify-content: flex-end;
+}
+.cuteUi-popup>.box>.header .close-btn{
+    width: 30px;
+    height: 30px;
+    padding:0px;
+}
+.cuteUi-popup>.box>.content{
+    padding:10px;
+    direction: rtl;
+}

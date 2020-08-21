@@ -1,4 +1,3 @@
-
 import React from 'react'
 import '../styles/toast.css'
 import * as Icon from 'react-bootstrap-icons';

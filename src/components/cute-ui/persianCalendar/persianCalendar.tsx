@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Button, buttonTheme, buttonType } from '../cute-ui/cuteUI';
+import { Button, buttonTheme, buttonType } from '../cuteUI';
 import './persianCalendar.css'
 import * as Icon from 'react-bootstrap-icons'
 
 function FixNumbers(string: string) {
-    // var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-    //     arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
-    // for (var i = 0; i < 10; i++) {
-    //     string = string.replace(persianNumbers[i], String(i)).replace(arabicNumbers[i], String(i));
-    // }
+    var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+    for (var i = 0; i < 10; i++) {
+        string = string.replace(persianNumbers[i], String(i)).replace(arabicNumbers[i], String(i));
+    }
     return string;
 };
 
@@ -43,9 +43,10 @@ function ToDateFormat(date: string) {
     return year + "/" + month + "/" + day;
 }
 
-export function PersianCalendar({ selectedDate = '', onChange = (e) => { } }: { selectedDate?: string, onChange?: (e) => {} | void }) {
+export function PersianCalendar({ date = FixNumbers(new Date().toLocaleDateString('fa-IR')), onChange = (e) => { } }: { date?: string, onChange?: (e: string) => {} | void }) {
     var todayDate = new Date();
     const today = FixNumbers(todayDate.toLocaleDateString('fa-IR'));
+    const [selectedDate, setSelectedDate] = useState(date);
     const [displayMonth, setDisplayMonth] = useState(GetMonth(today));
     var shift = (selectedDate == '') ? 0 : (GetMonth(selectedDate) - GetMonth(today));
     const [monthShift, setMonthShift] = useState(shift);
@@ -71,18 +72,8 @@ export function PersianCalendar({ selectedDate = '', onChange = (e) => { } }: { 
                         <th colSpan={7} >
                             <div className='navigator'>
                                 <div className='header'>
-                                    {/* <button onClick={() => { setMonthShift((monthShift - 1)) }}>ماه قبل</button> */}
-                                    {/* <Button rounded style={{ width: 36 }} onClick={() => { setMonthShift((monthShift - 1)) }}>
-                                        <Icon.ArrowRight size={30}></Icon.ArrowRight>
-                                    </Button>
-                                    <label>{GetMonthName(Math.abs(month + monthShift) % 12)}</label>
-                                    <Button rounded style={{ width: 36 }} onClick={() => { setMonthShift((monthShift + 1)) }}>
-                                        <Icon.ArrowLeft size={30}></Icon.ArrowLeft>
-                                    </Button> */}
-                                    {/* <button onClick={() => { setMonthShift(monthShift + 1) }}>ماه بعد</button> */}
                                 </div>
                                 <div className='header'>
-                                    {/* <button onClick={() => { setMonthShift((monthShift - 1)) }}>ماه قبل</button> */}
                                     <Button rounded style={{ width: 36 }} onClick={() => { setMonthShift((monthShift - 1)) }}>
                                         <Icon.ChevronRight size={30}></Icon.ChevronRight>
                                     </Button>
@@ -90,7 +81,6 @@ export function PersianCalendar({ selectedDate = '', onChange = (e) => { } }: { 
                                     <Button rounded style={{ width: 36 }} onClick={() => { setMonthShift((monthShift + 1)) }}>
                                         <Icon.ChevronLeft size={30}></Icon.ChevronLeft>
                                     </Button>
-                                    {/* <button onClick={() => { setMonthShift(monthShift + 1) }}>ماه بعد</button> */}
                                 </div>
                             </div>
                         </th>
@@ -116,7 +106,7 @@ export function PersianCalendar({ selectedDate = '', onChange = (e) => { } }: { 
                                     var type = (dayNo == 6) ? buttonType.danger : buttonType.secondary;
                                     return (
                                         <td key={day_index}>
-                                            <Button disabled={monthShift !== GetMonth(btn_date)} value={btn_date} type={type} theme={theme} active={btn_date == today} className='cute-ui-days' onClick={() => { onChange(ToDateFormat(btn_date)) }} >{GetDay(btn_date)}</Button>
+                                            <Button value={btn_date} type={type} theme={theme} active={btn_date == today} className='cute-ui-days' onClick={() => { onChange(ToDateFormat(btn_date)); setSelectedDate(btn_date) }} >{GetDay(btn_date).toString()}</Button>
                                         </td>
                                     )
                                 })}
@@ -127,7 +117,7 @@ export function PersianCalendar({ selectedDate = '', onChange = (e) => { } }: { 
                 <tfoot>
                     <tr>
                         <th colSpan={7}>
-                            <Button onClick={() => { setMonthShift(0) }} type={buttonType.primary}>امروز</Button>
+                            <Button onClick={() => { setMonthShift(0); setSelectedDate(today) }} type={buttonType.primary}>امروز</Button>
                         </th>
                     </tr>
                 </tfoot>

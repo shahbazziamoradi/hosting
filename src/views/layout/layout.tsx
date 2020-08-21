@@ -4,7 +4,8 @@ import './../../assets/fonts/fonts.css'
 import './layout.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route } from 'react-router-dom';
-import { Toast as ToastComponent, toastType } from '../../components/cute-ui/cuteUI'
+import { Toast as ToastComponent, toastType, Popup as PopupComponent } from '../../components/cute-ui/cuteUI'
+import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 export { toastType }
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',
@@ -29,6 +30,9 @@ type LayoutProps = {
     bodyClass?: string
 }
 export function Layout({ style, children, access = accessType.private, isAuthenticated = false, bodyClass, icon, title = '' }: LayoutProps) {
+    useEffect(() => {
+        setTitle(title)
+    }, [])
     return (
         (access == accessType.public || (access == accessType.private && isAuthenticated)) ? (
             <div className='layout'>
@@ -156,7 +160,10 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
                 <label>{title}</label>
             </div> */}
             <div className='layout-footer-cells date'>
-                <button className='layout-options-button'>
+                <button className='layout-options-button' onClick={() => {
+
+                    Popup('تقویم', <PersianCalendar onChange={(e) => { Toast(e) }}></PersianCalendar>)
+                }}>
                     <Icon.Calendar3 fontSize={20} />
                     <label dir='ltr'>{now}</label>
                 </button>
@@ -213,4 +220,29 @@ export function Toast(message: string, type = toastType.default, timeout = 5000)
         if (toastObj !== null)
             toastObj.remove();
     }, timeout);
+}
+
+function setTitle(title: any) {
+    ReactDOM.render(title, document.getElementsByTagName('title')[0]);
+}
+
+export function Popup(title: string, content: any, staticView = false) {
+    console.log(content)
+    var popup = document.createElement('div');
+    var index = document.getElementsByName('popup').length;
+    popup.id = `popup${index}`;
+    popup.setAttribute('name', 'popup');
+    popup.style.position = 'fixed';
+    popup.style.bottom = '0';
+    popup.style.right = '0';
+    popup.style.width = '100%';
+    popup.style.height = '100%';
+    var body = document.getElementsByTagName("body");
+    body[0].appendChild(popup);
+    ReactDOM.render(<PopupComponent staticView={staticView} title={title} index={index} key={index}>{content}</PopupComponent>, document.getElementById(`popup${index}`))
+    // return [() => {
+    //     var element = document.getElementById(`popup${index}`);
+    //     if (element)
+    //         element.remove()
+    // }]
 }
