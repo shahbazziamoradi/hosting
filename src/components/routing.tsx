@@ -33,7 +33,7 @@ export function Private({ component: Component, path = '' }: privateProps) {
         // });
         setTimeout(() => {
             setCheckAuth(false)
-        }, 2000);
+        }, 1);
     }, []);
     if (checkAuth) {
         return (<div className='routing-container-fluid'>

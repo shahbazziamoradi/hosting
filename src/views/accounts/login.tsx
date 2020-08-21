@@ -1,27 +1,25 @@
 import React, { useState } from 'react'
-import { Button, Input, inputType } from '../../components/cute-ui/cuteUI'
+import { Button, Input, inputType, buttonType, buttonTheme } from '../../components/cute-ui/cuteUI'
 import './../../assets/fonts/fonts.css'
 import './login.css'
-import { buttonType, buttonTheme } from '../../components/cute-ui/elements/button'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Header, Body } from '../layout/layout'
+import { Layout, accessType } from '../layout/layout'
 import { Route, Link } from 'react-router-dom';
 
 export function Login(props: { authorize: boolean }) {
     return (
-        <Layout {...props}>
-            <Body className='login'>
-                <PartialLogin>
+        <Layout {...props} bodyClass='login' access={accessType.public}>
+            <PartialLogin>
 
-                </PartialLogin>
-            </Body>
-        </Layout>
+            </PartialLogin>
+        </Layout >
     )
 }
 
 export function PartialLogin(props: object) {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+
     return (
         <div className='partial-login'>
             <Input title='نام کاربری' onChange={(e) => {

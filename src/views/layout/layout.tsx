@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, Component } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
 import './layout.css'
-import { Button } from '../../components/cute-ui/cuteUI';
-import { Routes } from '../../components/routing';
+import ReactDOM from 'react-dom';
+import { Redirect, Route } from 'react-router-dom';
+import { Toast as ToastComponent, toastType } from '../../components/cute-ui/cuteUI'
 
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',
@@ -13,7 +14,7 @@ export enum fonts {
     IranSans_Black = 'iransans_Black'
 }
 
-enum accessType {
+export enum accessType {
     public = 0,
     private = 1
 }
@@ -21,45 +22,94 @@ enum accessType {
 type LayoutProps = {
     style?: object,
     children?: object | string | Element,
-    access?: accessType
+    access?: accessType,
+    isAuthenticated?: boolean,
+    title?: string,
+    icon?: any,
+    bodyClass?: string
 }
-export function Layout({ style, children, access = accessType.private }: LayoutProps) {
-    const a = useRef();
-    a.
-        const[isAuthenticated, setAuthenticated] = useState(false);
-    const authorize = (e: boolean) => { setAuthenticated(e); }
+export function Layout({ style, children, access = accessType.private, isAuthenticated = false, bodyClass, icon, title = '' }: LayoutProps) {
     return (
         (access == accessType.public || (access == accessType.private && isAuthenticated)) ? (
             <div className='layout'>
-                {children}
-                <Footer authorize={(access == accessType.public || (access == accessType.private && isAuthenticated))}></Footer>
+                {(isAuthenticated) ? (
+                    <Header></Header>
+                ) : (null)}
+                <Body className={bodyClass}>
+                    {children}
+                </Body>
+                <Footer access={access} isAuthenticated={isAuthenticated} icon={icon} title={title}></Footer>
             </div>
         ) : (
-                null
+                <Route render={(e) => (
+                    <Redirect to={{ pathname: '/login', state: { from: e.location } }} />
+                )
+                } />
             )
     )
 }
 
 
 type headerProps = {
-    style?: object,
-    children?: object
 }
 
-export function Header(props: headerProps) {
+function Header(props: headerProps) {
     return (
         <div className='layout-header'>
+            <div className='layout-header-cells'>
+                <button className='layout-options-button'>
+                    <Icon.Bell size={20} style={{ marginLeft: 0 }} />
+                </button>
+            </div>
+            <div className='layout-header-cells'>
+                <button className='layout-options-button userinfo'>
+                    <Icon.PersonCircle size={20} />
+                    محمد شهباز ضیاءمرادی
+                </button>
+            </div>
+            <MenuItem icon={Icon.House} title='صفحه اصلی' />
+            <MenuItem icon={Icon.Diagram3} title='مکان‌ها' />
+            <MenuItem icon={Icon.ClipboardData} title='گزارش‌ها' />
+            <MenuItem icon={Icon.People} title='کاربران' />
+            <MenuItem icon={Icon.FileEarmarkCheck} title='لیست‌های تردد' />
+            <MenuItem icon={Icon.ChatSquareText} title='درخواست‌ها' />
+            <MenuItem icon={Icon.ArrowLeftRight} title='تردد‌ها' />
+            {/* <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem /> */}
+            <div className='layout-header-title-cell'>
+
+            </div>
         </div>
     )
 }
 
+type MenuItemPropsType = {
+    icon?: any,
+    title: string
+}
+function MenuItem({ title, icon: Icon }: MenuItemPropsType) {
+    return (
+        <div className='layout-header-cells'>
+            <button className='layout-options-button'>
+                <Icon size={20}></Icon>
+                {title}
+            </button>
+        </div>
+    )
+}
 type bodyProps = {
     className?: string,
     style?: object,
     children?: object | string
 }
 
-export function Body(props: bodyProps) {
+function Body(props: bodyProps) {
     return (
         <div className={`layout-body ${props.className}`} style={props.style}>
             {props.children}
@@ -71,10 +121,13 @@ export function Body(props: bodyProps) {
 type footerProps = {
     style?: object,
     children?: object,
-    authorize: boolean
+    isAuthenticated: boolean,
+    access?: accessType,
+    title?: string | null,
+    icon?: any,
 }
 
-function Footer(props: footerProps) {
+function Footer({ style, children, isAuthenticated, access, title, icon: PageIcon }: footerProps) {
     const [now, setNow] = useState(new Date().toLocaleString('fa-IR'));
     useEffect(() => {
         setInterval(() => { setNow(new Date().toLocaleString('fa-IR')) }, 1000)
@@ -82,26 +135,81 @@ function Footer(props: footerProps) {
 
     return (
         <div className='layout-footer'>
-            <div className='layout-footer-left'>
-                {(props.authorize) ? (
-                    <button className='layout-footer-options-button'>
+            <div className='layout-footer-cells'>
+                {(isAuthenticated) ? (
+                    <button className='layout-options-button'>
                         <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
                     تنظیمات
                     </button>
                 ) : (
-                        <button className='layout-footer-options-button'>
+                        <button className='layout-options-button'>
                             <Icon.BoxArrowInLeft fontSize={20} className='layout-footer-left-icon' />
-                    ورود به سیستم
-                        </button>)}
+                        ورود به سیستم
+                        </button>
+                    )}
             </div>
-            <div className='layout-footer-center'>
+            <div className='layout-footer-cells full'>
             </div>
-            <div className='layout-footer-right'>
-                <button className='layout-footer-options-button'>
-                    {now}
-                    <Icon.CalendarDate fontSize={20} className='layout-footer-right-icon' />
+            {/* <div className='layout-footer-cells title'>
+                <PageIcon fontSize={20} />
+                <label>{title}</label>
+            </div> */}
+            <div className='layout-footer-cells date'>
+                <button className='layout-options-button'>
+                    <Icon.Calendar3 fontSize={20} />
+                    <label dir='ltr'>{now}</label>
                 </button>
             </div>
         </div>
     )
+}
+
+function LoadingComponent(props: any) {
+    return (
+        <div className='loading-container-fluid'>
+            <div className='spinner'></div>
+        </div>
+    )
+}
+
+export function Loading(state = true) {
+    var index = document.getElementsByName('loading').length;
+    if (state && index == 0) {
+        var loading = document.createElement('div');
+        var index = document.getElementsByName('loading').length;
+        loading.id = 'loading';
+        loading.setAttribute('name', 'loading');
+        loading.style.position = 'fixed';
+        loading.style.bottom = '0';
+        loading.style.right = '0';
+        loading.style.width = '100%';
+        loading.style.height = '100%';
+        var body = document.getElementsByTagName("body");
+        body[0].appendChild(loading);
+        ReactDOM.render(<LoadingComponent></LoadingComponent>, document.getElementById('loading'))
+    }
+    else if (!state) {
+        var loadingObj = document.getElementById('loading');
+        if (loadingObj !== null) {
+            loadingObj.remove()
+        }
+    }
+}
+
+export function Toast(message: string, type = 'info', timeout = 5000) {
+    var toastBox = document.createElement('div');
+    toastBox.id = 'toast';
+    toastBox.style.position = 'fixed';
+    toastBox.style.bottom = '0';
+    toastBox.style.right = '0';
+    toastBox.style.width = '0';
+    toastBox.style.height = '0';
+    var body = document.getElementsByTagName("body");
+    body[0].appendChild(toastBox);
+    ReactDOM.render(<ToastComponent type={toastType.info}>{message}</ToastComponent>, document.getElementById('toast'))
+    setTimeout(() => {
+        var toastObj = document.getElementById('toast');
+        if (toastObj !== null)
+            toastObj.remove();
+    }, timeout);
 }

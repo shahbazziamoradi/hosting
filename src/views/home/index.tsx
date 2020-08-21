@@ -1,19 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Input, inputType } from '../../components/cute-ui/cuteUI'
 import './../../assets/fonts/fonts.css'
 import './index.css'
-import { buttonType, buttonTheme } from '../../components/cute-ui/elements/button'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Header, Body } from '../layout/layout'
-import { Route, Link } from 'react-router-dom';
+import { Layout, Loading, Toast } from '../layout/layout'
 
-export function Index(props: { authorize: boolean }) {
+export function Index({ authorize = false }: { authorize: boolean }) {
+    Toast('سلام', 'info')
     return (
-        <Layout authorize={props.authorize}>
-            <Header></Header>
-            <Body className='login'>
-                asdasd
-            </Body>
+        <Layout isAuthenticated={authorize} title='صفحه اصلی' icon={Icon.House}>
+
         </Layout>
     )
 }

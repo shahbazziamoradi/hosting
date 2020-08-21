@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  window.nativeAlert = window.alert;
+} else {
+  console.log = () => { }
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

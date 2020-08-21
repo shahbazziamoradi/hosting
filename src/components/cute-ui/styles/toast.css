@@ -1,0 +1,117 @@
+:root{
+    --primary: #007bff;
+    --primary-hover: #0069d9;
+    --primary-shadow: #007bff77;
+    --secondary: #6c757d;
+    --secondary-hover:#5a6268;
+    --secondary-shadow:#5a626877;
+    --success: #28a745;
+    --success-hover: #218838;
+    --success-shadow: #28a74577;
+    --info: #17a2b8;
+    --info-hover: #138496;
+    --info-shadow: #17a2b877;
+    --warning: #ffc107;
+    --warning-hover: #e0a800;
+    --warning-shadow: #ffc10777;
+    --danger: #dc3545;
+    --danger-hover: #c82333;
+    --danger-shadow: #c8233377;
+    --light: #f8f9fa;
+    --light-hover: #f8f9fa;
+    --light-shadow: #7e7e7e77;
+    --dark: #343a40;
+    --dark-hover: #23272b;
+    --dark-shadow: #343a4077;
+}
+
+.cute-ui-toast-box{
+    position: absolute;
+    bottom: 50px;
+    min-width: 200px;
+    padding: 15px 25px 15px 15px;
+    border-radius: 5px;
+    /* font-family: 'iransans_UltraLight'; */
+    color: #fff;
+    text-align: right;
+    font-size: 15px;
+    flex: 1;
+    display: flex;
+    animation-name: coming;
+    animation-duration: .5s;
+    animation-fill-mode: forwards
+}
+
+@-webkit-keyframes coming {
+  from {right: -1000px;}
+  to {right: 50px;}
+}
+
+@keyframes coming {
+  from {right: -1000px;}
+  to {right: 50px;}
+}
+
+.cute-ui-toast-box.info{
+    background-color:var(--info);
+}
+
+.cute-ui-toast-box.success{
+    background-color:var(--success-bg-color);
+}
+
+.cute-ui-toast-box.error{
+    background-color:var(--error-bg-color);
+}
+
+.cute-ui-toast-box.warning{
+    background-color:var(--warning-bg-color);
+}
+
+.cute-ui-toast-box.message{
+    background-color:var(--message-bg-color);
+}
+
+.cute-ui-toast-box>.icon-box{
+    height: 100%;
+    line-height: 30px;
+}
+
+.cute-ui-toast-box>.message-box{
+    flex-grow: 1;
+    line-height: 30px;
+    padding: 0 10px 0 50px;
+    white-space: nowrap;
+}
+
+.cute-ui-toast-box>.button-box{
+    height: 30px;
+    line-height: 30px;
+}
+
+.cute-ui-toast-box>.button-box>button{
+    height: 30px;
+    width: 30px;
+    border-radius: 100px;
+}
+
+/* .cute-ui-toast-box>.button-box>button>.close-icon{
+    padding: 0;
+    margin-top: -5px;
+    color: #fff;
+} */
+
+.cute-ui-toast-box.info>.button-box>button{
+    border: 2px solid var(--info-hove);
+    background-color: var(--info);
+    color: #fff;
+    padding: 0;
+}
+
+.cute-ui-toast-box.info>.button-box>button:hover{
+    background-color: var(--info-hover);
+}
+
+.cute-ui-toast-box.info>.button-box>button:focus{
+    background-color: var(--info-shadow);
+}
