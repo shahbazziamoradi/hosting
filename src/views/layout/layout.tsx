@@ -122,7 +122,6 @@ function Body(props: bodyProps) {
     )
 }
 
-
 type footerProps = {
     style?: object,
     children?: object,
@@ -162,7 +161,7 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
             <div className='layout-footer-cells date'>
                 <button className='layout-options-button' onClick={() => {
 
-                    Popup('تقویم', <PersianCalendar onChange={(e) => { Toast(e) }}></PersianCalendar>)
+                    const [closer] = Popup('تقویم', <PersianCalendar onChange={(e) => { }}></PersianCalendar>)
                 }}>
                     <Icon.Calendar3 fontSize={20} />
                     <label dir='ltr'>{now}</label>
@@ -240,9 +239,9 @@ export function Popup(title: string, content: any, staticView = false) {
     var body = document.getElementsByTagName("body");
     body[0].appendChild(popup);
     ReactDOM.render(<PopupComponent staticView={staticView} title={title} index={index} key={index}>{content}</PopupComponent>, document.getElementById(`popup${index}`))
-    // return [() => {
-    //     var element = document.getElementById(`popup${index}`);
-    //     if (element)
-    //         element.remove()
-    // }]
+    return [() => {
+        var element = document.getElementById(`popup${index}`);
+        if (element)
+            element.remove()
+    }]
 }

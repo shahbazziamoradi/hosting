@@ -89,6 +89,10 @@
     direction: rtl;
 }
 
+.layout-options-button>label{
+    cursor: pointer;
+  }
+
 .layout-options-button>svg
 {
     margin-left: 10px;
