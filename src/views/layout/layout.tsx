@@ -5,7 +5,7 @@ import './layout.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route } from 'react-router-dom';
 import { Toast as ToastComponent, toastType } from '../../components/cute-ui/cuteUI'
-
+export { toastType }
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',
     IranSans_Light = 'iransans_Light',
@@ -69,6 +69,7 @@ function Header(props: headerProps) {
             </div>
             <MenuItem icon={Icon.House} title='صفحه اصلی' />
             <MenuItem icon={Icon.Diagram3} title='مکان‌ها' />
+            <MenuItem icon={Icon.UpcScan} title='گیت‌ها' />
             <MenuItem icon={Icon.ClipboardData} title='گزارش‌ها' />
             <MenuItem icon={Icon.People} title='کاربران' />
             <MenuItem icon={Icon.FileEarmarkCheck} title='لیست‌های تردد' />
@@ -196,7 +197,7 @@ export function Loading(state = true) {
     }
 }
 
-export function Toast(message: string, type = 'info', timeout = 5000) {
+export function Toast(message: string, type = toastType.default, timeout = 5000) {
     var toastBox = document.createElement('div');
     toastBox.id = 'toast';
     toastBox.style.position = 'fixed';
@@ -206,7 +207,7 @@ export function Toast(message: string, type = 'info', timeout = 5000) {
     toastBox.style.height = '0';
     var body = document.getElementsByTagName("body");
     body[0].appendChild(toastBox);
-    ReactDOM.render(<ToastComponent type={toastType.info}>{message}</ToastComponent>, document.getElementById('toast'))
+    ReactDOM.render(<ToastComponent type={type}>{message}</ToastComponent>, document.getElementById('toast'))
     setTimeout(() => {
         var toastObj = document.getElementById('toast');
         if (toastObj !== null)

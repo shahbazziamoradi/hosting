@@ -1,3 +1,4 @@
+
 import React from 'react'
 import '../styles/toast.css'
 import * as Icon from 'react-bootstrap-icons';
@@ -8,13 +9,12 @@ export enum toastType {
     info = 'info',
     warning = 'warning',
     danger = 'danger',
-    default = 'light',
+    default = 'info',
     secondary = 'secondary',
-    dark = 'dark',
-    light = 'light'
+    dark = 'dark'
 }
 
-export function Toast({ type = toastType.info, disabled = false, hidden = false, children = '' }: { type: toastType, disabled?: boolean, hidden?: boolean, children: string }) {
+export function Toast({ type = toastType.default, disabled = false, hidden = false, children = '' }: { type: toastType, disabled?: boolean, hidden?: boolean, children: string }) {
     return (
         <div className={'cute-ui-toast-box ' + type}>
             <span className='message-box'>{children}</span>

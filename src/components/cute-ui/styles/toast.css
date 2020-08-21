@@ -31,12 +31,12 @@
     min-width: 200px;
     padding: 15px 25px 15px 15px;
     border-radius: 5px;
-    /* font-family: 'iransans_UltraLight'; */
     color: #fff;
     text-align: right;
     font-size: 15px;
     flex: 1;
     display: flex;
+    flex-direction: row-reverse;
     animation-name: coming;
     animation-duration: .5s;
     animation-fill-mode: forwards
@@ -50,26 +50,6 @@
 @keyframes coming {
   from {right: -1000px;}
   to {right: 50px;}
-}
-
-.cute-ui-toast-box.info{
-    background-color:var(--info);
-}
-
-.cute-ui-toast-box.success{
-    background-color:var(--success-bg-color);
-}
-
-.cute-ui-toast-box.error{
-    background-color:var(--error-bg-color);
-}
-
-.cute-ui-toast-box.warning{
-    background-color:var(--warning-bg-color);
-}
-
-.cute-ui-toast-box.message{
-    background-color:var(--message-bg-color);
 }
 
 .cute-ui-toast-box>.icon-box{
@@ -93,19 +73,19 @@
     height: 30px;
     width: 30px;
     border-radius: 100px;
+    outline: none;
+    cursor: pointer;
 }
 
-/* .cute-ui-toast-box>.button-box>button>.close-icon{
-    padding: 0;
-    margin-top: -5px;
-    color: #fff;
-} */
+.cute-ui-toast-box.info{
+    background-color:var(--info);
+}
 
 .cute-ui-toast-box.info>.button-box>button{
-    border: 2px solid var(--info-hove);
+    border: 2px solid var(--info-hover);
     background-color: var(--info);
     color: #fff;
-    padding: 0;
+    padding: 3px 0 0 0;
 }
 
 .cute-ui-toast-box.info>.button-box>button:hover{
@@ -113,5 +93,134 @@
 }
 
 .cute-ui-toast-box.info>.button-box>button:focus{
-    background-color: var(--info-shadow);
+    box-shadow:0 0 5px 1px rgba(255, 255, 255, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
+}
+
+.cute-ui-toast-box.primary{
+    background-color:var(--primary);
+}
+
+.cute-ui-toast-box.primary>.button-box>button{
+    border: 2px solid var(--primary-hover);
+    background-color: var(--primary);
+    color: #fff;
+    padding: 3px 0 0 0;
+}
+
+.cute-ui-toast-box.primary>.button-box>button:hover{
+    background-color: var(--primary-hover);
+}
+
+.cute-ui-toast-box.primary>.button-box>button:focus{
+    box-shadow:0 0 5px 1px rgba(255, 255, 255, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
+}
+
+.cute-ui-toast-box.secondary{
+    background-color:var(--secondary);
+}
+
+.cute-ui-toast-box.secondary>.button-box>button{
+    border: 2px solid var(--secondary-hover);
+    background-color: var(--secondary);
+    color: #fff;
+    padding: 3px 0 0 0;
+}
+
+.cute-ui-toast-box.secondary>.button-box>button:hover{
+    background-color: var(--secondary-hover);
+}
+
+.cute-ui-toast-box.secondary>.button-box>button:focus{
+    box-shadow:0 0 5px 1px rgba(255, 255, 255, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
+}
+
+.cute-ui-toast-box.success{
+    background-color:var(--success);
+}
+
+.cute-ui-toast-box.success>.button-box>button{
+    border: 2px solid var(--success-hover);
+    background-color: var(--success);
+    color: #fff;
+    padding: 3px 0 0 0;
+}
+
+.cute-ui-toast-box.success>.button-box>button:hover{
+    background-color: var(--success-hover);
+}
+
+.cute-ui-toast-box.success>.button-box>button:focus{
+    box-shadow:0 0 5px 1px rgba(255, 255, 255, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
+}
+
+.cute-ui-toast-box.warning{
+    background-color:var(--warning);
+    color: rgb(27, 27, 27);
+}
+
+.cute-ui-toast-box.warning>.button-box>button{
+    border: 2px solid var(--warning-hover);
+    background-color: var(--warning);
+    color: rgb(27, 27, 27);
+    padding: 3px 0 0 0;
+}
+
+.cute-ui-toast-box.warning>.button-box>button:hover{
+    background-color: var(--warning-hover);
+}
+
+.cute-ui-toast-box.warning>.button-box>button:focus{
+    box-shadow:0 0 5px 1px rgba(0, 0, 0, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
+}
+
+.cute-ui-toast-box.danger{
+    background-color:var(--danger);
+}
+
+.cute-ui-toast-box.danger>.button-box>button{
+    border: 2px solid var(--danger-hover);
+    background-color: var(--danger);
+    color: #fff;
+    padding: 3px 0 0 0;
+}
+
+.cute-ui-toast-box.danger>.button-box>button:hover{
+    background-color: var(--danger-hover);
+}
+
+.cute-ui-toast-box.danger>.button-box>button:focus{
+    box-shadow:0 0 5px 1px rgba(255, 255, 255, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
+}
+
+.cute-ui-toast-box.dark{
+    background-color:var(--dark);
+}
+
+.cute-ui-toast-box.dark>.button-box>button{
+    border: 2px solid var(--dark-hover);
+    background-color: var(--dark);
+    color: #fff;
+    padding: 3px 0 0 0;
+}
+
+.cute-ui-toast-box.dark>.button-box>button:hover{
+    background-color: var(--dark-hover);
+}
+
+.cute-ui-toast-box.dark>.button-box>button:focus{
+    box-shadow:0 0 5px 1px rgba(255, 255, 255, .3);
+    border-width:0px;
+    padding: 5px 0 0 0;
 }

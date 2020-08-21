@@ -18,7 +18,7 @@
     --danger-hover: #c82333;
     --danger-shadow: #c8233377;
     --light: #f8f9fa;
-    --light-hover: #f8f9fa;
+    --light-hover: #c8ff00;
     --light-shadow: #7e7e7e77;
     --dark: #343a40;
     --dark-hover: #23272b;
@@ -36,6 +36,10 @@ button.cute-ui{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+button.cute-ui.rounded{
+    border-radius: 100%;
 }
 
 button.cute-ui.primary.fill{
@@ -63,6 +67,11 @@ button.cute-ui.primary:focus{
     border: none;
 }
 
+button.cute-ui.primary.active{
+    box-shadow: 0px 0px 0 3px  var(--primary-shadow);
+    /* border: none; */
+}
+
 button.cute-ui.secondary.fill{
     background-color: var(--secondary);
     color: white;
@@ -86,6 +95,11 @@ button.cute-ui.secondary.outline:hover:enabled{
 button.cute-ui.secondary:focus{
     box-shadow: 0px 0px 0 3px  var(--secondary-shadow);
     border: none;
+}
+
+button.cute-ui.secondary.active{
+    box-shadow: 0px 0px 0 3px  var(--secondary-shadow);
+    /* border: none; */
 }
 
 button.cute-ui.success.fill{
@@ -113,6 +127,11 @@ button.cute-ui.success:focus{
     border: none;
 }
 
+button.cute-ui.success.active{
+    box-shadow: 0px 0px 0 3px  var(--success-shadow);
+    /* border: none; */
+}
+
 button.cute-ui.info.fill{
     background-color: var(--info);
     color: white;
@@ -136,6 +155,11 @@ button.cute-ui.info.outline:hover:enabled{
 button.cute-ui.info:focus{
     box-shadow: 0px 0px 0 3px  var(--info-shadow);
     border: none;
+}
+
+button.cute-ui.info.active{
+    box-shadow: 0px 0px 0 3px  var(--info-shadow);
+    /* border: none; */
 }
 
 button.cute-ui.warning.fill{
@@ -163,6 +187,11 @@ button.cute-ui.warning:focus{
     border: none;
 }
 
+button.cute-ui.warning.active{
+    box-shadow: 0px 0px 0 3px  var(--warning-shadow);
+    /* border: none; */
+}
+
 button.cute-ui.danger.fill{
     background-color: var(--danger);
     color: white;
@@ -186,6 +215,11 @@ button.cute-ui.danger.outline:hover:enabled{
 button.cute-ui.danger:focus{
     box-shadow: 0px 0px 0 3px  var(--danger-shadow);
     border: none;
+}
+
+button.cute-ui.danger.active{
+    box-shadow: 0px 0px 0 3px  var(--danger-shadow);
+    /* border: none; */
 }
 
 button.cute-ui.light.fill{
@@ -213,6 +247,11 @@ button.cute-ui.light:focus{
     border: none;
 }
 
+button.cute-ui.light.active{
+    box-shadow: 0px 0px 0 3px  var(--light-shadow);
+    /* border: none; */
+}
+
 button.cute-ui.dark.fill{
     background-color: var(--dark);
     color: white;
@@ -236,6 +275,11 @@ button.cute-ui.dark.outline:hover:enabled{
 button.cute-ui.dark:focus{
     box-shadow: 0px 0px 0 3px  var(--dark-shadow);
     border: none;
+}
+
+button.cute-ui.dark.active{
+    box-shadow: 0px 0px 0 3px  var(--dark-shadow);
+    /* border: none; */
 }
 
 button.cute-ui:disabled{

@@ -1,0 +1,39 @@
+.cute-ui-persian-calendar{
+    direction: rtl;
+    width: fit-content;
+    border-radius: 5px;
+    border:1px solid;
+    padding:5px
+}
+
+.cute-ui-persian-calendar>table>thead>tr>th>.navigator{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cute-ui-persian-calendar>table>thead>tr>th>.navigator>div{
+    display: flex;
+    flex-direction: row;
+}
+
+.cute-ui-persian-calendar>table>thead>tr>th>.navigator>div>label{
+    padding:6px 10px;
+    width: 50px;
+    font-size:  13px;
+    font-weight: 100;
+}
+
+.cute-ui-day-title{
+    font-size:  13px;
+    font-weight: 100;
+    padding: 0px;
+    width: 50px;
+}
+
+.cute-ui-days{
+    height: 45px !important;
+    padding: 10px ;
+    font-size:  18px;
+    font-weight: 100;
+}

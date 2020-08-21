@@ -7,7 +7,7 @@ export enum buttonType {
     info = 'info',
     warning = 'warning',
     danger = 'danger',
-    default = 'light',
+    default = 'secondary',
     secondary = 'secondary',
     dark = 'dark',
     light = 'light'
@@ -20,16 +20,20 @@ export enum buttonTheme {
 
 type buttonProps = {
     style?: object,
+    className?: string,
     type?: buttonType,
     disabled?: boolean,
+    active?: boolean,
     theme?: buttonTheme,
     children?: object | string,
-    onClick?: (e?: object) => void
+    onClick?: (e?: object) => void,
+    rounded?: boolean,
+    value?: any
 }
 
-export default function Button({ style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onClick = () => { }, disabled = false }: buttonProps) {
+export default function Button({ active = false, className, style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onClick = () => { }, disabled = false, rounded = false }: buttonProps) {
     return (
-        <button disabled={disabled} className={`cute-ui ${type} ${theme}`} style={style} onClick={(e) => {
+        <button disabled={disabled} className={`cute-ui ${type} ${theme} ${(rounded) ? 'rounded' : ''} ${(active) ? 'active' : ''} ${className}`} style={style} onClick={(e) => {
             onClick(e)
         }}>{children}</button>
     )
