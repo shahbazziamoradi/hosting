@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Private, Public } from './components/routing'
+import { E404 } from './views/errors/404';
 import { Account, Home } from './views/views';
 
 
@@ -19,7 +20,7 @@ export default function App() {
       {/* <Private path="/visitors" component={Visitors} /> */}
       <Public path="/login" component={Account.Login} />
       {/* <Public path="/glyphicons" component={Glyphicons} /> */}
-      {/* <Public component={_404} /> */}
+      <Public component={E404} />
     </Routes>
   );
 }

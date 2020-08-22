@@ -18,8 +18,8 @@
     --danger-hover: #c82333;
     --danger-shadow: #c8233377;
     --light: #f8f9fa;
-    --light-hover: #c8ff00;
-    --light-shadow: #7e7e7e77;
+    --light-hover: #dfdfdf;
+    --light-shadow: #f8f9fa77;
     --dark: #343a40;
     --dark-hover: #23272b;
     --dark-shadow: #343a4077;
@@ -230,7 +230,7 @@ button.cute-ui.light.fill{
 button.cute-ui.light.outline{
     border:1px solid var(--light);
     background-color: transparent;
-    color: #343a40;
+    color: var(--light);
 }
 
 button.cute-ui.light.fill:hover:enabled{

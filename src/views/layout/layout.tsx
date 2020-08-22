@@ -3,7 +3,7 @@ import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
 import './layout.css'
 import ReactDOM from 'react-dom';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Router } from 'react-router-dom';
 import { Toast as ToastComponent, toastType, Popup as PopupComponent } from '../../components/cute-ui/cuteUI'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 export { toastType }
@@ -71,14 +71,14 @@ function Header(props: headerProps) {
                     محمد شهباز ضیاءمرادی
                 </button>
             </div>
-            <MenuItem icon={Icon.House} title='صفحه اصلی' />
-            <MenuItem icon={Icon.Diagram3} title='مکان‌ها' />
-            <MenuItem icon={Icon.UpcScan} title='گیت‌ها' />
-            <MenuItem icon={Icon.ClipboardData} title='گزارش‌ها' />
-            <MenuItem icon={Icon.People} title='کاربران' />
-            <MenuItem icon={Icon.FileEarmarkCheck} title='لیست‌های تردد' />
-            <MenuItem icon={Icon.ChatSquareText} title='درخواست‌ها' />
-            <MenuItem icon={Icon.ArrowLeftRight} title='تردد‌ها' />
+            <MenuItem icon={Icon.House} title='صفحه اصلی' link='/' />
+            <MenuItem icon={Icon.Diagram3} title='مکان‌ها' link='/places' />
+            <MenuItem icon={Icon.UpcScan} title='گیت‌ها' link='/gates' />
+            <MenuItem icon={Icon.ClipboardData} title='گزارش‌ها' link='/reports' />
+            <MenuItem icon={Icon.People} title='کاربران' link='/users' />
+            <MenuItem icon={Icon.FileEarmarkCheck} title='لیست‌های تردد' link='/lists' />
+            <MenuItem icon={Icon.ChatSquareText} title='درخواست‌ها' link='/requests' />
+            <MenuItem icon={Icon.ArrowLeftRight} title='تردد‌ها' link='/traffic' />
             {/* <MenuItem />
             <MenuItem />
             <MenuItem />
@@ -96,15 +96,20 @@ function Header(props: headerProps) {
 
 type MenuItemPropsType = {
     icon?: any,
-    title: string
+    title: string,
+    link: string
 }
-function MenuItem({ title, icon: Icon }: MenuItemPropsType) {
+function MenuItem({ title, icon: Icon, link }: MenuItemPropsType) {
     return (
         <div className='layout-header-cells'>
-            <button className='layout-options-button'>
-                <Icon size={20}></Icon>
-                {title}
-            </button>
+            <Route render={({ history }) => (
+                <button className='layout-options-button' onClick={() => {
+                    history.push(link)
+                }}>
+                    <Icon size={20}></Icon>
+                    {title}
+                </button>
+            )} />
         </div>
     )
 }
