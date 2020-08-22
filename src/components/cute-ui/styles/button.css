@@ -27,7 +27,8 @@
 
 button.cute-ui{
     height: 35px;
-    width: 100%;
+    width: fit-content;
+    height: fit-content;
     border-radius: 3px;
     transition: all ease-in-out .2s;
     cursor: pointer;
@@ -36,6 +37,7 @@ button.cute-ui{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 5px 10px;
 }
 
 button.cute-ui.rounded{
@@ -64,7 +66,7 @@ button.cute-ui.primary.outline:hover:enabled{
 
 button.cute-ui.primary:focus{
     box-shadow: 0px 0px 0 3px  var(--primary-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.primary.active{
@@ -94,7 +96,7 @@ button.cute-ui.secondary.outline:hover:enabled{
 
 button.cute-ui.secondary:focus{
     box-shadow: 0px 0px 0 3px  var(--secondary-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.secondary.active{
@@ -124,7 +126,7 @@ button.cute-ui.success.outline:hover:enabled{
 
 button.cute-ui.success:focus{
     box-shadow: 0px 0px 0 3px  var(--success-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.success.active{
@@ -154,7 +156,7 @@ button.cute-ui.info.outline:hover:enabled{
 
 button.cute-ui.info:focus{
     box-shadow: 0px 0px 0 3px  var(--info-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.info.active{
@@ -184,7 +186,7 @@ button.cute-ui.warning.outline:hover:enabled{
 
 button.cute-ui.warning:focus{
     box-shadow: 0px 0px 0 3px  var(--warning-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.warning.active{
@@ -214,7 +216,7 @@ button.cute-ui.danger.outline:hover:enabled{
 
 button.cute-ui.danger:focus{
     box-shadow: 0px 0px 0 3px  var(--danger-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.danger.active{
@@ -244,7 +246,7 @@ button.cute-ui.light.outline:hover:enabled{
 
 button.cute-ui.light:focus{
     box-shadow: 0px 0px 0 3px  var(--light-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.light.active{
@@ -274,7 +276,7 @@ button.cute-ui.dark.outline:hover:enabled{
 
 button.cute-ui.dark:focus{
     box-shadow: 0px 0px 0 3px  var(--dark-shadow);
-    border: none;
+    /* border: none; */
 }
 
 button.cute-ui.dark.active{

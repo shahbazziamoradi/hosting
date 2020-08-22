@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, Component } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
-import './layout.css'
+import './styles/layout.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Router } from 'react-router-dom';
 import { Toast as ToastComponent, toastType, Popup as PopupComponent } from '../../components/cute-ui/cuteUI'
@@ -146,10 +146,15 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
         <div className='layout-footer'>
             <div className='layout-footer-cells'>
                 {(isAuthenticated) ? (
-                    <button className='layout-options-button'>
-                        <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
+                    <Route render={({ history }) => (
+                        <button className='layout-options-button' onClick={() => {
+                            history.push('/settings');
+                        }}>
+                            <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
                     تنظیمات
-                    </button>
+                        </button>
+                    )}
+                    />
                 ) : (
                         <button className='layout-options-button'>
                             <Icon.BoxArrowInLeft fontSize={20} className='layout-footer-left-icon' />

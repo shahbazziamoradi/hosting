@@ -5,10 +5,10 @@ import * as Icon from 'react-bootstrap-icons';
 import { Layout, Loading, Toast, toastType } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 
-export function Index({ authorize = false }: { authorize: boolean }) {
+export function Traffic({ authorize = false }: { authorize: boolean }) {
 
     return (
-        <Layout isAuthenticated={authorize} title='صفحه اصلی' icon={Icon.House}>
+        <Layout isAuthenticated={authorize} title='تردد‌ها' icon={Icon.House}>
 
         </Layout>
     )

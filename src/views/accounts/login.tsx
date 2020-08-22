@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Input, inputType, buttonType, buttonTheme } from '../../components/cute-ui/cuteUI'
 import './../../assets/fonts/fonts.css'
-import './login.css'
+import './styles/login.css'
 import * as Icon from 'react-bootstrap-icons';
 import { Layout, accessType } from '../layout/layout'
 import { Route, Link } from 'react-router-dom';

@@ -74,11 +74,11 @@ export function PersianCalendar({ date = FixNumbers(new Date().toLocaleDateStrin
                                 <div className='header'>
                                 </div>
                                 <div className='header'>
-                                    <Button rounded style={{ width: 36 }} onClick={() => { setMonthShift((monthShift - 1)) }}>
+                                    <Button rounded style={{ width: 30, height: 30 }} onClick={() => { setMonthShift((monthShift - 1)) }}>
                                         <Icon.ChevronRight size={30}></Icon.ChevronRight>
                                     </Button>
                                     <label>{GetMonthName(Math.abs(month + monthShift) % 12)}</label>
-                                    <Button rounded style={{ width: 36 }} onClick={() => { setMonthShift((monthShift + 1)) }}>
+                                    <Button rounded style={{ width: 30, height: 30 }} onClick={() => { setMonthShift((monthShift + 1)) }}>
                                         <Icon.ChevronLeft size={30}></Icon.ChevronLeft>
                                     </Button>
                                 </div>
@@ -117,7 +117,7 @@ export function PersianCalendar({ date = FixNumbers(new Date().toLocaleDateStrin
                 <tfoot>
                     <tr>
                         <th colSpan={7}>
-                            <Button onClick={() => { setMonthShift(0); setSelectedDate(today) }} type={buttonType.primary}>امروز</Button>
+                            <Button style={{ width: '100%' }} onClick={() => { setMonthShift(0); setSelectedDate(today) }} type={buttonType.primary}>امروز</Button>
                         </th>
                     </tr>
                 </tfoot>

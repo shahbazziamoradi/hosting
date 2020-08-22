@@ -8,7 +8,7 @@ import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persia
 export function Index({ authorize = false }: { authorize: boolean }) {
 
     return (
-        <Layout isAuthenticated={authorize} title='صفحه اصلی' icon={Icon.House}>
+        <Layout isAuthenticated={authorize} title='درخواست‌ها' icon={Icon.House}>
 
         </Layout>
     )

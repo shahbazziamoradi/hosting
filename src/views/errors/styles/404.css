@@ -41,7 +41,6 @@
 }
 
 .error-404>button{
-    width: fit-content;
+    /* width: fit-content; */
     font-size: 30px;
-    height: fit-content;
 }
