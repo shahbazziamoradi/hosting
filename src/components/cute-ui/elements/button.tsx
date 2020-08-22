@@ -31,7 +31,7 @@ type buttonProps = {
     value?: any
 }
 
-export default function Button({ active = false, className, style, type = buttonType.default, theme = buttonTheme.fill, children = {}, onClick = () => { }, disabled = false, rounded = false }: buttonProps) {
+export default function Button({ active = false, className, style, type = buttonType.default, theme = buttonTheme.fill, children = '', onClick = () => { }, disabled = false, rounded = false }: buttonProps) {
     return (
         <button disabled={disabled} className={`cute-ui ${type} ${theme} ${(rounded) ? 'rounded' : ''} ${(active) ? 'active' : ''} ${className}`} style={style} onClick={(e) => {
             onClick(e)

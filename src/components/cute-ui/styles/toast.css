@@ -1,4 +1,4 @@
-:root{
+/* :root{
     --primary: #007bff;
     --primary-hover: #0069d9;
     --primary-shadow: #007bff77;
@@ -23,7 +23,7 @@
     --dark: #343a40;
     --dark-hover: #23272b;
     --dark-shadow: #343a4077;
-}
+} */
 
 .cute-ui-toast-box{
     position: absolute;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, Component } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
 import './styles/layout.css'
+import '../../components/cute-ui/styles/colors.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Router } from 'react-router-dom';
 import { Toast as ToastComponent, toastType, Popup as PopupComponent } from '../../components/cute-ui/cuteUI'
