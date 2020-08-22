@@ -6,7 +6,6 @@ import { Layout, Loading, Toast, toastType } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
-
     return (
         <Layout isAuthenticated={authorize} title='صفحه اصلی' icon={Icon.House}>
 

@@ -52,9 +52,8 @@
   to {right: 50px;}
 }
 
-.cute-ui-toast-box>.icon-box{
-    height: 100%;
-    line-height: 30px;
+.cute-ui-toast-box.warning>.message-icon{
+    color: rgb(27, 27, 27);
 }
 
 .cute-ui-toast-box>.message-box{

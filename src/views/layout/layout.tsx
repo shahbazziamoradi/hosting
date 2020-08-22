@@ -213,7 +213,7 @@ export function Loading(state = true) {
     }
 }
 
-export function Toast(message: string, type = toastType.default, timeout = 5000) {
+export function Toast(message: string, type = toastType.default, icon?: Icon.IconType, timeout = 5000) {
     var toastBox = document.createElement('div');
     toastBox.id = 'toast';
     toastBox.style.position = 'fixed';
@@ -223,7 +223,7 @@ export function Toast(message: string, type = toastType.default, timeout = 5000)
     toastBox.style.height = '0';
     var body = document.getElementsByTagName("body");
     body[0].appendChild(toastBox);
-    ReactDOM.render(<ToastComponent type={type}>{message}</ToastComponent>, document.getElementById('toast'))
+    ReactDOM.render(<ToastComponent type={type} icon={icon}>{message}</ToastComponent>, document.getElementById('toast'))
     setTimeout(() => {
         var toastObj = document.getElementById('toast');
         if (toastObj !== null)
