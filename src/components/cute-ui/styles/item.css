@@ -1,0 +1,24 @@
+.cute-ui.item-block
+{
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    padding: 0;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.cute-ui.item-block.full{
+    width: 100%;
+}
+
+.cute-ui.item-block>.item-title
+{
+    border-radius: 0 3px 3px 0;
+    flex-grow: 1;
+}
+
+.cute-ui.item-block>.item-remove
+{
+    border-radius: 3px 0px 0px 3px;
+}

@@ -1,40 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import $ from 'jquery'
 import '../styles/input.css'
-export enum inputType {
-    button = 'button',
-    checkbox = 'checkbox',
-    color = 'color',
-    date = 'date',
-    datetime = 'datetime',
-    email = 'email',
-    file = 'file',
-    hidden = 'hidden',
-    image = 'image',
-    month = 'month',
-    number = 'number',
-    password = 'password',
-    radio = 'radio',
-    range = 'range',
-    reset = 'reset',
-    search = 'search',
-    submit = 'submit',
-    tel = 'tel',
-    text = 'text',
-    time = 'time',
-    url = 'url',
-    wee = 'wee',
-    ipAddress = 'text'
-}
+import * as Basic from './basics'
 
 type inputProps = {
     title: string,
     style?: object,
-    type?: inputType,
+    type?: Basic.input,
     children?: string,
     onChange?: (e: string) => void | string
 }
-export function Input({ title, style, type = inputType.text, children = '', onChange = (e: string) => { } }: inputProps) {
+export function Input({ title, style, type = Basic.input.text, children = '', onChange = (e: string) => { } }: inputProps) {
     const id = Math.floor(Math.random() * (9999999 - 1000000) + 1000000).toString();
     const [labelClass, setLabelClass] = useState('');
     const [legendWidth, setLegendWidth] = useState(0.0);

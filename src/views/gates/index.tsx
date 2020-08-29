@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './../../assets/fonts/fonts.css'
 import './styles/index.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Loading, Popup, Toast, toastType } from '../layout/layout'
+import { Layout, Loading, Popup, Toast } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
-import { Button, buttonTheme, buttonType, Table, tableTheme, buttonSize } from '../../components/cute-ui/cuteUI';
+import { Button, Table, Basic } from '../../components/cute-ui/cuteUI';
 import { NewGate } from './partials/_newGate';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
-    openNewGate()
     return (
         <Layout isAuthenticated={authorize} title='گیت‌ها' icon={Icon.House} style={{ padding: 5 }}>
-            <Table.Table className={'text-medium text-right'} border={true} theme={tableTheme.dark}>
+            <Table.Table className={'text-small text-right'} border={true} type={Basic.type.dark}>
                 <Table.THead>
                     <Table.Tr>
                         <Table.Th style={{ width: 30 }} className='text-center'>#</Table.Th>
                         <Table.Th style={{ width: 30, paddingTop: 4, paddingBottom: 4 }}>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Button theme={buttonTheme.outline} rounded type={buttonType.light} size={buttonSize.small} onClick={openCheckConnection}>
+                                <Button theme={Basic.theme.outline} rounded type={Basic.type.light} size={Basic.size.small} onClick={openCheckConnection}>
                                     <Icon.ArrowRepeat size={18}></Icon.ArrowRepeat>
                                 </Button>
                             </div>
@@ -27,7 +26,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                         {/* <Table.Th>عنوان</Table.Th> */}
                         <Table.Th style={{ paddingTop: 4, paddingBottom: 4 }}>
                             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                <Button theme={buttonTheme.outline} type={buttonType.light} size={buttonSize.small} full onClick={openNewGate}>
+                                <Button theme={Basic.theme.outline} type={Basic.type.light} size={Basic.size.small} full onClick={openNewGate}>
                                     <Icon.Plus size={22}></Icon.Plus>
                                     گیت
                                 </Button>
@@ -49,32 +48,32 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                         <Table.Td className='text-center'>255.255.255.255</Table.Td>
                         <Table.Td>
                             <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', alignItems: 'center', maxWidth: '100%', overflow: 'hidden' }}>
-                                <Button disabled size={buttonSize.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>تهران</Button>
-                                <Button disabled size={buttonSize.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>بازرگانی و خدمات همگام خودرو</Button>
-                                <Button disabled size={buttonSize.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>تعمیرگاه مرکزی 1067</Button>
-                                <Button disabled size={buttonSize.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>سایت جنوبی</Button>
-                                <Button disabled size={buttonSize.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>درب شرقی</Button>
+                                <Button disabled size={Basic.size.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>تهران</Button>
+                                <Button disabled size={Basic.size.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>بازرگانی و خدمات همگام خودرو</Button>
+                                <Button disabled size={Basic.size.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>تعمیرگاه مرکزی 1067</Button>
+                                <Button disabled size={Basic.size.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>سایت جنوبی</Button>
+                                <Button disabled size={Basic.size.small} style={{ paddingLeft: 10, paddingRight: 10, margin: 2.5, whiteSpace: 'nowrap' }}>درب شرقی</Button>
                             </div>
                         </Table.Td>
                         {/* <Table.Td></Table.Td> */}
                         <Table.Td style={{ paddingTop: 2.5, paddingBottom: 2.5, width: 70 }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                {/* <Button rounded type={buttonType.primary} size={buttonSize.small}>
+                                {/* <Button rounded type={Basic.type.primary} size={Basic.size.small}>
                                     <Icon.CloudUpload size={21}></Icon.CloudUpload>
                                 </Button>
-                                <Button rounded type={buttonType.success} size={buttonSize.small}>
+                                <Button rounded type={Basic.type.success} size={Basic.size.small}>
                                     <Icon.Wifi size={21}></Icon.Wifi>
                                 </Button> */}
-                                {/* <Button rounded type={buttonType.danger} size={buttonSize.small}>
+                                {/* <Button rounded type={Basic.type.danger} size={Basic.size.small}>
                                     <Icon.WifiOff size={21}></Icon.WifiOff>
                                 </Button> */}
-                                <Button type={buttonType.secondary} size={buttonSize.small} onClick={openCheckConnection}>
+                                <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openCheckConnection}>
                                     <Icon.ArrowRepeat size={21}></Icon.ArrowRepeat>
                                 </Button>
-                                <Button type={buttonType.secondary} size={buttonSize.small} onClick={openTrafficList}>
+                                <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
                                     <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
                                 </Button>
-                                <Button type={buttonType.secondary} size={buttonSize.small} onClick={openSettings}>
+                                <Button type={Basic.type.secondary} size={Basic.size.small} onClick={openSettings}>
                                     <Icon.GearWideConnected size={21}></Icon.GearWideConnected>
                                 </Button>
                             </div>
@@ -87,7 +86,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
 }
 
 function openNewGate() {
-    const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer() }} />);
+    const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer(); alert('asd') }} />);
 }
 
 function Settings(props: object) {
@@ -100,8 +99,29 @@ function openSettings() {
 }
 
 function CheckConnection(props: object) {
+    const [ind, setInd] = useState(0)
+    const [ok, setOk] = useState(false)
+    const [notOk, setNotOk] = useState(false)
+    useEffect(() => {
+        var t = ind;
+        var x = setInterval(() => {
+            setInd(++t);
+        }, 500);
+
+        setTimeout(() => {
+            clearInterval(x);
+            setInd(0);
+            setOk(true);
+        }, 5000);
+    }, []);
     return (
-        <div></div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 100 }}>
+            {(ind % 4 == 1) ? <Icon.Wifi1 size={50} color={Basic.colors.secondary}></Icon.Wifi1> : null}
+            {(ind % 4 == 2) ? <Icon.Wifi2 size={50} color={Basic.colors.secondary}></Icon.Wifi2> : null}
+            {(ind % 4 == 3) ? <Icon.Wifi size={50} color={Basic.colors.secondary}></Icon.Wifi> : null}
+            {(notOk) ? <Icon.WifiOff size={50} color={Basic.colors.danger}></Icon.WifiOff> : null}
+            {(ok) ? <Icon.Check2Circle size={50} color={Basic.colors.success}></Icon.Check2Circle> : null}
+        </div>
     )
 }
 function openCheckConnection() {
@@ -114,5 +134,5 @@ function TrafficList(props: object) {
     )
 }
 function openTrafficList() {
-    const [closer] = Popup('لیست تردد', <CheckConnection />);
+    const [closer] = Popup('لیست تردد', <TrafficList />);
 }

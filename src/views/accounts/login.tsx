@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Input, inputType, buttonType, buttonTheme } from '../../components/cute-ui/cuteUI'
+import { Button, Input } from '../../components/cute-ui/cuteUI'
 import './../../assets/fonts/fonts.css'
 import './styles/login.css'
 import * as Icon from 'react-bootstrap-icons';
 import { Layout, accessType } from '../layout/layout'
 import { Route, Link } from 'react-router-dom';
+import * as Basic from '../../components/cute-ui/elements/basics'
 
 export function Login(props: { authorize: boolean }) {
     return (
@@ -25,11 +26,11 @@ export function PartialLogin(props: object) {
             <Input title='نام کاربری' onChange={(e) => {
                 setUsername(e); console.log(e);
             }}></Input>
-            <Input type={inputType.password} title='کلمه عبور' onChange={(e) => {
+            <Input type={Basic.input.password} title='کلمه عبور' onChange={(e) => {
                 setPassword(e); console.log(e);
             }}></Input>
             <Route render={({ history }) => (
-                <Button disabled={(password && username) ? false : true} type={buttonType.primary} theme={buttonTheme.outline} style={{ marginTop: 10 }} onClick={() => {
+                <Button disabled={(password && username) ? false : true} type={Basic.type.primary} theme={Basic.theme.outline} style={{ marginTop: 10 }} onClick={() => {
                     if (password && username) {
                         history.push('/')
                     }

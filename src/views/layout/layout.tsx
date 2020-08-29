@@ -5,9 +5,8 @@ import './styles/layout.css'
 import '../../components/cute-ui/styles/basics.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Router } from 'react-router-dom';
-import { Toast as ToastComponent, toastType, Popup as PopupComponent } from '../../components/cute-ui/cuteUI'
+import { Toast as ToastComponent, Popup as PopupComponent, Basic } from '../../components/cute-ui/cuteUI'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
-export { toastType }
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',
     IranSans_Light = 'iransans_Light',
@@ -80,16 +79,7 @@ function Header(props: headerProps) {
             <MenuItem icon={Icon.FileEarmarkCheck} title='لیست‌های تردد' link='/lists' />
             <MenuItem icon={Icon.ChatSquareText} title='درخواست‌ها' link='/requests' />
             <MenuItem icon={Icon.ArrowLeftRight} title='تردد‌ها' link='/traffic' />
-            {/* <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem /> */}
             <div className='layout-header-title-cell'>
-
             </div>
         </div>
     )
@@ -214,7 +204,7 @@ export function Loading(state = true) {
     }
 }
 
-export function Toast(message: string, type = toastType.default, icon?: Icon.IconType, timeout = 5000) {
+export function Toast(message: string, type = Basic.type.default, icon?: Icon.IconType, timeout = 5000) {
     var toastBox = document.createElement('div');
     toastBox.id = 'toast';
     toastBox.style.position = 'fixed';

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './../../assets/fonts/fonts.css'
 import './styles/index.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Loading, Popup, Toast, toastType } from '../layout/layout'
+import { Layout, Loading, Popup, Toast } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
-import { Button, buttonSize, buttonTheme, buttonType, Input } from '../../components/cute-ui/cuteUI';
+import { Button, Input, Basic } from '../../components/cute-ui/cuteUI';
 import { data } from 'jquery';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
@@ -25,7 +25,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
         <Layout isAuthenticated={authorize} title='مکان‌ها' icon={Icon.House}>
             <div className='places-body'>
                 <div className='places-side-bar'>
-                    <PlacesTree data={struct} />
+                    <PlacesTree />
                 </div>
                 <div className='places-content'>
                 </div>
@@ -37,8 +37,10 @@ enum visiblityType {
     visible = 'visible',
     invisible = 'invisible'
 }
-type place = { id: number, title: string, childrens: Array<place> | Array<null> }
-function Place({ data, viewType }: { data: place, viewType: viewType }) {
+export type place = { id: number, title: string, childrens: Array<place> | Array<null> }
+function Place({ data, viewType, onSelect = () => { } }: {
+    data: place, viewType: viewType, onSelect?: (e?: place) => {} | void
+}) {
     const [visiblity, setVisiblity] = useState(visiblityType.invisible)
     return (
         <div className='place-node'>
@@ -61,30 +63,30 @@ function Place({ data, viewType }: { data: place, viewType: viewType }) {
                 <div className='place-body'>{data.title}</div>
                 {(viewType == "normal") ? (
                     <div className='place-options'>
-                        <Button theme={buttonTheme.outline} type={buttonType.danger} style={{ padding: 0 }}>
+                        <Button theme={Basic.theme.outline} type={Basic.type.danger} style={{ padding: 0 }}>
                             <Icon.Trash size={15} />
                         </Button>
-                        <Button theme={buttonTheme.outline} type={buttonType.primary} style={{ padding: 0 }} onClick={() => {
+                        <Button theme={Basic.theme.outline} type={Basic.type.primary} style={{ padding: 0 }} onClick={() => {
                             const [closer] = Popup('افزوردن گره جدید', <NewPlace onSubmit={() => {
                                 closer()
                             }}></NewPlace>);
                         }}>
                             <Icon.Plus size={15} />
                         </Button>
-                        <Button theme={buttonTheme.outline} type={buttonType.secondary} style={{ padding: 0 }}>
+                        <Button theme={Basic.theme.outline} type={Basic.type.secondary} style={{ padding: 0 }}>
                             <Icon.EyeFill size={15} />
                         </Button>
                     </div>
                 ) : null}
                 {(viewType == "selectable") ? (
                     <div className='place-options'>
-                        <Button theme={buttonTheme.outline} type={buttonType.secondary} size={buttonSize.xSmall}>
+                        <Button theme={Basic.theme.outline} type={Basic.type.secondary} size={Basic.size.xSmall} onClick={() => { onSelect(data) }}>
                             انتخاب
                         </Button>
                     </div>
                 ) : null}
             </div>
-            <PlacesTree data={data.childrens} visiblity={visiblity} type={viewType}></PlacesTree>
+            <PlacesTree init={false} data={data.childrens} visiblity={visiblity} type={viewType} onSelect={onSelect}></PlacesTree>
         </div>
     )
 }
@@ -94,8 +96,8 @@ function NewPlace({ onSubmit = () => { } }: { onSubmit: () => {} | void }) {
     return (
         <div>
             <Input title='عنوان گره' onChange={(e) => { setTitle(e) }}></Input>
-            <Button disabled={title.length == 0} theme={buttonTheme.outline} type={buttonType.primary} style={{ fontSize: 13, width: '100%', marginTop: 5 }}
-                onClick={() => { Toast('گره جدید به موفقیت ایجاد شد', toastType.success, Icon.Check); onSubmit() }}>ثبت</Button>
+            <Button disabled={title.length == 0} theme={Basic.theme.outline} type={Basic.type.primary} style={{ fontSize: 13, width: '100%', marginTop: 5 }}
+                onClick={() => { Toast('گره جدید به موفقیت ایجاد شد', Basic.type.success, Icon.Check); onSubmit() }}>ثبت</Button>
         </div>
     )
 }
@@ -106,13 +108,46 @@ export enum viewType {
     selectable = 'selectable'
 }
 
-export function PlacesTree({ data = [], visiblity = visiblityType.visible, type = viewType.normal }: { data: Array<place> | Array<null>, visiblity?: visiblityType, type?: viewType }) {
+export function PlacesTree({
+    init = true,
+    data = [],
+    visiblity = visiblityType.visible,
+    type = viewType.normal,
+    onSelect = () => { }
+}: {
+    init?: boolean,
+    data?: Array<place> | Array<null>,
+    visiblity?: visiblityType,
+    type?: viewType,
+    onSelect?: (e?: place) => {} | void
+}) {
+    const [struct, setStruct] = useState(Array<place | null>());
+    useEffect(() => {
+        if (init) {
+            setStruct([{
+                id: 1, title: 'شرکت بازرگانی و خدمات همگام‌خودرو', childrens: [{
+                    id: 2, title: 'مدیریت طرح‌وبرنامه', childrens: [
+                        { id: 4, title: 'بخش سیستم‌ها و روش‌ها', childrens: [] }, { id: 5, title: 'بخش پشتیبانی سیستم‌ها مکانیزه', childrens: [] }, { id: 6, title: 'بخش شبکه و امنیت اطلاعات', childrens: [] }
+                    ]
+                }, {
+                    id: 3, title: 'مدیریت منابع انسانی', childrens: [
+                        { id: 7, title: 'بخش کارگزینی', childrens: [] },
+                        { id: 8, title: 'بخش آموزش', childrens: [] },
+                        { id: 9, title: 'بخش امور پدر', childrens: [] }
+                    ]
+                }]
+            }]);
+        }
+        else {
+            setStruct([...data])
+        }
+    }, [])
     return (
-        (data.length > 0) ? (
+        (struct.length > 0) ? (
             <div className={`childrens ${visiblity}`}>
                 {
-                    (data as Array<place>).map((value: place, index: any) =>
-                        <Place key={index} data={value} viewType={type} />
+                    (struct as Array<place>).map((value: place, index: any) =>
+                        <Place key={index} data={value} viewType={type} onSelect={onSelect} />
                     )
                 }
             </div>

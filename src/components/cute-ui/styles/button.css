@@ -29,6 +29,10 @@ button.cute-ui.rounded{
     border-radius: 100%;
 }
 
+button.cute-ui.sharp{
+    border-radius: 0;
+}
+
 button.cute-ui.primary.fill{
     background-color: var(--primary);
     color: white;

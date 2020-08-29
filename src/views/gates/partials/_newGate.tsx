@@ -1,29 +1,34 @@
 import React, { useState } from 'react'
-import { Button, buttonType, Input, inputType } from '../../../components/cute-ui/cuteUI'
+import * as Icon from 'react-bootstrap-icons';
+import { Button, Input, Item, Basic } from '../../../components/cute-ui/cuteUI'
 import { Popup } from '../../layout/layout'
-import { PlacesTree, viewType } from '../../places'
+import { PlacesTree, viewType, place } from '../../places'
 
 export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} | void }) {
-    const [struct, setStruct] = useState([{
-        id: 1, title: 'شرکت بازرگانی و خدمات همگام‌خودرو', childrens: [{
-            id: 2, title: 'مدیریت طرح‌وبرنامه', childrens: [
-                { id: 4, title: 'بخش سیستم‌ها و روش‌ها', childrens: [] }, { id: 5, title: 'بخش پشتیبانی سیستم‌ها مکانیزه', childrens: [] }, { id: 6, title: 'بخش شبکه و امنیت اطلاعات', childrens: [] }
-            ]
-        }, {
-            id: 3, title: 'مدیریت منابع انسانی', childrens: [
-                { id: 7, title: 'بخش کارگزینی', childrens: [] },
-                { id: 8, title: 'بخش آموزش', childrens: [] },
-                { id: 9, title: 'بخش امور پدر', childrens: [] }
-            ]
-        }]
-    }])
+    const [node, setNode] = useState(null);
+    const [dist, setDist] = useState(null);
+    const [ip, setIp] = useState('');
     return (
         <div>
-            <Button onClick={() => {
-                Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} data={struct} /></div>)
-            }}>انتخاب آدرس</Button>
-            <Input type={inputType.ipAddress} title='آی‌پی آدرس'></Input>
-            <Button type={buttonType.primary} full onClick={() => { onSubmit() }}>ثبت</Button>
+            <Button full theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
+                const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
+                    setNode(e); closer();
+                }} /></div>)
+            }}>
+                <Icon.GeoAlt size={18} style={{ marginLeft: 10 }}></Icon.GeoAlt>
+                محل استقرار
+            </Button>
+            {(node) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setNode(null) }}>{(node as unknown as place).title}</Item> : ''}
+            <Button full style={{ marginTop: 5 }} theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
+                const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
+                    setDist(e); closer();
+                }} /></div>)
+            }}>
+                <Icon.BoxArrowLeft size={18} style={{ marginLeft: 10 }}></Icon.BoxArrowLeft>
+                خروجی</Button>
+            {(dist) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setDist(null) }}>{(dist as unknown as place).title}</Item> : ''}
+            <Input type={Basic.input.ipAddress} title='آی‌پی آدرس' onChange={(e) => { setIp(e) }}>{ip}</Input>
+            <Button disabled={(dist == null || node == null || ip == '')} type={Basic.type.primary} full onClick={() => { onSubmit() }}>ثبت</Button>
         </div>
     )
 }

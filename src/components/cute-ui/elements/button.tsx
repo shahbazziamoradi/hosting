@@ -1,48 +1,27 @@
 import React from 'react'
 import '../styles/button.css'
-
-export enum buttonType {
-    primary = 'primary',
-    success = 'success',
-    info = 'info',
-    warning = 'warning',
-    danger = 'danger',
-    default = 'secondary',
-    secondary = 'secondary',
-    dark = 'dark',
-    light = 'light'
-}
-
-export enum buttonTheme {
-    fill = 'fill',
-    outline = 'outline'
-}
-
-export enum buttonSize {
-    xSmall = 'x-small',
-    small = 'small',
-    medium = 'medium',
-    larg = 'larg'
-}
+import * as Basic from './basics'
 
 type buttonProps = {
     style?: React.CSSProperties | undefined,
     className?: string,
-    type?: buttonType,
+    type?: Basic.type,
     disabled?: boolean,
     active?: boolean,
-    theme?: buttonTheme,
+    theme?: Basic.theme,
     children?: object | string,
     onClick?: (e?: object) => void,
     rounded?: boolean,
+    sharp?: boolean,
     full?: boolean,
+    outline?: boolean,
     value?: any,
-    size?: buttonSize
+    size?: Basic.size
 }
 
-export default function Button({ active = false, full = false, className, style, type = buttonType.default, theme = buttonTheme.fill, size = buttonSize.medium, children = '', onClick = () => { }, disabled = false, rounded = false }: buttonProps) {
+export default function Button({ active = false, full = false, outline = false, className, style, type = Basic.type.default, theme = Basic.theme.fill, size = Basic.size.medium, children = '', onClick = () => { }, disabled = false, rounded = false, sharp = false }: buttonProps) {
     return (
-        <button disabled={disabled} className={`cute-ui ${type} ${theme} ${size} ${(rounded) ? 'rounded' : ''} ${(full) ? 'full' : ''} ${(active) ? 'active' : ''} ${className}`} style={style} onClick={(e) => {
+        <button disabled={disabled} className={`cute-ui ${type} ${theme} ${size} ${(rounded) ? 'rounded' : ''}  ${size} ${(sharp) ? 'sharp' : ''} ${(full) ? 'full' : ''} ${(active) ? 'active' : ''} ${className}`} style={style} onClick={(e) => {
             onClick(e)
         }}>{children}</button>
     )

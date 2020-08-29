@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/table.css'
-export enum tableTheme {
-    primary = 'primary',
-    secondary = 'secondary',
-    success = 'success',
-    info = 'info',
-    warning = 'warning',
-    danger = 'danger',
-    light = 'light',
-    dark = 'dark'
-}
+import * as Basic from './basics'
 type TablePropsType = {
     children?: any,
-    theme?: tableTheme,
+    type?: Basic.type,
     border?: boolean,
     striped?: boolean,
     style?: React.CSSProperties | undefined,
@@ -40,14 +31,14 @@ type TableCellPropsType = {
 }
 
 export function Table({ children,
-    theme = tableTheme.dark,
+    type = Basic.type.dark,
     className,
     striped,
     style,
     border }: TablePropsType) {
 
     return (
-        <table className={`cute-ui-table ${theme} ${className} ${(border) ? 'border' : ''}`} cellPadding={0} style={style}>
+        <table className={`cute-ui-table ${type} ${className} ${(border) ? 'border' : ''}`} cellPadding={0} style={style}>
             {children}
         </table>
     )

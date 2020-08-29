@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Button, buttonTheme, buttonType } from '../cuteUI';
+import { Button } from '../cuteUI';
 import './persianCalendar.css'
 import * as Icon from 'react-bootstrap-icons'
+import * as Basic from '../elements/basics';
 
 function FixNumbers(string: string) {
     var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
@@ -102,8 +103,8 @@ export function PersianCalendar({ date = FixNumbers(new Date().toLocaleDateStrin
                                 {([0, 1, 2, 3, 4, 5, 6]).map((dayNo, day_index) => {
                                     currentDate.setDate(currentDate.getDate() + 1);
                                     var btn_date = FixNumbers(currentDate.toLocaleDateString('fa-IR'))
-                                    var theme = (btn_date == selectedDate) ? buttonTheme.fill : buttonTheme.outline;
-                                    var type = (dayNo == 6) ? buttonType.danger : buttonType.secondary;
+                                    var theme = (btn_date == selectedDate) ? Basic.theme.fill : Basic.theme.outline;
+                                    var type = (dayNo == 6) ? Basic.type.danger : Basic.type.secondary;
                                     return (
                                         <td key={day_index}>
                                             <Button value={btn_date} type={type} theme={theme} active={btn_date == today} className='cute-ui-days' onClick={() => { onChange(ToDateFormat(btn_date)); setSelectedDate(btn_date) }} >{GetDay(btn_date).toString()}</Button>
@@ -117,7 +118,7 @@ export function PersianCalendar({ date = FixNumbers(new Date().toLocaleDateStrin
                 <tfoot>
                     <tr>
                         <th colSpan={7}>
-                            <Button style={{ width: '100%' }} onClick={() => { setMonthShift(0); setSelectedDate(today) }} type={buttonType.primary}>امروز</Button>
+                            <Button style={{ width: '100%' }} onClick={() => { setMonthShift(0); setSelectedDate(today) }} type={Basic.type.primary}>امروز</Button>
                         </th>
                     </tr>
                 </tfoot>
