@@ -2,10 +2,9 @@ fieldset.cute-ui{
     box-sizing: border-box;
     border-radius: 3px;
     border:1px solid #c4c4c4;
-    width: 100%;
     direction: rtl;
     padding: 5px;
-    margin-top: 15px;
+    margin: 15px 0 5px 0;
     background-color: white;
     height: 33px;
     transition: all .1s;

@@ -1,0 +1,58 @@
+.cute-ui-table{
+    width: 100%;
+    max-width: 100%;
+    direction: rtl;
+    overflow: hidden;
+    border-collapse: collapse;
+}
+
+.cute-ui-table>.cute-ui-thead{
+    color: #fff;
+}
+
+.cute-ui-table.primary>.cute-ui-thead{
+    background-color: var(--primary);
+}
+
+.cute-ui-table.secondary>.cute-ui-thead{
+    background-color: var(--secondary);
+}
+
+.cute-ui-table.success>.cute-ui-thead{
+    background-color: var(--success);
+}
+
+.cute-ui-table.info>.cute-ui-thead{
+    background-color: var(--info);
+}
+
+.cute-ui-table.warning>.cute-ui-thead{
+    background-color: var(--warning);
+    color: var(--dark);
+}
+
+.cute-ui-table.danger>.cute-ui-thead{
+    background-color: var(--danger);
+}
+
+.cute-ui-table.light>.cute-ui-thead{
+    background-color: var(--light);
+    color: var(--dark);
+}
+
+.cute-ui-table.dark>.cute-ui-thead{
+    background-color: var(--dark);
+}
+
+.cute-ui-table>.cute-ui-thead>.cute-ui-tr>.cute-ui-th,.cute-ui-table>.cute-ui-tbody>.cute-ui-tr>.cute-ui-td{
+    font-weight: 100;
+    padding: 5px 5px;
+}
+
+.cute-ui-table.border .cute-ui-td,.cute-ui-table.border .cute-ui-th{
+    border:1px solid rgb(206, 206, 206);
+}
+
+.cute-ui-table.border .cute-ui-td{
+    /* line-height: 100%; */
+}

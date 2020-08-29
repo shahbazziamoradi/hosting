@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Component } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import './../../assets/fonts/fonts.css'
 import './styles/layout.css'
-import '../../components/cute-ui/styles/colors.css'
+import '../../components/cute-ui/styles/basics.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Router } from 'react-router-dom';
 import { Toast as ToastComponent, toastType, Popup as PopupComponent } from '../../components/cute-ui/cuteUI'
@@ -40,7 +40,7 @@ export function Layout({ style, children, access = accessType.private, isAuthent
                 {(isAuthenticated) ? (
                     <Header></Header>
                 ) : (null)}
-                <Body className={bodyClass}>
+                <Body className={bodyClass} style={style}>
                     {children}
                 </Body>
                 <Footer access={access} isAuthenticated={isAuthenticated} icon={icon} title={title}></Footer>

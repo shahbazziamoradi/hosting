@@ -18,8 +18,15 @@ export enum buttonTheme {
     outline = 'outline'
 }
 
+export enum buttonSize {
+    xSmall = 'x-small',
+    small = 'small',
+    medium = 'medium',
+    larg = 'larg'
+}
+
 type buttonProps = {
-    style?: object,
+    style?: React.CSSProperties | undefined,
     className?: string,
     type?: buttonType,
     disabled?: boolean,
@@ -28,12 +35,14 @@ type buttonProps = {
     children?: object | string,
     onClick?: (e?: object) => void,
     rounded?: boolean,
-    value?: any
+    full?: boolean,
+    value?: any,
+    size?: buttonSize
 }
 
-export default function Button({ active = false, className, style, type = buttonType.default, theme = buttonTheme.fill, children = '', onClick = () => { }, disabled = false, rounded = false }: buttonProps) {
+export default function Button({ active = false, full = false, className, style, type = buttonType.default, theme = buttonTheme.fill, size = buttonSize.medium, children = '', onClick = () => { }, disabled = false, rounded = false }: buttonProps) {
     return (
-        <button disabled={disabled} className={`cute-ui ${type} ${theme} ${(rounded) ? 'rounded' : ''} ${(active) ? 'active' : ''} ${className}`} style={style} onClick={(e) => {
+        <button disabled={disabled} className={`cute-ui ${type} ${theme} ${size} ${(rounded) ? 'rounded' : ''} ${(full) ? 'full' : ''} ${(active) ? 'active' : ''} ${className}`} style={style} onClick={(e) => {
             onClick(e)
         }}>{children}</button>
     )

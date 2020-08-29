@@ -23,7 +23,8 @@ export enum inputType {
     text = 'text',
     time = 'time',
     url = 'url',
-    wee = 'wee'
+    wee = 'wee',
+    ipAddress = 'text'
 }
 
 type inputProps = {

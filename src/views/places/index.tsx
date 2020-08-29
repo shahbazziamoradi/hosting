@@ -4,7 +4,8 @@ import './styles/index.css'
 import * as Icon from 'react-bootstrap-icons';
 import { Layout, Loading, Popup, Toast, toastType } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
-import { Button, buttonTheme, buttonType, Input } from '../../components/cute-ui/cuteUI';
+import { Button, buttonSize, buttonTheme, buttonType, Input } from '../../components/cute-ui/cuteUI';
+import { data } from 'jquery';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [struct, setStruct] = useState([{
@@ -24,11 +25,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
         <Layout isAuthenticated={authorize} title='مکان‌ها' icon={Icon.House}>
             <div className='places-body'>
                 <div className='places-side-bar'>
-                    {struct.map((value, index) => {
-                        return (
-                            <Place key={index} data={value} />
-                        )
-                    })}
+                    <PlacesTree data={struct} />
                 </div>
                 <div className='places-content'>
                 </div>
@@ -41,7 +38,7 @@ enum visiblityType {
     invisible = 'invisible'
 }
 type place = { id: number, title: string, childrens: Array<place> | Array<null> }
-function Place({ data }: { data: place }) {
+function Place({ data, viewType }: { data: place, viewType: viewType }) {
     const [visiblity, setVisiblity] = useState(visiblityType.invisible)
     return (
         <div className='place-node'>
@@ -62,29 +59,32 @@ function Place({ data }: { data: place }) {
                     </Button>) : null}
                 </div>
                 <div className='place-body'>{data.title}</div>
-                <div className='place-options'>
-                    <Button theme={buttonTheme.outline} type={buttonType.danger} style={{ padding: 0 }}>
-                        <Icon.Trash size={15} />
-                    </Button>
-                    <Button theme={buttonTheme.outline} type={buttonType.primary} style={{ padding: 0 }} onClick={() => {
-                        const [closer] = Popup('افزوردن گره جدید', <NewPlace onSubmit={() => {
-                            closer()
-                        }}></NewPlace>);
-                    }}>
-                        <Icon.Plus size={15} />
-                    </Button>
-                    <Button theme={buttonTheme.outline} type={buttonType.secondary} style={{ padding: 0 }}>
-                        <Icon.EyeFill size={15} />
-                    </Button>
-                </div>
+                {(viewType == "normal") ? (
+                    <div className='place-options'>
+                        <Button theme={buttonTheme.outline} type={buttonType.danger} style={{ padding: 0 }}>
+                            <Icon.Trash size={15} />
+                        </Button>
+                        <Button theme={buttonTheme.outline} type={buttonType.primary} style={{ padding: 0 }} onClick={() => {
+                            const [closer] = Popup('افزوردن گره جدید', <NewPlace onSubmit={() => {
+                                closer()
+                            }}></NewPlace>);
+                        }}>
+                            <Icon.Plus size={15} />
+                        </Button>
+                        <Button theme={buttonTheme.outline} type={buttonType.secondary} style={{ padding: 0 }}>
+                            <Icon.EyeFill size={15} />
+                        </Button>
+                    </div>
+                ) : null}
+                {(viewType == "selectable") ? (
+                    <div className='place-options'>
+                        <Button theme={buttonTheme.outline} type={buttonType.secondary} size={buttonSize.xSmall}>
+                            انتخاب
+                        </Button>
+                    </div>
+                ) : null}
             </div>
-            {(data.childrens.length > 0) ? (
-                <div className={`childrens ${visiblity}`}>
-                    {data.childrens.map((value: place, index: number) => {
-                        return (<Place key={index} data={value} />)
-                    })}
-                </div>
-            ) : null}
+            <PlacesTree data={data.childrens} visiblity={visiblity} type={viewType}></PlacesTree>
         </div>
     )
 }
@@ -97,5 +97,25 @@ function NewPlace({ onSubmit = () => { } }: { onSubmit: () => {} | void }) {
             <Button disabled={title.length == 0} theme={buttonTheme.outline} type={buttonType.primary} style={{ fontSize: 13, width: '100%', marginTop: 5 }}
                 onClick={() => { Toast('گره جدید به موفقیت ایجاد شد', toastType.success, Icon.Check); onSubmit() }}>ثبت</Button>
         </div>
+    )
+}
+
+export enum viewType {
+    normal = 'normal',
+    readOnly = 'readOnly',
+    selectable = 'selectable'
+}
+
+export function PlacesTree({ data = [], visiblity = visiblityType.visible, type = viewType.normal }: { data: Array<place> | Array<null>, visiblity?: visiblityType, type?: viewType }) {
+    return (
+        (data.length > 0) ? (
+            <div className={`childrens ${visiblity}`}>
+                {
+                    (data as Array<place>).map((value: place, index: any) =>
+                        <Place key={index} data={value} viewType={type} />
+                    )
+                }
+            </div>
+        ) : null
     )
 }
