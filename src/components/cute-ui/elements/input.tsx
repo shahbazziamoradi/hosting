@@ -5,7 +5,8 @@ import * as Basic from './basics'
 
 type inputProps = {
     title: string,
-    style?: object,
+    style?: React.CSSProperties | undefined,
+    className?: string,
     type?: Basic.input,
     children?: string,
     onChange?: (e: string) => void | string

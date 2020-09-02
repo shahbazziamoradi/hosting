@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect, BrowserRouter, useHistory } from 'react-router-dom'
-import { Account } from '../controllers/controllers';
+import { Accounts } from '../controllers/controllers';
 import './routing.css'
 type routesProps = {
     children: object | string
@@ -25,15 +25,16 @@ export function Private({ component: Component, path = '' }: privateProps) {
     const [auth, setAuth] = useState(true);
     const [checkAuth, setCheckAuth] = useState(true);
     useEffect(() => {
+        Accounts.isAuthenticated().then((result: boolean) => {
+            setAuth(result);
+            setCheckAuth(false);
+        })
         // Account.isInRole(path).then((response) => {
         //     // if (response) {
         //     //     setAuth(true);
         //     // }
         //     // setCheckAuth(false);
         // });
-        setTimeout(() => {
-            setCheckAuth(false)
-        }, 1);
     }, []);
     if (checkAuth) {
         return (<div className='routing-container-fluid'>

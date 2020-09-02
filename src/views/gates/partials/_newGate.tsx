@@ -1,24 +1,27 @@
 import React, { useState } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import { Button, Input, Item, Basic } from '../../../components/cute-ui/cuteUI'
-import { Popup } from '../../layout/layout'
-import { PlacesTree, viewType, place } from '../../places'
+import { Place } from '../../../models/models';
+import { Gates } from '../../../controllers/controllers';
+import { Loading, Popup, Toast } from '../../layout/layout'
+import { PlacesTree, viewType } from '../../places/partials/_placeTree';
 
 export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} | void }) {
-    const [node, setNode] = useState(null);
+    const [src, setSrc] = useState(null);
     const [dist, setDist] = useState(null);
     const [ip, setIp] = useState('');
+    const [title, setTitle] = useState('');
     return (
         <div>
             <Button full theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
                 const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
-                    setNode(e); closer();
+                    setSrc(e); closer();
                 }} /></div>)
             }}>
                 <Icon.GeoAlt size={18} style={{ marginLeft: 10 }}></Icon.GeoAlt>
                 محل استقرار
             </Button>
-            {(node) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setNode(null) }}>{(node as unknown as place).title}</Item> : ''}
+            {(src) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setSrc(null) }}>{(src as unknown as Place).title}</Item> : ''}
             <Button full style={{ marginTop: 5 }} theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
                 const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
                     setDist(e); closer();
@@ -26,9 +29,24 @@ export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} |
             }}>
                 <Icon.BoxArrowLeft size={18} style={{ marginLeft: 10 }}></Icon.BoxArrowLeft>
                 خروجی</Button>
-            {(dist) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setDist(null) }}>{(dist as unknown as place).title}</Item> : ''}
-            <Input type={Basic.input.ipAddress} title='آی‌پی آدرس' onChange={(e) => { setIp(e) }}>{ip}</Input>
-            <Button disabled={(dist == null || node == null || ip == '')} type={Basic.type.primary} full onClick={() => { onSubmit() }}>ثبت</Button>
+            {(dist) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setDist(null) }}>{(dist as unknown as Place).title}</Item> : ''}
+            <Input type={Basic.input.ipAddress} style={{ textAlign: 'center' }} title='آی‌پی آدرس' onChange={(e) => { setIp(e) }}>{ip}</Input>
+            <Input type={Basic.input.text} title='عنوان' onChange={(e) => { setTitle(e) }}>{title}</Input>
+            <Button disabled={(dist == null || src == null || ip == '' || title == '')} type={Basic.type.primary} full onClick={() => {
+                Loading(true)
+                Gates.addGate((dist as unknown as Place).id, (src as unknown as Place).id, ip, title).then(() => {
+                    onSubmit()
+                }).catch((e) => {
+                    console.log(e)
+                    if (e.code == 500) {
+                        Toast(e.error.Message, Basic.type.danger)
+                    } else {
+                        Toast('خطا در ارتباط با سرور', Basic.type.danger)
+                    }
+                }).finally(() => {
+                    Loading(false)
+                })
+            }}>ثبت</Button>
         </div>
     )
 }

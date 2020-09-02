@@ -47,12 +47,15 @@ export class User {
                     switch (data.status) {
                         case 200:
                             let jsonData = await data.json();
-                            storage.setKey('access_token', jsonData.token).then(() => {
-                                resolve(data.status);
-                                return;
-                            });
+                            storage.setKey('access_token', jsonData.token)
+                            storage.setKey('userId', jsonData.id)
+                            storage.setKey('firstName', jsonData.firstName)
+                            storage.setKey('lastName', jsonData.lastName)
+                            console.log(jsonData);
+                            resolve(data.status);
+                            return;
                             break;
-                        case 500:
+                        case 401:
                             reject(new Error('نام‌کاربری و کلمه‌عبور نادرست می‌باشد'));
                             return;
                             break;
@@ -80,18 +83,7 @@ export class User {
     }
 
     logout() {
-        let logoutPromise = (resolve: any, reject: any) => {
-            var promise = storage.removeKey('access_token');
-            promise.then(() => {
-                resolve();
-                return;
-            })
-            promise.catch((error: any) => {
-                reject(error);
-                return;
-            })
-        };
-        return new Promise(logoutPromise);
+        storage.removeKey('access_token');
     }
 
     changePassword(oldPassword: string, newPassword: string, confirmPassword: string): any {

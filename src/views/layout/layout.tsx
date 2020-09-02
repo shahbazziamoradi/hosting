@@ -5,8 +5,10 @@ import './styles/layout.css'
 import '../../components/cute-ui/styles/basics.css'
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Router } from 'react-router-dom';
-import { Toast as ToastComponent, Popup as PopupComponent, Basic } from '../../components/cute-ui/cuteUI'
+import { Toast as ToastComponent, Popup as PopupComponent, Alert as AlertComponent, Confirm as ConfirmComponent, Basic } from '../../components/cute-ui/cuteUI'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
+import { storage } from '../../assets/dataSource/dataSource';
+import { Accounts } from '../../controllers/controllers';
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',
     IranSans_Light = 'iransans_Light',
@@ -14,12 +16,10 @@ export enum fonts {
     IranSans_Bold = 'iransans_Bold',
     IranSans_Black = 'iransans_Black'
 }
-
 export enum accessType {
     public = 0,
     private = 1
 }
-
 type LayoutProps = {
     style?: object,
     children?: object | string | Element,
@@ -60,7 +60,7 @@ type headerProps = {
 function Header(props: headerProps) {
     return (
         <div className='layout-header'>
-            <div className='layout-header-cells'>
+            <div className='layout-header-cells' style={{ paddingRight: 0 }}>
                 <button className='layout-options-button'>
                     <Icon.Bell size={20} style={{ marginLeft: 0 }} />
                 </button>
@@ -68,7 +68,7 @@ function Header(props: headerProps) {
             <div className='layout-header-cells'>
                 <button className='layout-options-button userinfo'>
                     <Icon.PersonCircle size={20} />
-                    محمد شهباز ضیاءمرادی
+                    {`${storage.getKey('firstName')} ${storage.getKey('lastName')}`}
                 </button>
             </div>
             <MenuItem icon={Icon.House} title='صفحه اصلی' link='/' />
@@ -135,17 +135,31 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
 
     return (
         <div className='layout-footer'>
-            <div className='layout-footer-cells'>
+            <div className='layout-footer-cells options'>
                 {(isAuthenticated) ? (
-                    <Route render={({ history }) => (
-                        <button className='layout-options-button' onClick={() => {
-                            history.push('/settings');
-                        }}>
-                            <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
+                    <div>
+                        <Route render={({ history }) => (
+                            <button className='layout-options-button' onClick={() => {
+                                history.push('/settings');
+                            }}>
+                                <Icon.GearWideConnected fontSize={20} className='layout-footer-left-icon' />
                     تنظیمات
-                        </button>
-                    )}
-                    />
+                            </button>
+                        )}
+                        />
+                        <Route render={({ history }) => (
+                            <button style={{
+                                borderLeftColor: '#1f3d4b', borderLeftWidth: 1, borderLeftStyle: 'solid'
+                            }} className='layout-options-button' onClick={() => {
+                                Accounts.logout();
+                                history.push('/login');
+                            }}>
+                                <Icon.BoxArrowLeft fontSize={20} className='layout-footer-left-icon' />
+                    خروج
+                            </button>
+                        )}
+                        />
+                    </div>
                 ) : (
                         <button className='layout-options-button'>
                             <Icon.BoxArrowInLeft fontSize={20} className='layout-footer-left-icon' />
@@ -227,7 +241,6 @@ function setTitle(title: any) {
 }
 
 export function Popup(title: string, content: any, staticView = false) {
-    console.log(content)
     var popup = document.createElement('div');
     var index = document.getElementsByName('popup').length;
     popup.id = `popup${index}`;
@@ -242,6 +255,46 @@ export function Popup(title: string, content: any, staticView = false) {
     ReactDOM.render(<PopupComponent staticView={staticView} title={title} index={index} key={index}>{content}</PopupComponent>, document.getElementById(`popup${index}`))
     return [() => {
         var element = document.getElementById(`popup${index}`);
+        if (element)
+            element.remove()
+    }]
+}
+
+export function Alert(message: string, type: Basic.type = Basic.type.secondary, buttonTitle: string = 'تایید', onSubmit = () => { }) {
+    var alert = document.createElement('div');
+    var index = document.getElementsByName('alert').length;
+    alert.id = `alert${index}`;
+    alert.setAttribute('name', 'alert');
+    alert.style.position = 'fixed';
+    alert.style.bottom = '0';
+    alert.style.right = '0';
+    alert.style.width = '100%';
+    alert.style.height = '100%';
+    var body = document.getElementsByTagName("body");
+    body[0].appendChild(alert);
+    ReactDOM.render(<AlertComponent buttonTitle={buttonTitle} onSubmit={onSubmit} type={type} index={index} key={index}>{message}</AlertComponent>, document.getElementById(`alert${index}`))
+    return [() => {
+        var element = document.getElementById(`alert${index}`);
+        if (element)
+            element.remove()
+    }]
+}
+
+export function Confirm(message: string, type: Basic.type = Basic.type.secondary, onOk?: (e?: any) => {} | void, onCancel?: (e?: any) => {} | void) {
+    var confirm = document.createElement('div');
+    var index = document.getElementsByName('confirm').length;
+    confirm.id = `confirm${index}`;
+    confirm.setAttribute('name', 'confirm');
+    confirm.style.position = 'fixed';
+    confirm.style.bottom = '0';
+    confirm.style.right = '0';
+    confirm.style.width = '100%';
+    confirm.style.height = '100%';
+    var body = document.getElementsByTagName("body");
+    body[0].appendChild(confirm);
+    ReactDOM.render(<ConfirmComponent type={type} index={index} key={index} onOk={onOk} onCancel={onCancel}>{message}</ConfirmComponent>, document.getElementById(`confirm${index}`))
+    return [() => {
+        var element = document.getElementById(`confirm${index}`);
         if (element)
             element.remove()
     }]

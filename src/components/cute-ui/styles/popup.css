@@ -1,4 +1,4 @@
-.cuteUi-popup{
+.cute-ui-popup{
     background-color: rgba(0, 0, 0, .6);
     width: 100%;
     height: 100%;
@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
 }
-.cuteUi-popup>.box{
+.cute-ui-popup>.box{
     min-width: 350px;
     width: auto;
     background-color: #fff;
@@ -14,14 +14,18 @@
     border: 2px solid #eee;
 }
 
-.cuteUi-popup>.box>.header{
+.cute-ui-popup>.box>.header{
+    height: 30px;
+}
+
+.cute-ui-popup>.box>.header{
     padding: 5px;
     display: flex;
     flex-direction: row-reverse;
     border-bottom: 1px solid #eee;
 }
 
-.cuteUi-popup>.box>.header>.right,.cuteUi-popup>.box>.header>.left{
+.cute-ui-popup>.box>.header>.right,.cute-ui-popup>.box>.header>.left{
     /* background-color: green; */
     /* padding: 10px; */
     display: flex;
@@ -29,18 +33,34 @@
     align-items: center;
 }
 
-.cuteUi-popup>.box>.header>.right{
+.cute-ui-popup>.box>.header>.right{
     flex-grow: 1;
     height: fit-content;
     font-size: 15px;
     justify-content: flex-end;
 }
-.cuteUi-popup>.box>.header .close-btn{
+.cute-ui-popup>.box>.header .close-btn{
     width: 20px;
     height: 20px;
     padding:0px;
 }
-.cuteUi-popup>.box>.content{
+.cute-ui-popup>.box>.content{
     padding:10px;
     direction: rtl;
+}
+.cute-ui-alert>.box>.content{
+    min-height: 70px;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+.cute-ui-alert>.box>.footer{
+    display: flex;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.cute-ui-alert>.box>.footer>button{
+    min-width: 120px;
 }
