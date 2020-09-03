@@ -6,11 +6,10 @@ enum methodTypes {
 export default class dataSource {
     static host() {
         if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-            // return 'http://wst.htsco.ir'
             // return 'http://10.0.2.2:5000'
             return 'http://localhost:62302'
         } else {
-            return (false) ? 'http://89.43.7.156:5001' : 'http://172.27.172.29:55555';
+            return (false) ? 'http://172.27.172.29:55555';
         }
     }
 
