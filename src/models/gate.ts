@@ -1,20 +1,23 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
+import { Base } from '../controllers/baseController';
 
 enum gateState {
     active = 1,
     deactive = 0,
 }
 
-export class Gate {
+export class Gate extends Base {
     constructor(data?: { AGAT_GAT: number, AGAT_SRC_ZONE: number, SRC_PATH: string, AGAT_DIST_ZONE: number, DIST_PATH: string, AGAT_IP: string, AGAT_TTL: string, AGAT_STAT: gateState, AGAT_STAT_DESC: string }) {
+        super();
         if (data) {
             this._id = data.AGAT_GAT;
             this._title = data.AGAT_TTL;
             this._ip = data.AGAT_IP;
             this._source = data.AGAT_SRC_ZONE;
-            this._distination = data.AGAT_DIST_ZONE;
+            this._parent = data.AGAT_SRC_ZONE;
+            this._destination = data.AGAT_DIST_ZONE;
             this._sourcePath = data.SRC_PATH;
-            this._distinationPath = data.DIST_PATH;
+            this._destinationPath = data.DIST_PATH;
             this._state = data.AGAT_STAT
         }
     }
@@ -22,6 +25,14 @@ export class Gate {
     private _id!: number;
     public get id(): number {
         return this._id;
+    }
+
+    private _parent!: number;
+    public get parent(): number {
+        return this._parent;
+    }
+    public set parent(v: number) {
+        this._parent = v;
     }
 
     private _title!: string;
@@ -40,12 +51,12 @@ export class Gate {
         this._ip = v;
     }
 
-    private _distination!: number;
-    public get dist(): number {
-        return this._distination;
+    private _destination!: number;
+    public get destination(): number {
+        return this._destination;
     }
-    public set distination(v: number) {
-        this._distination = v;
+    public set destination(v: number) {
+        this._destination = v;
     }
 
     private _source!: number;
@@ -64,14 +75,13 @@ export class Gate {
         this._sourcePath = v;
     }
 
-    private _distinationPath!: string;
-    public get distinationPath(): string {
-        return this._distinationPath;
+    private _destinationPath!: string;
+    public get destinationPath(): string {
+        return this._destinationPath;
     }
-    public set distinationPath(v: string) {
-        this._distinationPath = v;
+    public set destinationPath(v: string) {
+        this._destinationPath = v;
     }
-
 
     private _state!: gateState;
     public get state(): gateState {
@@ -89,7 +99,6 @@ export class Gate {
             promise.then(async (e) => {
                 if (e.status == 200) {
                     var json = await e.json();
-                    console.log(e);
                     json.forEach((element: any) => {
                         result.push(new Gate(element))
                     });
@@ -127,14 +136,19 @@ export class Gate {
         return new Promise(resultPromise);
     }
 
-    static addGate(data: { distId: number; srcId: number; ip: string; title: string; }): Promise<void> {
+    static addGate(data: Gate): Promise<Array<Gate>> {
         var resultPromise = (resolve: any, reject: any): void => {
             var promise = dataSource.post(`api/gates/addGate`, data);
 
             promise.then(async (e: Response) => {
                 switch (e.status) {
                     case 200:
-                        resolve();
+                        var result = new Array<Gate>();
+                        var json = await e.json();
+                        json.forEach((element: any) => {
+                            result.push(new Gate(element))
+                        });
+                        resolve(result);
                         break;
                     case 500:
                         reject({ error: await e.json(), code: e.status })

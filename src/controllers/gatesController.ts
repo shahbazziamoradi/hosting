@@ -10,8 +10,14 @@ export default class Gates {
         return Gate.checkConnection(ip);
     }
 
-    static addGate(distId: number, srcId: number, ip: string, title: string): Promise<Gate | void> {
-        return Gate.addGate({ distId, srcId, ip, title })
+    static addGate(destination: number, source: number, ip: string, title: string): Promise<Array<Gate>> {
+        var gate = new Gate();
+        gate.destination = destination;
+        gate.source = source;
+        gate.parent = source;
+        gate.ip = ip;
+        gate.title = title;
+        return Gate.addGate(gate)
     }
 
     // static async deleteGate(id: number): Promise<void> {

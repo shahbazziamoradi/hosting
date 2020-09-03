@@ -15,7 +15,6 @@ export function Index({ authorize = false }: { authorize: boolean }) {
         Loading(true)
         var promise = Gates.getGates();
         promise.then(async (e: Array<Gate>) => {
-            console.log(e)
             setData([...e])
         })
         promise.catch(() => {
@@ -41,11 +40,16 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                             </div>
                         </Table.Th>
                         <Table.Th className='text-center' style={{ width: 120, minWidth: 120 }}>آی‌پی</Table.Th>
-                        <Table.Th>عنوان</Table.Th>
+                        <Table.Th style={{ width: 150 }}>عنوان</Table.Th>
                         <Table.Th>آدرس</Table.Th>
-                        <Table.Th style={{ paddingTop: 4, paddingBottom: 4 }}>
+                        <Table.Th style={{ paddingTop: 4, paddingBottom: 4, width: 82 }}>
                             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                <Button theme={Basic.theme.outline} type={Basic.type.light} size={Basic.size.small} full onClick={openNewGate}>
+                                <Button theme={Basic.theme.outline} type={Basic.type.light} size={Basic.size.small} full onClick={() => {
+                                    const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={(e) => {
+                                        setData([...data, ...e]);
+                                        closer();
+                                    }} />);
+                                }}>
                                     <Icon.Plus size={22}></Icon.Plus>
                                     گیت
                                 </Button>
@@ -88,7 +92,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                     <Icon.WifiOff size={21}></Icon.WifiOff>
                                 </Button> */}
                                         <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openCheckConnection}>
-                                            <Icon.ArrowRepeat size={21}></Icon.ArrowRepeat>
+                                            <Icon.XCircle size={21}></Icon.XCircle>
                                         </Button>
                                         <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
                                             <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
@@ -107,7 +111,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
 }
 
 function openNewGate() {
-    const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer(); alert('asd') }} />);
+    const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer(); }} />);
 }
 
 function Settings(props: object) {

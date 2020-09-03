@@ -48,20 +48,24 @@ function PlaceNode({ data, viewType, onSelect = () => { }, onDelete = () => { } 
                 <div className='place-body'>{data.title}</div>
                 {(viewType == "normal") ? (
                     <div className='place-options'>
-                        <Button theme={Basic.theme.outline} type={Basic.type.danger} style={{ padding: 0 }} onClick={() => {
-                            Confirm('آیا مایل به حذف گره هستید؟', Basic.type.danger, () => {
-                                deleteNode(data.id)
-                            })
-                        }}>
-                            <Icon.Trash size={15} />
-                        </Button>
-                        <Button theme={Basic.theme.outline} type={Basic.type.primary} style={{ padding: 0 }} onClick={() => {
-                            const [closer] = Popup('افزوردن گره جدید', <NewPlace parent={data.id} onSubmit={() => {
-                                closer()
-                            }}></NewPlace>);
-                        }}>
-                            <Icon.Plus size={15} />
-                        </Button>
+                        {(data.type != 6 && data.path !== data.id.toString() && data.childs.length == 0) ? (
+                            <Button theme={Basic.theme.outline} type={Basic.type.danger} style={{ padding: 0 }} onClick={() => {
+                                Confirm('آیا مایل به حذف گره هستید؟', Basic.type.danger, () => {
+                                    deleteNode(data.id)
+                                })
+                            }}>
+                                <Icon.Trash size={15} />
+                            </Button>
+                        ) : null}
+                        {(data.type != 6) ? (
+                            <Button theme={Basic.theme.outline} type={Basic.type.primary} style={{ padding: 0 }} onClick={() => {
+                                const [closer] = Popup('افزوردن گره جدید', <NewPlace parent={data.id} onSubmit={() => {
+                                    closer()
+                                }}></NewPlace>);
+                            }}>
+                                <Icon.Plus size={15} />
+                            </Button>
+                        ) : null}
                         <Button theme={Basic.theme.outline} type={Basic.type.secondary} style={{ padding: 0 }}>
                             <Icon.EyeFill size={15} />
                         </Button>

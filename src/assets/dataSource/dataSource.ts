@@ -9,7 +9,7 @@ export default class dataSource {
             // return 'http://10.0.2.2:5000'
             return 'http://localhost:62302'
         } else {
-            return (false) ? 'http://172.27.172.29:55555';
+            return (false) ? 'http://172.27.172.29:55555' : '';
         }
     }
 
@@ -44,11 +44,16 @@ export default class dataSource {
     }
 
     static post(url: string, data?: any) {
+        console.log(JSON.stringify({
+            "json": data
+        }))
         var token = this.getToken();
         var postPromise = fetch(`${this.host()}/${url}`, {
             method: methodTypes.POST,
             headers: this.headers(token, methodTypes.POST),
-            body: JSON.stringify({ "json": JSON.stringify(data) })
+            body: JSON.stringify({
+                "json": JSON.stringify(data)
+            })
         });
         return postPromise;
     }

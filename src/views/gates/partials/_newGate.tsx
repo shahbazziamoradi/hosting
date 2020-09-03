@@ -8,7 +8,7 @@ import { PlacesTree, viewType } from '../../places/partials/_placeTree';
 
 export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} | void }) {
     const [src, setSrc] = useState(null);
-    const [dist, setDist] = useState(null);
+    const [dest, setDest] = useState(null);
     const [ip, setIp] = useState('');
     const [title, setTitle] = useState('');
     return (
@@ -24,20 +24,20 @@ export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} |
             {(src) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setSrc(null) }}>{(src as unknown as Place).title}</Item> : ''}
             <Button full style={{ marginTop: 5 }} theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
                 const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
-                    setDist(e); closer();
+                    setDest(e); closer();
                 }} /></div>)
             }}>
                 <Icon.BoxArrowLeft size={18} style={{ marginLeft: 10 }}></Icon.BoxArrowLeft>
                 خروجی</Button>
-            {(dist) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setDist(null) }}>{(dist as unknown as Place).title}</Item> : ''}
+            {(dest) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setDest(null) }}>{(dest as unknown as Place).title}</Item> : ''}
             <Input type={Basic.input.ipAddress} style={{ textAlign: 'center' }} title='آی‌پی آدرس' onChange={(e) => { setIp(e) }}>{ip}</Input>
             <Input type={Basic.input.text} title='عنوان' onChange={(e) => { setTitle(e) }}>{title}</Input>
-            <Button disabled={(dist == null || src == null || ip == '' || title == '')} type={Basic.type.primary} full onClick={() => {
+            <Button disabled={(dest == null || src == null || ip == '' || title == '')} type={Basic.type.primary} full onClick={() => {
                 Loading(true)
-                Gates.addGate((dist as unknown as Place).id, (src as unknown as Place).id, ip, title).then(() => {
-                    onSubmit()
+                Gates.addGate((dest as unknown as Place).id, (src as unknown as Place).id, ip, title).then((e) => {
+                    Toast('عملیات با موفقیت انجام شد.', Basic.type.success)
+                    onSubmit(e)
                 }).catch((e) => {
-                    console.log(e)
                     if (e.code == 500) {
                         Toast(e.error.Message, Basic.type.danger)
                     } else {
