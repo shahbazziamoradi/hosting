@@ -80,12 +80,16 @@ export class storage {
     }
 
     static removeKey(key: string) {
-        return localStorage.removeItem(key)
+        localStorage.removeItem(key)
     }
 
     static removeKeys(keys: Array<string>) {
         keys.forEach(key => {
             localStorage.removeItem(key)
         });
+    }
+
+    static clear() {
+        localStorage.clear();
     }
 }

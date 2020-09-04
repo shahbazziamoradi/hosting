@@ -1,21 +1,43 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
+import { Person } from './models';
 
 export class User {
-    constructor() {
-        this._name = '';
-        this._password = '';
-        this._username = ''
+    constructor(data?: {
+        AUSR_PPRS: Person,
+        AUSR_ACT_FLG: Boolean,
+        AUSR_INS_DTE: Date,
+        AUSR_LOCK: boolean,
+        AUSR_PPRS_PRS: number,
+        AUSR_USERNAME: string,
+        AUSR_USR: string
+    }) {
+        if (data) {
+            if (data.AUSR_PPRS) {
+                this._person = data.AUSR_PPRS;
+            }
+            this._id = data.AUSR_USR;
+            this._username = data.AUSR_USERNAME;
+            this._lock = data.AUSR_LOCK
+        }
     }
 
-    private _name: string;
-    public get name(): string {
-        return this._name;
+    private _id!: string;
+    public get id(): string {
+        return this._id;
     }
-    public set name(v: string) {
-        this._name = v;
+    public set id(v: string) {
+        this._id = v;
     }
 
-    private _username: string;
+    private _person!: Person;
+    public get person(): Person {
+        return this._person;
+    }
+    public set person(v: Person) {
+        this._person = v;
+    }
+
+    private _username!: string;
     public get username(): string {
         return this._username;
     }
@@ -23,13 +45,22 @@ export class User {
         this._username = v;
     }
 
-    private _password: string;
+    private _password!: string;
     public get password(): string {
         return this._password;
     }
     public set password(v: string) {
         this._password = v;
     }
+
+    private _lock !: boolean;
+    public get lock(): boolean {
+        return this._lock;
+    }
+    public set lock(v: boolean) {
+        this._lock = v;
+    }
+
 
     isValid(): boolean {
         if (this._username && this._password) {
@@ -83,9 +114,55 @@ export class User {
     }
 
     logout() {
-        storage.removeKey('access_token');
+        storage.clear();
     }
 
     changePassword(oldPassword: string, newPassword: string, confirmPassword: string): any {
+    }
+
+    resetPassword(): Promise<boolean> {
+        var promise = (resolve: (e: any) => {} | void, reject: (e: any) => {} | void): boolean | any => {
+            dataSource.post(`api/account/resetPassword/${this.username}`).then(async (e) => {
+                switch (e.status) {
+                    case 200:
+                        console.log(e);
+                        console.log(await e.json());
+                        resolve(true);
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+                resolve(true)
+            }).catch((e) => {
+            })
+        }
+        return new Promise(promise);
+    }
+
+    locking(): Promise<boolean> {
+        var promise = (resolve: (e: any) => {} | void, reject: (e: any) => {} | void): boolean | any => {
+            dataSource.post(`api/account/lock/${this.username}`).then(async (e) => {
+                switch (e.status) {
+                    case 200:
+                        console.log(e);
+                        console.log(await e.json());
+                        resolve(true);
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+                resolve(true)
+            }).catch((e) => {
+            })
+        }
+        return new Promise(promise);
     }
 }

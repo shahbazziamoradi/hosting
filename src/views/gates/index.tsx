@@ -30,7 +30,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
             <Table.Table className={'text-small text-right'} border={true} type={Basic.type.dark}>
                 <Table.THead>
                     <Table.Tr>
-                        <Table.Th style={{ width: 30, minWidth: 30 }} className='text-center'>#</Table.Th>
+                        <Table.Th width={30} className='text-center'>#</Table.Th>
                         <Table.Th style={{ width: 30, minWidth: 30, paddingTop: 4, paddingBottom: 4 }}>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 {/* <Button theme={Basic.theme.outline} rounded type={Basic.type.light} size={Basic.size.small} >
@@ -91,13 +91,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         {/* <Button rounded type={Basic.type.danger} size={Basic.size.small}>
                                     <Icon.WifiOff size={21}></Icon.WifiOff>
                                 </Button> */}
-                                        <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openCheckConnection}>
+                                        <Button style={{ marginLeft: 2 }} type={Basic.type.danger} size={Basic.size.small}>
                                             <Icon.XCircle size={21}></Icon.XCircle>
                                         </Button>
                                         <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
                                             <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
                                         </Button>
-                                        <Button type={Basic.type.secondary} size={Basic.size.small} onClick={openSettings}>
+                                        <Button type={Basic.type.info} size={Basic.size.small} onClick={openSettings}>
                                             <Icon.GearWideConnected size={21}></Icon.GearWideConnected>
                                         </Button>
                                     </div>

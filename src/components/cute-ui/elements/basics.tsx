@@ -15,6 +15,12 @@ export enum theme {
     outline = 'outline'
 }
 
+export enum textAlign {
+    right = 'text-right',
+    center = 'text-center',
+    left = 'text-left'
+}
+
 export enum size {
     xSmall = 'x-small',
     small = 'small',
