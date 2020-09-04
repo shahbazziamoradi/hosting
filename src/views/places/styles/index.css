@@ -13,5 +13,18 @@ overflow: auto;
 }
 .places-content{
     flex-grow: 1;
-overflow: auto;
+    overflow: auto;
+    direction: rtl;
+}
+.places-content>div.header{
+    padding: 10px;
+    display: flex;
+}
+.places-content>div.body{
+    
+}
+.places-content>div.header>h3{
+    font-weight: 100;
+    margin: 0;
+    flex-grow: 1;
 }

@@ -21,7 +21,7 @@ export enum accessType {
     private = 1
 }
 type LayoutProps = {
-    style?: object,
+    style?: React.CSSProperties | undefined,
     children?: object | string | Element,
     access?: accessType,
     isAuthenticated?: boolean,

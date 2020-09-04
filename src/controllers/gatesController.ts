@@ -1,5 +1,5 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
-import { Gate } from '../models/models';
+import { Gate, List } from '../models/models';
 
 export default class Gates {
     static async getGates(): Promise<Array<Gate>> {
@@ -19,11 +19,4 @@ export default class Gates {
         gate.title = title;
         return Gate.addGate(gate)
     }
-
-    // static async deleteGate(id: number): Promise<void> {
-    //     return Gate.deleteGate(id)
-    // }
-    // static async addGate(parentId: number, title: string): Promise<void> {
-    //     return Gate.addGate(parentId, title);
-    // }
 }

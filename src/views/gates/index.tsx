@@ -91,9 +91,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         {/* <Button rounded type={Basic.type.danger} size={Basic.size.small}>
                                     <Icon.WifiOff size={21}></Icon.WifiOff>
                                 </Button> */}
-                                        <Button style={{ marginLeft: 2 }} type={Basic.type.danger} size={Basic.size.small}>
-                                            <Icon.XCircle size={21}></Icon.XCircle>
-                                        </Button>
+                                        {(gate.state) ?
+                                            <Button style={{ marginLeft: 2 }} type={Basic.type.danger} size={Basic.size.small}>
+                                                <Icon.X size={21}></Icon.X>
+                                            </Button> :
+                                            <Button style={{ marginLeft: 2 }} type={Basic.type.success} size={Basic.size.small}>
+                                                <Icon.Check size={21}></Icon.Check>
+                                            </Button>}
                                         <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
                                             <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
                                         </Button>

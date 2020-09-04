@@ -33,7 +33,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                         <Table.Th width={120} textAlign={Basic.textAlign.center}>شماره تماس</Table.Th>
                         <Table.Th>نام و نام خانوادگی</Table.Th>
                         <Table.Th width={100} textAlign={Basic.textAlign.center}>وضعیت</Table.Th>
-                        <Table.Th></Table.Th>
+                        <Table.Th width={80}></Table.Th>
                     </Table.Tr>
                 </Table.THead>
                 <Table.TBody>
@@ -47,7 +47,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                             <Table.Td textAlign={Basic.textAlign.center}>{
                                 (person.user.id) ? (person.user.lock ? 'غیر فعال' : 'فعال') : 'فاقد کاربری'
                             }</Table.Td>
-                            <Table.Td width={50}>
+                            <Table.Td>
                                 {(person.user.id != null) ? (
                                     <span style={{ display: 'flex' }}>
                                         {(person.user.lock) ?

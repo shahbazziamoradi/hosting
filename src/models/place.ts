@@ -1,13 +1,17 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
+import { List } from './models';
 
 export class Place {
-    constructor(data?: { APLC_PLC: number, APLC_TTL: string, APLC_TYP: number, APLC_PTH: string, APLC_PTH_DESC: string, APLC_APLCS: string }) {
+    constructor(data?: { APLC_PLC: number, APLC_TTL: string, APLC_TYP: number, APLC_PTH: string, APLC_PTH_DESC: string, APLC_APLCS: string, APLC_ALST: Array<any> }) {
         if (data) {
             this._id = data.APLC_PLC;
             this._title = data.APLC_TTL;
             this._type = data.APLC_TYP;
             this._path = data.APLC_PTH;
             this._pathText = data.APLC_PTH_DESC;
+            if (data.APLC_ALST) {
+                this._list = new List(data.APLC_ALST[0]);
+            }
             this._childs = new Array<Place>();
             if (data.APLC_APLCS) {
                 JSON.parse(data.APLC_APLCS).forEach((aplc: any) => {
@@ -56,6 +60,15 @@ export class Place {
         return this._pathText;
     }
 
+    private _list!: List;
+    public get list(): List {
+        return this._list;
+    }
+    public set list(v: List) {
+        this._list = v;
+    }
+
+
     static getPlaces(): Promise<Array<Place>> {
         var resultPromise = (resolve: any, reject: any): Array<Place> => {
             var result = new Array<Place>();
@@ -63,6 +76,7 @@ export class Place {
 
             promise.then(async (e) => {
                 var json = await e.json();
+                console.log(json)
                 json.forEach((element: any) => {
                     result.push(new Place(element))
                 });

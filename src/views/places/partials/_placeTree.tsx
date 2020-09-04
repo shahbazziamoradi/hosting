@@ -14,7 +14,7 @@ enum visiblityType {
 export type place = { id: number, title: string, childrens: Array<place> | Array<null> }
 
 function PlaceNode({ data, viewType, onSelect = () => { }, onDelete = () => { } }: {
-    data: Place, viewType: viewType, onSelect?: (e?: Place) => {} | void, onDelete?: () => {} | void
+    data: Place, viewType: viewType, onSelect?: (e: Place) => {} | void, onDelete?: () => {} | void
 }) {
     const deleteNode = (nodeId: number) => {
         Loading(true)
@@ -66,7 +66,7 @@ function PlaceNode({ data, viewType, onSelect = () => { }, onDelete = () => { } 
                                 <Icon.Plus size={15} />
                             </Button>
                         ) : null}
-                        <Button theme={Basic.theme.outline} type={Basic.type.secondary} style={{ padding: 0 }}>
+                        <Button theme={Basic.theme.outline} type={Basic.type.secondary} style={{ padding: 0 }} onClick={() => { onSelect(data) }}>
                             <Icon.EyeFill size={15} />
                         </Button>
                     </div>
@@ -121,7 +121,7 @@ export function PlacesTree({
     data?: Array<Place>,
     visiblity?: visiblityType,
     type?: viewType,
-    onSelect?: (e?: Place) => {} | void
+    onSelect?: (e: Place) => {} | void
 }) {
     const [struct, setStruct] = useState(Array<Place>());
     useEffect(() => {
@@ -129,6 +129,7 @@ export function PlacesTree({
             Loading(true)
             var promise = Places.getPlaces();
             promise.then(async (e: Array<Place>) => {
+                console.log(e)
                 setStruct([...e])
             })
             promise.catch(() => {

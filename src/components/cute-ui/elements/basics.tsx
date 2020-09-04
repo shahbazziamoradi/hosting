@@ -54,8 +54,6 @@ export enum input {
     ipAddress = 'text'
 }
 
-
-
 export enum colors {
     primary = '#007bff',
     secondary = '#6c757d',
@@ -65,4 +63,9 @@ export enum colors {
     danger = '#dc3545',
     light = '#f8f9fa',
     dark = '#343a40'
+}
+
+export enum status {
+    active = 1,
+    deactive = 0
 }

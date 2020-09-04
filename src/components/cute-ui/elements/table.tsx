@@ -67,13 +67,13 @@ export function Tr(props: TableRowPropsType) {
 export function Th(props: TableCellPropsType) {
 
     return (
-        <th colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-th ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, ...props.style }}>{props.children}</th>
+        <th colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-th ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, ...props.style }}>{props.children}</th>
     )
 }
 
 export function Td(props: TableCellPropsType) {
 
     return (
-        <td colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-td ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, ...props.style }}>{props.children}</td>
+        <td colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-td ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, ...props.style }}>{props.children}</td>
     )
 }

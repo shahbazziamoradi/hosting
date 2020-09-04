@@ -1,13 +1,9 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
+import { Basic } from '../components/cute-ui/cuteUI';
 import { Base } from '../controllers/baseController';
 
-enum gateState {
-    active = 1,
-    deactive = 0,
-}
-
 export class Gate extends Base {
-    constructor(data?: { AGAT_GAT: number, AGAT_SRC_ZONE: number, SRC_PATH: string, AGAT_DIST_ZONE: number, DIST_PATH: string, AGAT_IP: string, AGAT_TTL: string, AGAT_STAT: gateState, AGAT_STAT_DESC: string }) {
+    constructor(data?: { AGAT_GAT: number, AGAT_SRC_ZONE: number, SRC_PATH: string, AGAT_DIST_ZONE: number, DIST_PATH: string, AGAT_IP: string, AGAT_TTL: string, AGAT_STAT: Basic.status, AGAT_STAT_DESC: string }) {
         super();
         if (data) {
             this._id = data.AGAT_GAT;
@@ -83,11 +79,11 @@ export class Gate extends Base {
         this._destinationPath = v;
     }
 
-    private _state!: gateState;
-    public get state(): gateState {
+    private _state!: Basic.status;
+    public get state(): Basic.status {
         return this._state;
     }
-    public set state(v: gateState) {
+    public set state(v: Basic.status) {
         this._state = v;
     }
 
@@ -109,7 +105,7 @@ export class Gate extends Base {
             })
 
             promise.catch((e) => {
-                reject(e);
+                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
 
             return new Array<Gate>();
@@ -130,7 +126,7 @@ export class Gate extends Base {
             })
 
             promise.catch((e) => {
-                reject(e);
+                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
         }
         return new Promise(resultPromise);
@@ -160,7 +156,7 @@ export class Gate extends Base {
             })
 
             promise.catch((e) => {
-                reject(e);
+                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
 
         }
