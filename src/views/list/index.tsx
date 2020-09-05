@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './../../assets/fonts/fonts.css'
 // import './styles/index.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Loading, Popup, Toast } from '../layout/layout'
+import { Confirm, Layout, Loading, Popup, Toast } from '../layout/layout'
 import { Basic, Button, Table } from '../../components/cute-ui/cuteUI';
 import { textAlign, type } from '../../components/cute-ui/elements/basics';
 import { List, Person, Place } from '../../models/models';
@@ -63,7 +63,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                             <Icon.Check size={20}></Icon.Check>
                                         </Button>}
                                     <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }} onClick={() => {
-                                        Popup('لیست اشخاص', <ListPersons data={list.persons}></ListPersons>)
+                                        Popup('لیست اشخاص', <ListPersons data={list.persons} onDelete={(id) => {
+                                            Loading(true)
+                                            list.deletePerson(id).then(() => {
+                                                Toast('عملبات با موفقیت انجام شد', Basic.type.success);
+
+                                            }).catch((e) => { Toast(e.error.Message, Basic.type.danger) }).finally(() => { Loading(false) })
+                                        }}></ListPersons>)
                                     }}>
                                         <Icon.People size={20}></Icon.People>
                                     </Button>
@@ -72,10 +78,10 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                     }}>
                                         <Icon.Diagram3 size={20}></Icon.Diagram3>
                                     </Button>
-                                    <Button size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }}>
+                                    <Button disabled={true} size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }}>
                                         <Icon.Pencil size={20}></Icon.Pencil>
                                     </Button>
-                                    <Button size={Basic.size.small} type={Basic.type.danger}>
+                                    <Button disabled={true} size={Basic.size.small} type={Basic.type.danger}>
                                         <Icon.Trash size={20}></Icon.Trash>
                                     </Button>
                                 </span>
@@ -88,34 +94,41 @@ export function Index({ authorize = false }: { authorize: boolean }) {
     )
 }
 
-function ListPersons({ data }: { data: Array<Person> }) {
+function ListPersons({ data, onDelete = (id: number) => { } }: { data: Array<Person>, onDelete: (id: number) => {} | void }) {
     return (
-        <Table.Table className={'text-small'} type={type.dark} border>
-            <Table.THead>
-                <Table.Tr>
-                    <Table.Th width={30}>#</Table.Th>
-                    <Table.Th width={70} textAlign={textAlign.center}>کد ملی</Table.Th>
-                    <Table.Th textAlign={textAlign.right}>نام و نام خانوادگی</Table.Th>
-                    <Table.Th width={22}></Table.Th>
-                </Table.Tr>
-            </Table.THead>
-            <Table.TBody>
-                {data.map((person: Person, index: number) => {
-                    return <Table.Tr key={index}>
-                        <Table.Td textAlign={textAlign.center}>{index + 1}</Table.Td>
-                        <Table.Td textAlign={textAlign.center}>{person.nationalId}</Table.Td>
-                        <Table.Td>
-                            {person.firstName + ' ' + person.lastName}
-                        </Table.Td>
-                        <Table.Td>
-                            <Button size={Basic.size.small} type={Basic.type.danger}>
-                                <Icon.Trash size={20}></Icon.Trash>
-                            </Button>
-                        </Table.Td>
+        <span>
+            <Button full type={Basic.type.primary} outline style={{ marginBottom: 5 }}>افزودن شخص جدید</Button>
+            <Table.Table className={'text-small'} type={type.dark} border>
+                <Table.THead>
+                    <Table.Tr>
+                        <Table.Th width={30}>#</Table.Th>
+                        <Table.Th width={70} textAlign={textAlign.center}>کد ملی</Table.Th>
+                        <Table.Th textAlign={textAlign.right}>نام و نام خانوادگی</Table.Th>
+                        <Table.Th width={22}></Table.Th>
                     </Table.Tr>
-                })}
-            </Table.TBody>
-        </Table.Table>
+                </Table.THead>
+                <Table.TBody>
+                    {data.map((person: Person, index: number) => {
+                        return <Table.Tr key={index}>
+                            <Table.Td textAlign={textAlign.center}>{index + 1}</Table.Td>
+                            <Table.Td textAlign={textAlign.center}>{person.nationalId}</Table.Td>
+                            <Table.Td>
+                                {person.firstName + ' ' + person.lastName}
+                            </Table.Td>
+                            <Table.Td>
+                                <Button size={Basic.size.small} type={Basic.type.danger} onClick={() => {
+                                    Confirm('آیا مایل به حذف هستید', Basic.type.info, () => {
+                                        onDelete(person.id)
+                                    })
+                                }}>
+                                    <Icon.Trash size={20}></Icon.Trash>
+                                </Button>
+                            </Table.Td>
+                        </Table.Tr>
+                    })}
+                </Table.TBody>
+            </Table.Table>
+        </span>
     )
 }
 

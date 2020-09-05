@@ -31,9 +31,9 @@ export default class Requests {
         return new Promise(promise);
     }
 
-    static async add(subject: string, description: string, personId: number, date: string, type: number): Promise<Array<Request>> {
+    static async add(subject: string, description: string, personId: number, date: string, type: number, name: string, family: string, mobile: string, id: string): Promise<Array<Request>> {
         var promise = (resolve: any, reject: any): Array<Request> | void => {
-            dataSource.post('api/requests/set', { subject, description, personId, date, type }).then(async (e: Response) => {
+            dataSource.post('api/requests/set', { subject, description, personId, date, type, name, family, mobile, id }).then(async (e: Response) => {
                 switch (e.status) {
                     case 200:
                         resolve(await e.json());

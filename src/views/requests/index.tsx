@@ -54,10 +54,10 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                             <Table.Td textAlign={Basic.textAlign.center}></Table.Td>
                             <Table.Td>
                                 <span style={{ display: 'flex' }}>
-                                    <Button size={Basic.size.small} type={Basic.type.danger} style={{ marginLeft: 2 }}>
+                                    <Button size={Basic.size.small} type={Basic.type.danger} style={{ marginLeft: 2 }} disabled>
                                         <Icon.Trash size={20}></Icon.Trash>
                                     </Button>
-                                    <Button size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }}>
+                                    <Button size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }} disabled>
                                         <Icon.Pencil size={20}></Icon.Pencil>
                                     </Button>
                                     <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
@@ -82,6 +82,10 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
     const [type, setType] = useState(1);
     const [host, setHost] = useState(new Person());
     const [date, setDate] = useState('');
+    const [name, setName] = useState('');
+    const [family, setFamily] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [id, setId] = useState('');
     const [guest, setGuest] = useState(new Person());
 
     const [subject, setSubject] = useState('');
@@ -92,31 +96,43 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
             <option value={2}>درخواست میهمان(درون سازمان)</option>
             <option value={3}>درخواست میهمان(برون سازمان)</option>
         </select>
-        {(type == 1) ?
+
+        <Button outline full type={Basic.type.primary} style={{ marginBottom: 10 }} onClick={() => {
+            const [closer] = Popup('', <PersianCalendar onChange={(e) => { setDate(e); closer() }}></PersianCalendar>)
+        }}>انتخاب تاریخ ملاقات</Button>
+        {(date) ? <Item full value={date} onRemove={() => { setDate('') }} style={{ marginBottom: 10 }}>{date}</Item> : null}
+        {(type == 1 || type == 2) ?
             <span>
                 <Button outline full type={Basic.type.primary} style={{ marginBottom: 10 }} onClick={() => {
-                    const [closer] = Popup('', <PersianCalendar onChange={(e) => { setDate(e); closer() }}></PersianCalendar>)
-                }}>انتخاب تاریخ ملاقات</Button>
-                {(date) ? <Item full value={date} onRemove={() => { setDate('') }} style={{ marginBottom: 10 }}>{date}</Item> : null}
-                <Button outline full type={Basic.type.primary} style={{ marginBottom: 10 }} onClick={() => {
                     const [closer] = Popup('', <PersonList onSelect={(e: Person) => { setHost(e); closer() }}></PersonList>)
-                }}>انتخاب میزبان</Button>
+                }}>{`انتخاب ${(type == 1) ? 'میزبان' : 'میهمان'}`}</Button>
                 {(host.id) ? <Item full value={host.id} onRemove={() => { setHost(new Person()) }} style={{ marginBottom: 10 }}>{host.firstName + ' ' + host.lastName}</Item> : null}
-                <Input title={'موضوع ملاقات'} onChange={(e) => { setSubject(e) }}>{subject}</Input>
-                <Input title={'توضیحات'} onChange={(e) => { setDescription(e) }}>{description}</Input>
-                <Button disabled={subject == '' || description.length < 25 || host.id == null || date == ''} full type={Basic.type.primary} onClick={() => {
-                    Loading(true);
-                    Requests.add(subject, description, host.id, date, type).then((e: Array<Request>) => {
-                        onSubmit(e);
-                        Toast('درخواست با موفقیت ثبت شد', Basic.type.success)
-                    }).catch((e: any) => {
-                        console.log(e)
-                        Toast(e.error.Message, Basic.type.danger)
-                    }).finally(() => { Loading(false) })
-                }}>ثبت</Button>
-            </span> : null
+            </span>
+            :
+            <span>
+                <Input title={'نام'} onChange={(e) => { setName(e) }}>{name}</Input>
+                <Input title={'نام خانوادگی'} onChange={(e) => { setFamily(e) }}>{family}</Input>
+                <Input title={'شماره تماس'} onChange={(e) => { setMobile(e) }}>{mobile}</Input>
+                <Input title={'کد ملی'} onChange={(e) => { setId(e) }}>{id}</Input>
+            </span>
         }
-    </div >
+        <Input title={'موضوع ملاقات'} onChange={(e) => { setSubject(e) }}>{subject}</Input>
+        <Input title={'توضیحات'} onChange={(e) => { setDescription(e) }}>{description}</Input>
+        <Button disabled={
+            ((type == 1 || type == 2) && (subject == '' || description.length < 25 || host.id == null || date == ''))
+            ||
+            ((type == 3) && (subject == '' || description.length < 25 || name == '' || family == '' || mobile == '' || id == '' || date == ''))
+        } full type={Basic.type.primary} onClick={() => {
+            Loading(true);
+            Requests.add(subject, description, host.id, date, type, name, family, mobile, id).then((e: Array<Request>) => {
+                onSubmit(e);
+                Toast('درخواست با موفقیت ثبت شد', Basic.type.success)
+            }).catch((e: any) => {
+                console.log(e)
+                Toast(e.error.Message, Basic.type.danger)
+            }).finally(() => { Loading(false) })
+        }}>ثبت</Button>
+    </div>
 }
 
 function RequestDetails({ subject, description }: { subject?: string, description?: string }) {

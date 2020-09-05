@@ -94,4 +94,27 @@ export class List extends Base {
         this._status = v;
     }
 
+    deletePerson(personId: number): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/lists/deletePerson/${personId}/${this.id}`);
+
+            promise.then(async (e: Response) => {
+                console.log(e)
+                switch (e.status) {
+                    case 200:
+                        resolve();
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject(e);
+            })
+        }
+        return new Promise(resultPromise);
+    }
+
 }
