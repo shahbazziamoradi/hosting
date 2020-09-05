@@ -33,7 +33,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                         <Table.Th width={50}>نوع</Table.Th>
                         <Table.Th textAlign={textAlign.right}>عنوان</Table.Th>
                         <Table.Th width={50}>وضعیت</Table.Th>
-                        <Table.Th width={100}>
+                        <Table.Th width={133}>
                             <Button full type={Basic.type.light} outline size={Basic.size.small}>
                                 <Icon.Plus size={20}></Icon.Plus>
                                 لیست جدید
@@ -71,6 +71,9 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         Popup('لیست مکان‌ها', <ListPlaces data={list.places}></ListPlaces>)
                                     }}>
                                         <Icon.Diagram3 size={20}></Icon.Diagram3>
+                                    </Button>
+                                    <Button size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }}>
+                                        <Icon.Pencil size={20}></Icon.Pencil>
                                     </Button>
                                     <Button size={Basic.size.small} type={Basic.type.danger}>
                                         <Icon.Trash size={20}></Icon.Trash>

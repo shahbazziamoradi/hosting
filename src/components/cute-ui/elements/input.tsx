@@ -49,3 +49,9 @@ export function Input({ title, style, type = Basic.input.text, children = '', on
         </fieldset>
     )
 }
+
+export function DropDown(props: any) {
+    return (
+        <select></select>
+    )
+}

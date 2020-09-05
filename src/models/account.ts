@@ -1,7 +1,8 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
+import { Base } from '../controllers/baseController';
 import { Person } from './models';
 
-export class User {
+export class User extends Base {
     constructor(data?: {
         AUSR_PPRS: Person,
         AUSR_ACT_FLG: Boolean,
@@ -11,6 +12,7 @@ export class User {
         AUSR_USERNAME: string,
         AUSR_USR: string
     }) {
+        super()
         if (data) {
             if (data.AUSR_PPRS) {
                 this._person = data.AUSR_PPRS;

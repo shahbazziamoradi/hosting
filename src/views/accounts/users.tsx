@@ -77,6 +77,9 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                                         }}>
                                             <Icon.Key size={20}></Icon.Key>
                                         </Button>
+                                        <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
+                                            <Icon.CreditCard size={20}></Icon.CreditCard>
+                                        </Button>
                                         <Button size={Basic.size.small} type={Basic.type.info}>
                                             <Icon.Pencil size={20}></Icon.Pencil>
                                         </Button>
