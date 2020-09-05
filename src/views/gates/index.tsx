@@ -8,6 +8,7 @@ import { Button, Table, Basic } from '../../components/cute-ui/cuteUI';
 import { NewGate } from './partials/_newGate';
 import { Gate } from '../../models/models';
 import { Gates } from '../../controllers/controllers';
+import { TrafficList } from './../../views/gates/traffic';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [data, setData] = useState(Array<Gate>());
@@ -169,11 +170,6 @@ function openCheckConnection() {
     // const [closer] = Popup('تست ارتباط', <CheckConnection />);
 }
 
-function TrafficList(props: object) {
-    return (
-        <div></div>
-    )
-}
 function openTrafficList() {
     const [closer] = Popup('لیست تردد', <TrafficList />);
 }

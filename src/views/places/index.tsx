@@ -6,6 +6,7 @@ import { Alert, Layout } from '../layout/layout'
 import { PlacesTree } from './partials/_placeTree';
 import { Basic, Button } from '../../components/cute-ui/cuteUI';
 import { Place } from '../../models/models';
+import { TrafficList } from '../gates/traffic';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [place, setPlace] = useState(new Place());
@@ -23,7 +24,9 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                             <Icon.X size={25}></Icon.X>
                         </Button>
                     </div>
-                    <div className='body'></div>
+                    <div className='body'>
+                        <TrafficList></TrafficList>
+                    </div>
                 </div> : null}
             </div>
         </Layout>

@@ -4,7 +4,7 @@ import { Index as HomeIndex } from './home/index'
 import { Index as PlaceIndex } from './places/index'
 import { Index as GatesIndex } from './gates/index'
 import { Index as ListsIndex } from './list/index'
-import { Traffic } from './gates/traffic'
+import { Traffic, TrafficList } from './gates/traffic'
 import { Index as RequestsIndex } from './requests/index'
 import { Index as ReportsIndex } from './reports/index'
 import { Index as SettingsIndex } from './settings/index'
@@ -12,7 +12,7 @@ import { Index as SettingsIndex } from './settings/index'
 var Account = { Login, Users }
 var Home = { Index: HomeIndex }
 var Places = { Index: PlaceIndex }
-var Gates = { Index: GatesIndex, Traffic }
+var Gates = { Index: GatesIndex, Traffic, TrafficList }
 var Lists = { Index: ListsIndex }
 var Requests = { Index: RequestsIndex }
 var Reports = { Index: ReportsIndex }
