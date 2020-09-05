@@ -4,7 +4,7 @@ import { Button, Input } from '../../components/cute-ui/cuteUI'
 import './../../assets/fonts/fonts.css'
 import './styles/login.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, accessType, Toast } from '../layout/layout'
+import { Layout, accessType, Toast, Loading } from '../layout/layout'
 import { Route, Link } from 'react-router-dom';
 import * as Basic from '../../components/cute-ui/elements/basics'
 import { Accounts } from '../../controllers/controllers';
@@ -34,10 +34,13 @@ export function PartialLogin(props: object) {
             <Route render={({ history }) => (
                 <Button disabled={(password && username) ? false : true} type={Basic.type.primary} theme={Basic.theme.outline} style={{ marginTop: 10 }} onClick={() => {
                     if (password && username) {
+                        Loading(true)
                         Accounts.login(username, password).then((e) => {
                             history.push('/')
                         }).catch((e) => {
                             Toast(e.message, Basic.type.danger)
+                        }).finally(() => {
+                            Loading(false)
                         })
                     }
                 }}>

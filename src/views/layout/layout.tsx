@@ -218,7 +218,7 @@ export function Loading(state = true) {
     }
 }
 
-export function Toast(message: string, type = Basic.type.default, icon?: Icon.IconType, timeout = 5000) {
+export function Toast(message: string, type = Basic.type.default, icon?: any, timeout = 5000) {
     var toastBox = document.createElement('div');
     toastBox.id = 'toast';
     toastBox.style.position = 'fixed';

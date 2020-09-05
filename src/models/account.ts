@@ -86,15 +86,12 @@ export class User extends Base {
                             storage.setKey('lastName', jsonData.lastName)
                             console.log(jsonData);
                             resolve(data.status);
-                            return;
                             break;
                         case 401:
                             reject(new Error('نام‌کاربری و کلمه‌عبور نادرست می‌باشد'));
-                            return;
                             break;
                         default:
                             reject(new Error('خطا در ارتباط با سرور'));
-                            return;
                             break;
                     }
                 });
@@ -105,11 +102,9 @@ export class User extends Base {
                     } else {
                         reject(new Error('خطا در ارتباط با سرور'));
                     }
-                    return;
                 });
             } else {
                 reject(new Error('ورود نام‌کاربری و کلمه‌عبور الزامی می‌باشد'));
-                return;
             }
         }
         return new Promise(loginPromise);

@@ -12,7 +12,7 @@ import { data } from 'jquery';
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [requests, setRequests] = useState(new Array<Request>())
     useEffect(() => {
-        const [closer] = Popup('ثبت درخواست', <NewRequest onSubmit={() => { closer() }}></NewRequest>)
+        // const [closer] = Popup('ثبت درخواست', <NewRequest onSubmit={() => { closer() }}></NewRequest>)
         Loading(true)
         Requests.getRequests().then((e) => {
             setRequests([...e])
@@ -106,7 +106,7 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
                 <Input title={'توضیحات'} onChange={(e) => { setDescription(e) }}>{description}</Input>
                 <Button disabled={subject == '' || description.length < 25 || host.id == null || date == ''} full type={Basic.type.primary} onClick={() => {
                     Loading(true);
-                    Requests.add(subject, description, host.id, new Date(date), type).then((e: Array<Request>) => {
+                    Requests.add(subject, description, host.id, date, type).then((e: Array<Request>) => {
                         onSubmit(e);
                         Toast('درخواست با موفقیت ثبت شد', Basic.type.success)
                     }).catch((e: any) => {
