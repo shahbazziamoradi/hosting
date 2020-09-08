@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './_placeTree.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Confirm, Loading, Popup, Toast } from '../../layout/layout'
+import { Confirm, Loading, Popup, Toast, SessionTimeout } from '../../layout/layout'
 import { Button, Input, Basic } from '../../../components/cute-ui/cuteUI';
 import { Places } from '../../../controllers/controllers';
 import { Place } from '../../../models/models';
@@ -22,7 +22,6 @@ function PlaceNode({ data, viewType, onSelect = () => { }, onDelete = () => { } 
             Toast('حذف با موفقیت انجام شد', Basic.type.success);
             onDelete()
         }).catch((e) => {
-            console.log(e)
             Toast(e.error.Message, Basic.type.danger);
         }).finally(() => { Loading(false) });
     }
@@ -129,11 +128,10 @@ export function PlacesTree({
             Loading(true)
             var promise = Places.getPlaces();
             promise.then(async (e: Array<Place>) => {
-                console.log(e)
                 setStruct([...e])
             })
-            promise.catch(() => {
-                Toast('خطا در ارتباط با سرور', Basic.type.danger)
+            promise.catch((e) => {
+                Toast(e.error.Message, Basic.type.danger)
             })
             promise.finally(() => {
                 Loading(false)

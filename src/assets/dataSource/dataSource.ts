@@ -1,3 +1,5 @@
+import { SessionTimeout } from "../../views/layout/layout";
+
 enum methodTypes {
     POST = 'POST',
     GET = 'GET'
@@ -40,6 +42,11 @@ export default class dataSource {
             headers: this.headers(token, methodTypes.GET),
             // Accept: '*/*'
         });
+        getPromise.then((e: Response) => {
+            if (e.status == 401) {
+                SessionTimeout()
+            }
+        })
         return getPromise;
     }
 
@@ -55,6 +62,11 @@ export default class dataSource {
                 "json": JSON.stringify(data)
             })
         });
+        postPromise.then((e: Response) => {
+            if (e.status == 401) {
+                SessionTimeout()
+            }
+        })
         return postPromise;
     }
 
@@ -67,6 +79,7 @@ export default class dataSource {
             },
             body: JSON.stringify({ "username": username, "password": password })
         });
+
         return postPromise;
     }
 }

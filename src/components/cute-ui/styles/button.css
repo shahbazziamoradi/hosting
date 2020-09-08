@@ -34,6 +34,7 @@ button.cute-ui.sharp{
 }
 
 button.cute-ui.primary.fill{
+    border:1px solid var(--primary);
     background-color: var(--primary);
     color: white;
 }
@@ -64,6 +65,7 @@ button.cute-ui.primary.active{
 }
 
 button.cute-ui.secondary.fill{
+    border:1px solid var(--secondary);
     background-color: var(--secondary);
     color: white;
 }
@@ -94,6 +96,7 @@ button.cute-ui.secondary.active{
 }
 
 button.cute-ui.success.fill{
+    border:1px solid var(--success);
     background-color: var(--success);
     color: white;
 }
@@ -124,6 +127,7 @@ button.cute-ui.success.active{
 }
 
 button.cute-ui.info.fill{
+    border:1px solid var(--info);
     background-color: var(--info);
     color: white;
 }
@@ -154,6 +158,7 @@ button.cute-ui.info.active{
 }
 
 button.cute-ui.warning.fill{
+    border:1px solid var(--warning);
     background-color: var(--warning);
     color: #343a40;
 }
@@ -184,6 +189,7 @@ button.cute-ui.warning.active{
 }
 
 button.cute-ui.danger.fill{
+    border:1px solid var(--danger);
     background-color: var(--danger);
     color: white;
 }
@@ -214,6 +220,7 @@ button.cute-ui.danger.active{
 }
 
 button.cute-ui.light.fill{
+    border:1px solid var(--light);
     background-color: var(--light);
     color: #343a40;
 }
@@ -244,6 +251,7 @@ button.cute-ui.light.active{
 }
 
 button.cute-ui.dark.fill{
+    border:1px solid var(--dark);
     background-color: var(--dark);
     color: white;
 }

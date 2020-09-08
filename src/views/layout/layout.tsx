@@ -4,11 +4,12 @@ import './../../assets/fonts/fonts.css'
 import './styles/layout.css'
 import '../../components/cute-ui/styles/basics.css'
 import ReactDOM from 'react-dom';
-import { Redirect, Route, Router } from 'react-router-dom';
-import { Toast as ToastComponent, Popup as PopupComponent, Alert as AlertComponent, Confirm as ConfirmComponent, Basic } from '../../components/cute-ui/cuteUI'
+import { Redirect, Route, Router, useHistory } from 'react-router-dom';
+import { Toast as ToastComponent, Popup as PopupComponent, Alert as AlertComponent, Confirm as ConfirmComponent, Basic, Button } from '../../components/cute-ui/cuteUI'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 import { storage } from '../../assets/dataSource/dataSource';
 import { Accounts } from '../../controllers/controllers';
+import { Routes } from '../../components/routing';
 export enum fonts {
     IranSans_UltraLight = 'iransans_UltraLight',
     IranSans_Light = 'iransans_Light',
@@ -298,4 +299,17 @@ export function Confirm(message: string, type: Basic.type = Basic.type.secondary
         if (element)
             element.remove()
     }]
+}
+
+export function SessionTimeout() {
+    localStorage.clear();
+    Popup('صفحه منقضی شده است',
+        <div style={{ width: '100%', padding: 10, display: 'flex', justifyContent: 'center' }}>
+            <Button type={Basic.type.danger} size={Basic.size.larg} onClick={() => {
+                window.location.href = '/login'
+            }}>
+                ورود مجدد به سیستم
+            </Button>
+        </div>
+    )
 }

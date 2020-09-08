@@ -9,10 +9,12 @@ import { NewGate } from './partials/_newGate';
 import { Gate } from '../../models/models';
 import { Gates } from '../../controllers/controllers';
 import { TrafficList } from './../../views/gates/traffic';
+import { GateSettings } from './partials/_gateSettings';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [data, setData] = useState(Array<Gate>());
     useEffect(() => {
+        openSettings()
         Loading(true)
         var promise = Gates.getGates();
         promise.then(async (e: Array<Gate>) => {
@@ -119,13 +121,8 @@ function openNewGate() {
     const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer(); }} />);
 }
 
-function Settings(props: object) {
-    return (
-        <div></div>
-    )
-}
 function openSettings() {
-    const [closer] = Popup('ویرایش و تنظیمات', <Settings />);
+    const [closer] = Popup('پارامترها', <GateSettings></GateSettings>);
 }
 
 function CheckConnection({ ip }: { ip: string }) {

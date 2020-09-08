@@ -1,0 +1,12 @@
+.gate-settings-main{
+    width: 500px;
+    display: flex;
+}
+.gate-settings-main>.right-side{
+    padding-left: 5px;
+    border-left: 1px solid var(--secondary);
+}
+.gate-settings-main>.left-side{
+    padding-right: 10px;
+    flex-grow: 1;
+}

@@ -1,4 +1,5 @@
 import dataSource, { storage } from '../assets/dataSource/dataSource';
+import { SessionTimeout } from '../views/layout/layout';
 import { List } from './models';
 
 export class Place {
@@ -75,13 +76,22 @@ export class Place {
             var promise = dataSource.get(`api/places/getplaces`);
 
             promise.then(async (e) => {
-                var json = await e.json();
-                console.log(json)
-                json.forEach((element: any) => {
-                    result.push(new Place(element))
-                });
 
-                resolve(result);
+                switch (e.status) {
+                    case 200:
+                        var json = await e.json();
+                        json.forEach((element: any) => {
+                            result.push(new Place(element))
+                        });
+                        resolve(result);
+                        break;
+                    case 401:
+                        reject({ error: { Message: 'صفحه منقضی شده است' }, code: e.status });
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
             })
 
             promise.catch((e) => {
@@ -101,6 +111,9 @@ export class Place {
                 switch (e.status) {
                     case 200:
                         resolve();
+                        break;
+                    case 401:
+                        reject({ error: { Message: 'صفحه منقضی شده است' }, code: e.status });
                         break;
                     default:
                         reject({ error: await e.json(), code: e.status })
@@ -123,6 +136,9 @@ export class Place {
                 switch (e.status) {
                     case 200:
                         resolve();
+                        break;
+                    case 401:
+                        reject({ error: { Message: 'صفحه منقضی شده است' }, code: e.status });
                         break;
                     default:
                         reject({ error: await e.json(), code: e.status })

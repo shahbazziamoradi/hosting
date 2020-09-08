@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, Redirect, BrowserRouter, useHistory } from 'react-router-dom'
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { Accounts } from '../controllers/controllers';
 import './routing.css'
 type routesProps = {

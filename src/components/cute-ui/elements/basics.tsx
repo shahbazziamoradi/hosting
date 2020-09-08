@@ -4,7 +4,7 @@ export enum type {
     info = 'info',
     warning = 'warning',
     danger = 'danger',
-    default = 'secondary',
+    default = '',
     secondary = 'secondary',
     dark = 'dark',
     light = 'light'
