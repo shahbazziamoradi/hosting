@@ -22,7 +22,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
     }, [])
     return (
         <Layout isAuthenticated={authorize} title='درخواست‌ها' icon={Icon.House} style={{ padding: 5 }}>
-            <Table.Table className={'text-small text-right'} type={Basic.type.dark} border>
+            <Table.Table className={'text-small text-right'} dark border>
                 <Table.THead>
                     <Table.Tr>
                         <Table.Th textAlign={Basic.textAlign.center} width={30}>#</Table.Th>
@@ -93,20 +93,20 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
     return <div>
         <select onChange={(e) => { setType(parseInt(e.target.value)) }} style={{ width: '100%', borderRadius: 3, height: 35, marginBottom: 10 }} value={type}>
             <option value={1}>درخواست ملاقات</option>
-            <option value={2}>درخواست میهمان(درون سازمان)</option>
-            <option value={3}>درخواست میهمان(برون سازمان)</option>
+            <option value={2}>درخواست میهمان (درون سازمان)</option>
+            <option value={3}>درخواست میهمان (برون سازمان)</option>
         </select>
 
         <Button outline full type={Basic.type.primary} style={{ marginBottom: 10 }} onClick={() => {
             const [closer] = Popup('', <PersianCalendar onChange={(e) => { setDate(e); closer() }}></PersianCalendar>)
         }}>انتخاب تاریخ ملاقات</Button>
-        {(date) ? <Item full value={date} onRemove={() => { setDate('') }} style={{ marginBottom: 10 }}>{date}</Item> : null}
+        {(date) ? <Item full value={date} onAction={() => { setDate('') }} style={{ marginBottom: 10 }}>{date}</Item> : null}
         {(type == 1 || type == 2) ?
             <span>
                 <Button outline full type={Basic.type.primary} style={{ marginBottom: 10 }} onClick={() => {
                     const [closer] = Popup('', <PersonList onSelect={(e: Person) => { setHost(e); closer() }}></PersonList>)
                 }}>{`انتخاب ${(type == 1) ? 'میزبان' : 'میهمان'}`}</Button>
-                {(host.id) ? <Item full value={host.id} onRemove={() => { setHost(new Person()) }} style={{ marginBottom: 10 }}>{host.firstName + ' ' + host.lastName}</Item> : null}
+                {(host.id) ? <Item full value={host.id} onAction={() => { setHost(new Person()) }} style={{ marginBottom: 10 }}>{host.firstName + ' ' + host.lastName}</Item> : null}
             </span>
             :
             <span>
@@ -158,7 +158,7 @@ function PersonList({ onSelect = (e: Person) => { } }: { onSelect: (e: Person) =
             Loading(false)
         })
     }, [])
-    return <Table.Table className='text-small' border >
+    return <Table.Table className='text-small' border dark >
         <Table.THead>
             <Table.Tr>
                 <Table.Th width={30}>#</Table.Th>

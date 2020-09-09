@@ -21,7 +21,7 @@ export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} |
                 <Icon.GeoAlt size={18} style={{ marginLeft: 10 }}></Icon.GeoAlt>
                 محل استقرار
             </Button>
-            {(src) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setSrc(null) }}>{(src as unknown as Place).title}</Item> : ''}
+            {(src) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onAction={() => { setSrc(null) }}>{(src as unknown as Place).title}</Item> : ''}
             <Button full style={{ marginTop: 5 }} theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
                 const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
                     setDest(e); closer();
@@ -29,7 +29,7 @@ export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} |
             }}>
                 <Icon.BoxArrowLeft size={18} style={{ marginLeft: 10 }}></Icon.BoxArrowLeft>
                 خروجی</Button>
-            {(dest) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onRemove={() => { setDest(null) }}>{(dest as unknown as Place).title}</Item> : ''}
+            {(dest) ? <Item full type={Basic.type.primary} style={{ marginTop: 5 }} onAction={() => { setDest(null) }}>{(dest as unknown as Place).title}</Item> : ''}
             <Input type={Basic.input.ipAddress} style={{ textAlign: 'center' }} title='آی‌پی آدرس' onChange={(e) => { setIp(e) }}>{ip}</Input>
             <Input type={Basic.input.text} title='عنوان' onChange={(e) => { setTitle(e) }}>{title}</Input>
             <Button disabled={(dest == null || src == null || ip == '' || title == '')} type={Basic.type.primary} full onClick={() => {

@@ -8,6 +8,15 @@ type TablePropsType = {
     striped?: boolean,
     style?: React.CSSProperties | undefined,
     className?: string,
+    primary?: boolean,
+    success?: boolean,
+    info?: boolean,
+    warning?: boolean,
+    danger?: boolean,
+    default?: boolean,
+    secondary?: boolean,
+    dark?: boolean,
+    light?: boolean,
 }
 type TableSectionPropsType = {
     active?: boolean,
@@ -33,14 +42,30 @@ type TableCellPropsType = {
 }
 
 export function Table({ children,
-    type = Basic.type.dark,
     className,
     striped,
     style,
-    border }: TablePropsType) {
+    border,
+    primary = false,
+    success = false,
+    info = false,
+    warning = false,
+    danger = false,
+    secondary = false,
+    dark = false,
+    light = false }: TablePropsType) {
 
     return (
-        <table className={`cute-ui-table ${type} ${className} ${(border) ? 'border' : ''}`} cellPadding={0} style={style}>
+        <table className={`cute-ui-table ${className} ${(border) ? 'border' : ''}
+            ${(primary) ? ' primary ' : ''}
+            ${(success) ? ' success ' : ''}
+            ${(info) ? ' info ' : ''}
+            ${(warning) ? ' warning ' : ''}
+            ${(danger) ? ' danger ' : ''}
+            ${(secondary) ? ' secondary ' : ''} 
+            ${(dark) ? ' dark ' : ''}
+            ${(light) ? ' light ' : ''}
+        `} cellPadding={0} style={style}>
             {children}
         </table>
     )

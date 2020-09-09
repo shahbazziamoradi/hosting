@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import * as Icon from 'react-bootstrap-icons';
-import { Basic, Button, Input } from '../../../components/cute-ui/cuteUI';
+import { Basic, Button, DropDown, Input, Item } from '../../../components/cute-ui/cuteUI';
+import { Table } from '../../../components/cute-ui/cuteUI';
 import '../styles/gateSettings.css'
 // type buttonProps = {
 //     style?: React.CSSProperties | undefined,
@@ -19,44 +20,71 @@ import '../styles/gateSettings.css'
 // }
 
 export function GateSettings({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} | void }) {
-    const [section, setSection] = useState(0)
+    const [section, setSection] = useState(2)
     return (
         <div className='gate-settings-main'>
             <div className='right-side'>
-                <Button sharp outline={!(section == 0)} primary={true} onClick={() => { setSection(0) }}>
-                    <Icon.Sliders size={30}></Icon.Sliders>
+                <Button sharp outline={!(section == 0)} secondary onClick={() => { setSection(0) }}>
+                    <Icon.Sliders size={20}></Icon.Sliders>
                 </Button>
-                <Button sharp outline={!(section == 1)} primary={true} onClick={() => { setSection(1) }}>
-                    <Icon.CloudDownload size={30}></Icon.CloudDownload>
+                <Button sharp outline={!(section == 1)} secondary onClick={() => { setSection(1) }}>
+                    <Icon.CloudDownload size={20}></Icon.CloudDownload>
                 </Button>
-                <Button sharp outline={!(section == 2)} primary={true} onClick={() => { setSection(2) }}>
-                    <Icon.CloudUpload size={30}></Icon.CloudUpload>
+                <Button sharp outline={!(section == 3)} secondary onClick={() => { setSection(3) }}>
+                    <Icon.Command size={20}></Icon.Command>
                 </Button>
-                <Button sharp outline={!(section == 3)} primary={true} onClick={() => { setSection(3) }}>
-                    <Icon.Command size={30}></Icon.Command>
+                <Button sharp outline={!(section == 4)} secondary onClick={() => { setSection(4) }}>
+                    <Icon.Pencil size={20}></Icon.Pencil>
                 </Button>
-                <Button sharp outline={!(section == 4)} primary={true} onClick={() => { setSection(4) }}>
-                    <Icon.Pencil size={30}></Icon.Pencil>
+                <Button sharp outline={!(section == 2)} secondary onClick={() => { setSection(2) }}>
+                    <Icon.InfoCircle size={20}></Icon.InfoCircle>
                 </Button>
             </div>
             <div className='left-side'>
                 {(section == 0) ? <div>
                 </div> : null}
-                {(section == 1) ? <div>2</div> : null}
-                {(section == 2) ? <div>3</div> : null}
+                {(section == 1) ?
+                    <div>
+                        <Button primary style={{ marginBottom: 5 }}>تخلیه اطلاعات
+                        <Icon.CloudDownload style={{ marginRight: 10 }} size={20}></Icon.CloudDownload>
+                        </Button>
+                        <Table.Table className={'text-small'} dark>
+                            <Table.THead>
+                                <Table.Tr>
+                                    <Table.Th>#</Table.Th>
+                                    <Table.Th>زمان</Table.Th>
+                                    <Table.Th>کاربر</Table.Th>
+                                    <Table.Th>تعداد رکورد</Table.Th>
+                                    <Table.Th>ثبت شده</Table.Th>
+                                    <Table.Th>تکراری</Table.Th>
+                                </Table.Tr>
+                            </Table.THead>
+                        </Table.Table>
+                    </div> : null}
+                {(section == 2) ? <div className='info-tab'>
+                    <Table.Table className={'text-small text-right'} dark border style={{ marginBottom: 5 }}>
+                        <Table.TBody>
+                            <Table.Tr>
+                                <Table.Td width={100}>نسخه نرم‌افزار</Table.Td>
+                                <Table.Td>1.1.0</Table.Td>
+                            </Table.Tr>
+                            <Table.Tr>
+                                <Table.Td width={100}>نسخه سخت افزار</Table.Td>
+                                <Table.Td>0.5.0</Table.Td>
+                            </Table.Tr>
+                        </Table.TBody>
+                    </Table.Table>
+                    <Item primary full icon={Icon.Folder2Open}>به روزرسانی
+                        <Icon.CloudUpload style={{ marginRight: 10 }} size={20}></Icon.CloudUpload></Item>
+                </div> : null}
                 {(section == 3) ? <div>
-                    <Button full outline info>ویرایش</Button>
-                    <Button full outline info style={{ marginTop: 5 }}>ویرایش</Button>
-                    <Button full outline info style={{ marginTop: 5 }}>ویرایش</Button>
-                    <Button full outline info style={{ marginTop: 5 }}>ویرایش</Button>
-                    <Button full outline info style={{ marginTop: 5 }}>ویرایش</Button>
-                    <Button full outline info style={{ marginTop: 5 }}>ویرایش</Button>
-                    <Button full outline info style={{ marginTop: 5 }}>ویرایش</Button>
+                    <DropDown title='دستور'></DropDown>
+                    <Button outline primary style={{ marginTop: 5 }}>ارسال به دستگاه</Button>
                 </div> : null}
                 {(section == 4) ? <div>
                     <Input title={'عنوان'}></Input>
                     <Input type={Basic.input.ipAddress} title={'آی‌پی'}></Input>
-                    <Button full outline info style={{ marginTop: 15 }}>ویرایش</Button>
+                    <Button outline primary style={{ marginTop: 15 }}>ویرایش</Button>
                 </div> : null}
             </div>
         </div>

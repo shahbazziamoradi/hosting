@@ -24,7 +24,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
     }, [])
     return (
         <Layout isAuthenticated={authorize} title='کاربران' icon={Icon.House} style={{ padding: 5 }}>
-            <Table.Table className={'text-small text-right'} border={true} type={Basic.type.dark}>
+            <Table.Table className={'text-small text-right'} border dark >
                 <Table.THead>
                     <Table.Tr>
                         <Table.Th width={30} textAlign={Basic.textAlign.center}>#</Table.Th>
@@ -32,6 +32,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                         <Table.Th width={120} textAlign={Basic.textAlign.center}>کد ملی</Table.Th>
                         <Table.Th width={120} textAlign={Basic.textAlign.center}>شماره تماس</Table.Th>
                         <Table.Th>نام و نام خانوادگی</Table.Th>
+                        <Table.Th width={60} textAlign={Basic.textAlign.center}>سازمانی</Table.Th>
                         <Table.Th width={100} textAlign={Basic.textAlign.center}>وضعیت</Table.Th>
                         <Table.Th width={80}></Table.Th>
                     </Table.Tr>
@@ -44,6 +45,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                             <Table.Td textAlign={Basic.textAlign.center}>{person.nationalId}</Table.Td>
                             <Table.Td>{person.mobile}</Table.Td>
                             <Table.Td>{person.firstName + ' ' + person.lastName}</Table.Td>
+                            <Table.Td width={60} textAlign={Basic.textAlign.center}>بله</Table.Td>
                             <Table.Td textAlign={Basic.textAlign.center}>{
                                 (person.user.id) ? (person.user.lock ? 'غیر فعال' : 'فعال') : 'فاقد کاربری'
                             }</Table.Td>
@@ -52,7 +54,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                                     <span style={{ display: 'flex' }}>
                                         {(person.user.lock) ?
                                             <Button size={Basic.size.small} type={Basic.type.success} style={{ marginLeft: 2 }}>
-                                                <Icon.CheckCircle size={20}></Icon.CheckCircle>
+                                                <Icon.Check size={20}></Icon.Check>
                                             </Button>
                                             :
                                             <Button size={Basic.size.small} type={Basic.type.danger} style={{ marginLeft: 2 }} onClick={() => {
@@ -64,7 +66,7 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                                                     Loading(false)
                                                 })
                                             }}>
-                                                <Icon.XCircle size={20}></Icon.XCircle>
+                                                <Icon.X size={20}></Icon.X>
                                             </Button>}
                                         <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }} onClick={() => {
                                             Loading(true);
@@ -79,6 +81,9 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                                         </Button>
                                         <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
                                             <Icon.CreditCard size={20}></Icon.CreditCard>
+                                        </Button>
+                                        <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
+                                            <Icon.ClockHistory size={20}></Icon.ClockHistory>
                                         </Button>
                                         <Button size={Basic.size.small} type={Basic.type.info}>
                                             <Icon.Pencil size={20}></Icon.Pencil>

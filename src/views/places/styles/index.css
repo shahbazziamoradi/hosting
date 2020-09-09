@@ -27,4 +27,6 @@ overflow: auto;
     font-weight: 100;
     margin: 0;
     flex-grow: 1;
+    white-space: nowrap;
+    overflow-x: hidden;
 }

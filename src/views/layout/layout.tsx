@@ -76,7 +76,7 @@ function Header(props: headerProps) {
             <MenuItem icon={Icon.Diagram3} title='مکان‌ها' link='/places' />
             <MenuItem icon={Icon.UpcScan} title='گیت‌ها' link='/gates' />
             <MenuItem icon={Icon.ClipboardData} title='گزارش‌ها' link='/reports' />
-            <MenuItem icon={Icon.People} title='کاربران' link='/users' />
+            <MenuItem icon={Icon.People} title='اشخاص' link='/users' />
             <MenuItem icon={Icon.FileEarmarkCheck} title='لیست‌های تردد' link='/lists' />
             <MenuItem icon={Icon.ChatSquareText} title='درخواست‌ها' link='/requests' />
             <MenuItem icon={Icon.ArrowLeftRight} title='تردد‌ها' link='/traffic' />

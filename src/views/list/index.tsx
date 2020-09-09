@@ -26,7 +26,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
     }, [])
     return (
         <Layout isAuthenticated={authorize} title='لیست‌ها تردد' icon={Icon.House} style={{ padding: 5 }} >
-            <Table.Table className={'text-small'} type={type.dark} border>
+            <Table.Table className={'text-small'} dark border>
                 <Table.THead>
                     <Table.Tr>
                         <Table.Th width={30}>#</Table.Th>
@@ -97,13 +97,15 @@ export function Index({ authorize = false }: { authorize: boolean }) {
 function ListPersons({ data, onDelete = (id: number) => { } }: { data: Array<Person>, onDelete: (id: number) => {} | void }) {
     return (
         <span>
-            <Button full type={Basic.type.primary} outline style={{ marginBottom: 5 }}>افزودن شخص جدید</Button>
-            <Table.Table className={'text-small'} type={type.dark} border>
+            <Button full primary outline style={{ marginBottom: 5 }}>افزودن شخص جدید
+            <Icon.PersonPlus style={{ marginRight: 10 }} size={20}></Icon.PersonPlus>
+            </Button>
+            <Table.Table className={'text-small'} dark border>
                 <Table.THead>
                     <Table.Tr>
                         <Table.Th width={30}>#</Table.Th>
                         <Table.Th width={70} textAlign={textAlign.center}>کد ملی</Table.Th>
-                        <Table.Th textAlign={textAlign.right}>نام و نام خانوادگی</Table.Th>
+                        <Table.Th textAlign={textAlign.right} width={250}>نام و نام خانوادگی</Table.Th>
                         <Table.Th width={22}></Table.Th>
                     </Table.Tr>
                 </Table.THead>
@@ -134,27 +136,32 @@ function ListPersons({ data, onDelete = (id: number) => { } }: { data: Array<Per
 
 function ListPlaces({ data }: { data: Array<Place> }) {
     return (
-        <Table.Table className={'text-small'} type={type.dark} border>
-            <Table.THead>
-                <Table.Tr>
-                    <Table.Th width={30}>#</Table.Th>
-                    <Table.Th textAlign={textAlign.right}>عنوان</Table.Th>
-                    <Table.Th width={22}></Table.Th>
-                </Table.Tr>
-            </Table.THead>
-            <Table.TBody>
-                {data.map((place: Place, index: number) => {
-                    return <Table.Tr key={index}>
-                        <Table.Td textAlign={textAlign.center}>{index + 1}</Table.Td>
-                        <Table.Td textAlign={textAlign.right}>{place.title}</Table.Td>
-                        <Table.Td>
-                            <Button size={Basic.size.small} type={Basic.type.danger}>
-                                <Icon.Trash size={20}></Icon.Trash>
-                            </Button>
-                        </Table.Td>
+        <span>
+            <Button full primary outline style={{ marginBottom: 5 }}>الساق به محل جدید
+            <Icon.Paperclip style={{ marginRight: 10 }} size={20}></Icon.Paperclip>
+            </Button>
+            <Table.Table className={'text-small'} dark border>
+                <Table.THead>
+                    <Table.Tr>
+                        <Table.Th width={30}>#</Table.Th>
+                        <Table.Th textAlign={textAlign.right} width={250}>عنوان</Table.Th>
+                        <Table.Th width={22}></Table.Th>
                     </Table.Tr>
-                })}
-            </Table.TBody>
-        </Table.Table>
+                </Table.THead>
+                <Table.TBody>
+                    {data.map((place: Place, index: number) => {
+                        return <Table.Tr key={index}>
+                            <Table.Td textAlign={textAlign.center}>{index + 1}</Table.Td>
+                            <Table.Td textAlign={textAlign.right}>{place.title}</Table.Td>
+                            <Table.Td>
+                                <Button size={Basic.size.small} type={Basic.type.danger}>
+                                    <Icon.Trash size={20}></Icon.Trash>
+                                </Button>
+                            </Table.Td>
+                        </Table.Tr>
+                    })}
+                </Table.TBody>
+            </Table.Table>
+        </span>
     )
 }

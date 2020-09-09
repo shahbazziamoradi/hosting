@@ -16,7 +16,7 @@ export function Traffic({ authorize = false }: { authorize: boolean }) {
 }
 
 export function TrafficList() {
-    return <Table.Table className='text-small' border type={Basic.type.dark}>
+    return <Table.Table className='text-small' border dark>
         <Table.THead>
             <Table.Tr>
                 <Table.Th width={30}>#</Table.Th>

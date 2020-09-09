@@ -13,21 +13,68 @@ type itemProps = {
     theme?: Basic.theme,
     children?: object | string,
     onClick?: (e?: object) => void,
-    onRemove?: (e?: object) => void,
+    onAction?: (e?: object) => void,
     sharp?: boolean,
     full?: boolean,
     value?: any,
-    size?: Basic.size
+    size?: Basic.size,
+    icon?: Icon.IconType,
+    primary?: boolean,
+    success?: boolean,
+    info?: boolean,
+    warning?: boolean,
+    danger?: boolean,
+    secondary?: boolean,
+    dark?: boolean,
+    light?: boolean
 }
 
-export default function Item({ active = false, full = false, className, style, type = Basic.type.default, theme = Basic.theme.fill, size = Basic.size.medium, children = '', onClick = () => { }, onRemove = () => { }, disabled = false, sharp = false }: itemProps) {
+export default function Item({
+    active = false,
+    full = false,
+    className,
+    style,
+    type = Basic.type.primary,
+    theme = Basic.theme.fill,
+    size = Basic.size.medium,
+    children = '',
+    onClick = () => { },
+    onAction = () => { },
+    disabled = false,
+    sharp = false,
+    icon: ActionIcon = Icon.X,
+    primary = false,
+    success = false,
+    info = false,
+    warning = false,
+    danger = false,
+    secondary = false,
+    dark = false,
+    light = false
+}: itemProps) {
     return (
         <div className={`cute-ui item-block ${full ? 'full' : ''}`} style={style}>
-            <Button className='item-title' size={size} onClick={() => { onClick() }}>
+            <Button className='item-title' size={size} primary={primary}
+                success={success}
+                info={info}
+                warning={warning}
+                danger={danger}
+                secondary={secondary}
+                dark={dark}
+                light={light}
+                onClick={() => { onClick() }}>
                 {children}
             </Button>
-            <Button className='item-remove' onClick={() => { onRemove() }}>
-                <Icon.X size={21}></Icon.X>
+            <Button className='item-remove' primary={primary}
+                success={success}
+                info={info}
+                warning={warning}
+                danger={danger}
+                secondary={secondary}
+                dark={dark}
+                light={light}
+                onClick={() => { onAction() }}>
+                <ActionIcon size={21}></ActionIcon>
             </Button>
         </div >
     )

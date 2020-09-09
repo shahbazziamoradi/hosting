@@ -30,10 +30,10 @@ export function Index({ authorize = false }: { authorize: boolean }) {
 
     return (
         <Layout isAuthenticated={authorize} title='گیت‌ها' icon={Icon.House} style={{ padding: 5 }}>
-            <Table.Table className={'text-small text-right'} border={true} type={Basic.type.dark}>
+            <Table.Table className={'text-small text-right'} border={true} dark>
                 <Table.THead>
                     <Table.Tr>
-                        <Table.Th width={30} className='text-center'>#</Table.Th>
+                        <Table.Th width={30} textAlign={Basic.textAlign.center}>#</Table.Th>
                         <Table.Th style={{ width: 30, minWidth: 30, paddingTop: 4, paddingBottom: 4 }}>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 {/* <Button theme={Basic.theme.outline} rounded type={Basic.type.light} size={Basic.size.small} >
@@ -42,9 +42,10 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                 <Icon.Wifi size={22}></Icon.Wifi>
                             </div>
                         </Table.Th>
-                        <Table.Th className='text-center' style={{ width: 120, minWidth: 120 }}>آی‌پی</Table.Th>
+                        <Table.Th textAlign={Basic.textAlign.center} style={{ width: 120, minWidth: 120 }}>آی‌پی</Table.Th>
                         <Table.Th style={{ width: 150 }}>عنوان</Table.Th>
                         <Table.Th>آدرس</Table.Th>
+                        <Table.Th style={{ width: 70 }}>وضعیت</Table.Th>
                         <Table.Th style={{ paddingTop: 4, paddingBottom: 4, width: 82 }}>
                             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <Button theme={Basic.theme.outline} type={Basic.type.light} size={Basic.size.small} full onClick={() => {
@@ -64,7 +65,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                     {data.map((gate: Gate, index: number) => {
                         return (
                             <Table.Tr key={index}>
-                                <Table.Td className='text-center'>{index + 1}</Table.Td>
+                                <Table.Td textAlign={Basic.textAlign.center}>{index + 1}</Table.Td>
                                 <Table.Td>
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                                         {/* <Icon.CircleFill style={{ color: 'var(--success)' }} size={20}></Icon.CircleFill> */}
@@ -74,7 +75,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                 <Icon.CircleFill style={{ color: 'var(--secondary)' }} size={20}></Icon.CircleFill> */}
                                     </div>
                                 </Table.Td>
-                                <Table.Td className='text-center'>{gate.ip}</Table.Td>
+                                <Table.Td textAlign={Basic.textAlign.center}>{gate.ip}</Table.Td>
                                 <Table.Td style={{ whiteSpace: 'nowrap', minWidth: 150 }}>{gate.title}</Table.Td>
                                 <Table.Td style={{ width: '100%' }}>
                                     <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', alignItems: 'center', maxWidth: '100%', overflow: 'hidden' }}>
@@ -83,6 +84,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         })}
                                     </div>
                                 </Table.Td>
+                                <Table.Td textAlign={Basic.textAlign.center} style={{ whiteSpace: 'nowrap', minWidth: 70 }}>{(gate.state) ? 'فعال' : 'غیر فعال'}</Table.Td>
                                 <Table.Td style={{ paddingTop: 2.5, paddingBottom: 2.5, width: 70 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         {/* <Button rounded type={Basic.type.primary} size={Basic.size.small}>
