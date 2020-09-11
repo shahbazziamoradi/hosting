@@ -90,6 +90,30 @@ export class Gate extends Base {
         this._state = v;
     }
 
+    private _modelNo!: string;
+    public get modelNo(): string {
+        return this._modelNo;
+    }
+    public set modelNo(v: string) {
+        this._modelNo = v;
+    }
+
+    private _hardwareVersion!: string;
+    public get hardwareVersion(): string {
+        return this._hardwareVersion;
+    }
+    public set hardwareVersion(v: string) {
+        this._hardwareVersion = v;
+    }
+
+    private _softwareVersion!: string;
+    public get softwareVersion(): string {
+        return this._softwareVersion;
+    }
+    public set softwareVersion(v: string) {
+        this._softwareVersion = v;
+    }
+
     static checkConnection(ip: string): Promise<boolean> {
         var resultPromise = (resolve: any, reject: any) => {
             var promise = dataSource.post(`api/Gates/checkConnection/${ip}`);

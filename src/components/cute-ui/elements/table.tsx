@@ -17,6 +17,9 @@ type TablePropsType = {
     secondary?: boolean,
     dark?: boolean,
     light?: boolean,
+    right?: boolean,
+    center?: boolean,
+    left?: boolean
 }
 type TableSectionPropsType = {
     active?: boolean,
@@ -40,7 +43,10 @@ type TableCellPropsType = {
     textAlign?: Basic.textAlign,
     width?: number,
     full?: boolean,
-    nowrap?: boolean
+    nowrap?: boolean,
+    right?: boolean,
+    center?: boolean,
+    left?: boolean
 }
 
 export function Table({ children,
@@ -55,7 +61,7 @@ export function Table({ children,
     danger = false,
     secondary = false,
     dark = false,
-    light = false }: TablePropsType) {
+    light = false, ...props }: TablePropsType) {
 
     return (
         <table className={`cute-ui-table ${className} ${(border) ? 'border' : ''}
@@ -67,6 +73,9 @@ export function Table({ children,
             ${(secondary) ? ' secondary ' : ''} 
             ${(dark) ? ' dark ' : ''}
             ${(light) ? ' light ' : ''}
+            ${(props.right) ? ' text-right ' : ''}
+            ${(props.left) ? ' text-left ' : ''}
+            ${(props.center) ? ' text-center ' : ''}
         `} cellPadding={0} style={style}>
             {children}
         </table>
@@ -94,13 +103,13 @@ export function Tr(props: TableRowPropsType) {
 export function Th(props: TableCellPropsType) {
 
     return (
-        <th colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-th ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, minWidth: props.width, ...props.style }}>{props.children}</th>
+        <th colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-th ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}${props.right ? ' text-right' : ''}${props.center ? ' text-center' : ''}${props.left ? ' text-left' : ''}`} style={{ width: props.width, maxWidth: props.width, minWidth: props.width, ...props.style }}>{props.children}</th>
     )
 }
 
 export function Td({ nowrap = true, ...props }: TableCellPropsType) {
 
     return (
-        <td colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-td ${props.className} ${(nowrap) ? 'nowrap' : ''} ${(props.active) ? 'active' : ''} ${(props.full) ? 'full' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, minWidth: props.width, ...props.style }}>{props.children}</td>
+        <td colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-td ${props.className} ${(nowrap) ? 'nowrap' : ''} ${(props.active) ? 'active' : ''} ${(props.full) ? 'full' : ''} ${props.textAlign}${props.right ? ' text-right' : ''}${props.center ? ' text-center' : ''}${props.left ? ' text-left' : ''}`} style={{ width: props.width, maxWidth: props.width, minWidth: props.width, ...props.style }}>{props.children}</td>
     )
 }

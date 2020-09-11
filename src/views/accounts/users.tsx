@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './styles/users.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Loading, Toast } from '../layout/layout'
+import { Layout, Loading, Toast, Popup } from '../layout/layout'
 import { Button, Table, Basic } from '../../components/cute-ui/cuteUI';
 import { Accounts } from '../../controllers/controllers';
-import { Person } from '../../models/models';
+import { Person, AccessMode } from '../../models/models';
 
 export function Users({ authorize = false }: { authorize: boolean }) {
     const [data, setData] = useState(Array<Person>())
@@ -84,15 +84,6 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                                             }}>
                                                 <Icon.Key size={20}></Icon.Key>
                                             </Button>
-                                            {/* <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
-                                            <Icon.CreditCard size={20}></Icon.CreditCard>
-                                        </Button>
-                                        <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
-                                            <Icon.ClockHistory size={20}></Icon.ClockHistory>
-                                        </Button>
-                                        <Button size={Basic.size.small} type={Basic.type.info}>
-                                            <Icon.Pencil size={20}></Icon.Pencil>
-                                        </Button> */}
                                         </span>
                                     ) : (
                                             <Button size={Basic.size.small} type={Basic.type.primary} style={{ marginLeft: 2, flexGrow: 1 }} onClick={() => {
@@ -105,15 +96,17 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                                                 })
                                             }}><Icon.PersonPlus size={20}></Icon.PersonPlus></Button>
                                         )}
-                                    <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
+                                    <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }} onClick={() => {
+                                        showAccessModes(person)
+                                    }}>
                                         <Icon.CreditCard size={20}></Icon.CreditCard>
                                     </Button>
-                                    <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
+                                    {/* <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
                                         <Icon.ClockHistory size={20}></Icon.ClockHistory>
                                     </Button>
                                     <Button size={Basic.size.small} type={Basic.type.info}>
                                         <Icon.Pencil size={20}></Icon.Pencil>
-                                    </Button>
+                                    </Button> */}
                                 </span>
                             </Table.Td>
                         </Table.Tr>
@@ -121,5 +114,113 @@ export function Users({ authorize = false }: { authorize: boolean }) {
                 </Table.TBody>
             </Table.Table>
         </Layout>
+    )
+}
+
+const showAccessModes = (person: Person) => {
+    const [closer] = Popup('', <AccessModesList list={person.AccessModes} person={person}></AccessModesList>);
+}
+
+function AccessModesList({ list, person }: { list: Array<AccessMode> | null, person: Person }) {
+    const [data, setData] = useState(list)
+    return (
+        <span>
+            <Button full primary outline style={{ marginBottom: 10 }} onClick={() => {
+                Popup('لطفا کارت خود را به دستگاه نزدیک کنید', <AddNewAccessCard person={person}></AddNewAccessCard>)
+            }}>
+                افزودن کارت جدید
+            </Button>
+            <Table.Table className='text-small' center dark border>
+                <Table.THead>
+                    <Table.Tr>
+                        <Table.Th width={30}>#</Table.Th>
+                        <Table.Th right>عنوان</Table.Th>
+                        <Table.Th width={50}>وضعیت</Table.Th>
+                        <Table.Th width={50}>
+                        </Table.Th>
+                    </Table.Tr>
+                </Table.THead>
+                <Table.TBody>
+                    {data?.map((value, index) => {
+                        return <Table.Tr key={index}>
+                            <Table.Td>{index + 1}</Table.Td>
+                            <Table.Td right>{value.title}</Table.Td>
+                            <Table.Td>{(value.active) ? 'فعال' : 'غیرفعال'}</Table.Td>
+                            <Table.Td>
+                                <span style={{ display: 'flex' }}>
+                                    <Button size={Basic.size.small} type={(!value.active) ? Basic.type.success : Basic.type.danger} style={{ marginLeft: 2 }} onClick={() => {
+                                        Loading(true);
+                                        value.toggle().then((e) => {
+                                            data[index].active = e
+                                            setData([...data]);
+                                            Toast('عملیات موفق', Basic.type.success);
+                                        }).catch((e) => {
+                                            Toast(e.error.Message, Basic.type.danger);
+                                        }).finally(() => {
+                                            Loading(false)
+                                        })
+                                    }}>
+                                        {(!value.active) ? <Icon.Check size={20}></Icon.Check> : <Icon.X size={20}></Icon.X>}
+                                    </Button>
+                                    <Button size={Basic.size.small} danger onClick={() => {
+                                        Loading(true);
+                                        value.delete().then((e) => {
+                                            if (e) {
+                                                data.splice(index, 1);
+                                                setData([...data]);
+                                                Toast('عملیات موفق', Basic.type.success);
+                                            } else {
+                                                Toast('عملیات ناموفق', Basic.type.warning);
+                                            }
+                                        }).catch((e) => {
+                                            Toast(e.error.Message, Basic.type.danger);
+                                        }).finally(() => {
+                                            Loading(false)
+                                        })
+                                    }}>
+                                        <Icon.Trash size={20}></Icon.Trash>
+                                    </Button>
+                                </span>
+                            </Table.Td>
+                        </Table.Tr>
+                    })}
+                </Table.TBody>
+            </Table.Table >
+        </span>
+    )
+}
+
+function AddNewAccessCard({ person }: { person: Person }) {
+    const [wait, setWait] = useState(false);
+    const [ok, setOk] = useState(false);
+    const [notOk, setNotOk] = useState(false);
+    const run = () => {
+        setWait(true)
+        setOk(false)
+        setNotOk(false)
+        person.addAccessCard().then((e: any) => {
+            setOk(true)
+        }).catch((e) => {
+            Toast(e.error.Message, Basic.type.danger)
+            setNotOk(true)
+        }).finally(() => {
+            setWait(false)
+        })
+    }
+    useEffect(() => {
+        run()
+    }, [])
+    return (
+        <span style={{ height: 150, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
+            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                {wait ? <Icon.HourglassSplit size={50} color={Basic.colors.secondary}></Icon.HourglassSplit> : null}
+                {ok ? <Icon.CheckCircleFill size={50} color={Basic.colors.success}></Icon.CheckCircleFill> : null}
+                {notOk ? <Icon.XCircleFill size={50} color={Basic.colors.danger}></Icon.XCircleFill> : null}
+            </span>
+            <span style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
+                {notOk ? <Button primary onClick={() => { run() }}>تلاش مجدد <Icon.ArrowRepeat size={25} style={{ marginRight: 10 }}></Icon.ArrowRepeat></Button> : null}
+                {ok ? <Button primary onClick={() => { run() }}>کارت جدید <Icon.Plus size={25} style={{ marginRight: 10 }}></Icon.Plus></Button> : null}
+            </span>
+        </span>
     )
 }

@@ -114,7 +114,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
                                             <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
                                         </Button>
-                                        <Button type={Basic.type.info} size={Basic.size.small} onClick={openSettings}>
+                                        <Button type={Basic.type.info} size={Basic.size.small} onClick={() => { openSettings(gate) }}>
                                             <Icon.GearWideConnected size={21}></Icon.GearWideConnected>
                                         </Button>
                                     </div>
@@ -131,8 +131,8 @@ function openNewGate() {
     const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer(); }} />);
 }
 
-function openSettings() {
-    const [closer] = Popup('پارامترها', <GateSettings></GateSettings>);
+function openSettings(gate: Gate) {
+    const [closer] = Popup('پارامترها', <GateSettings gate={gate}></GateSettings>);
 }
 
 function CheckConnection({ ip }: { ip: string }) {

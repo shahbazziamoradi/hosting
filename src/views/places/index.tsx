@@ -49,5 +49,5 @@ function Details({ place, onClose = () => { } }: { place: Place, onClose?: () =>
 }
 
 function openSettings() {
-    const [closer] = Popup('پارامترها', <GateSettings></GateSettings>);
+    // const [closer] = Popup('پارامترها', <GateSettings></GateSettings>);
 }
