@@ -56,3 +56,11 @@
 .cute-ui-table.border .cute-ui-td{
     /* line-height: 100%; */
 }
+
+.cute-ui-td.full,.cute-ui-th.full{
+    width: 100%
+}
+
+.cute-ui-td.nowrap,.cute-ui-th.nowrap{
+    white-space: nowrap;
+}

@@ -22,6 +22,9 @@ export class Gate extends Base {
     public get id(): number {
         return this._id;
     }
+    public set id(v: number) {
+        this._id = v;
+    }
 
     private _parent!: number;
     public get parent(): number {
@@ -87,32 +90,6 @@ export class Gate extends Base {
         this._state = v;
     }
 
-    static getGates(): Promise<Array<Gate>> {
-        var resultPromise = (resolve: any, reject: any): Array<Gate> => {
-            var result = new Array<Gate>();
-            var promise = dataSource.get(`api/Gates/getGates`);
-
-            promise.then(async (e) => {
-                if (e.status == 200) {
-                    var json = await e.json();
-                    json.forEach((element: any) => {
-                        result.push(new Gate(element))
-                    });
-                    resolve(result);
-                } else {
-                    reject(e)
-                }
-            })
-
-            promise.catch((e) => {
-                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
-            })
-
-            return new Array<Gate>();
-        }
-        return new Promise(resultPromise);
-    }
-
     static checkConnection(ip: string): Promise<boolean> {
         var resultPromise = (resolve: any, reject: any) => {
             var promise = dataSource.post(`api/Gates/checkConnection/${ip}`);
@@ -132,9 +109,9 @@ export class Gate extends Base {
         return new Promise(resultPromise);
     }
 
-    static addGate(data: Gate): Promise<Array<Gate>> {
+    add(): Promise<Array<Gate>> {
         var resultPromise = (resolve: any, reject: any): void => {
-            var promise = dataSource.post(`api/gates/addGate`, data);
+            var promise = dataSource.post(`api/gates/addGate`, this);
 
             promise.then(async (e: Response) => {
                 switch (e.status) {
@@ -162,47 +139,62 @@ export class Gate extends Base {
         }
         return new Promise(resultPromise);
     }
-    // static deletePlace(id: number): Promise<void> {
-    //     var resultPromise = (resolve: any, reject: any): void => {
-    //         var promise = dataSource.post(`api/places/deleteplace/${id}`);
 
-    //         promise.then(async (e: Response) => {
-    //             switch (e.status) {
-    //                 case 200:
-    //                     resolve();
-    //                     break;
-    //                 default:
-    //                     reject(await { error: e.json(), code: e.status })
-    //                     break;
-    //             }
-    //         })
+    delete(): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/gates/delete/${this.id}`);
 
-    //         promise.catch((e) => {
-    //             reject(e);
-    //         })
-    //     }
-    //     return new Promise(resultPromise);
-    // }
+            promise.then(async (e: Response) => {
+                switch (e.status) {
+                    case 200:
+                        var result = new Array<Gate>();
+                        var json = await e.json();
+                        json.forEach((element: any) => {
+                            result.push(new Gate(element))
+                        });
+                        resolve(result);
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+            })
 
-    // static addPlace(parent: number, title: string): Promise<void> {
-    //     var resultPromise = (resolve: any, reject: any): void => {
-    //         var promise = dataSource.post(`api/places/addplace`, { parent, title });
+            promise.catch((e) => {
+                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+            })
 
-    //         promise.then(async (e: Response) => {
-    //             switch (e.status) {
-    //                 case 200:
-    //                     resolve();
-    //                     break;
-    //                 default:
-    //                     reject({ error: await e.json(), code: e.status })
-    //                     break;
-    //             }
-    //         })
+        }
+        return new Promise(resultPromise);
+    }
 
-    //         promise.catch((e) => {
-    //             reject(e);
-    //         })
-    //     }
-    //     return new Promise(resultPromise);
-    // }
+    toggle(): Promise<boolean> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/gates/toggle/${this.id}`);
+
+            promise.then(async (e: Response) => {
+                switch (e.status) {
+                    case 200:
+                        var result = await e.json();
+                        resolve(result);
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+            })
+
+        }
+        return new Promise(resultPromise);
+    }
 }

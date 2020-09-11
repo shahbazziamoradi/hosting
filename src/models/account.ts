@@ -122,9 +122,8 @@ export class User extends Base {
             dataSource.post(`api/account/resetPassword/${this.username}`).then(async (e) => {
                 switch (e.status) {
                     case 200:
-                        console.log(e);
-                        console.log(await e.json());
-                        resolve(true);
+                        var result = await e.json();
+                        resolve(result);
                         break;
                     case 500:
                         reject({ error: await e.json(), code: e.status })
@@ -140,14 +139,13 @@ export class User extends Base {
         return new Promise(promise);
     }
 
-    locking(): Promise<boolean> {
+    toggle(): Promise<boolean> {
         var promise = (resolve: (e: any) => {} | void, reject: (e: any) => {} | void): boolean | any => {
-            dataSource.post(`api/account/lock/${this.username}`).then(async (e) => {
+            dataSource.post(`api/account/toggle/${this.username}`).then(async (e) => {
                 switch (e.status) {
                     case 200:
-                        console.log(e);
-                        console.log(await e.json());
-                        resolve(true);
+                        var result = await e.json();
+                        resolve(result);
                         break;
                     case 500:
                         reject({ error: await e.json(), code: e.status })

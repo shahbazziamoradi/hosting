@@ -33,9 +33,6 @@ export function GateSettings({ onSubmit = () => { } }: { onSubmit?: (e?: any) =>
                 <Button sharp outline={!(section == 3)} secondary onClick={() => { setSection(3) }}>
                     <Icon.Command size={20}></Icon.Command>
                 </Button>
-                <Button sharp outline={!(section == 4)} secondary onClick={() => { setSection(4) }}>
-                    <Icon.Pencil size={20}></Icon.Pencil>
-                </Button>
                 <Button sharp outline={!(section == 2)} secondary onClick={() => { setSection(2) }}>
                     <Icon.InfoCircle size={20}></Icon.InfoCircle>
                 </Button>
@@ -65,26 +62,39 @@ export function GateSettings({ onSubmit = () => { } }: { onSubmit?: (e?: any) =>
                     <Table.Table className={'text-small text-right'} dark border style={{ marginBottom: 5 }}>
                         <Table.TBody>
                             <Table.Tr>
+                                <Table.Td width={100}>نام دستگاه</Table.Td>
+                                <Table.Td full>1.1.0</Table.Td>
+                                <Table.Td >
+                                    <Button info size={Basic.size.xSmall}><Icon.Pencil size={20}></Icon.Pencil></Button>
+                                </Table.Td>
+                            </Table.Tr>
+                            <Table.Tr>
+                                <Table.Td width={100}>آی‌پی</Table.Td>
+                                <Table.Td full>1.1.0</Table.Td>
+                                <Table.Td >
+                                    <Button info size={Basic.size.xSmall}><Icon.Pencil size={20}></Icon.Pencil></Button>
+                                </Table.Td>
+                            </Table.Tr>
+                            <Table.Tr>
+                                <Table.Td width={100}>مدل</Table.Td>
+                                <Table.Td full colSpan={2}>1.1.0</Table.Td>
+                            </Table.Tr>
+                            <Table.Tr>
                                 <Table.Td width={100}>نسخه نرم‌افزار</Table.Td>
-                                <Table.Td>1.1.0</Table.Td>
+                                <Table.Td full colSpan={2}>1.1.0</Table.Td>
                             </Table.Tr>
                             <Table.Tr>
                                 <Table.Td width={100}>نسخه سخت افزار</Table.Td>
-                                <Table.Td>0.5.0</Table.Td>
+                                <Table.Td full colSpan={2}>0.5.0</Table.Td>
                             </Table.Tr>
                         </Table.TBody>
                     </Table.Table>
-                    <Item primary full icon={Icon.Folder2Open}>به روزرسانی
+                    <Item primary icon={Icon.Folder2Open}>به روزرسانی
                         <Icon.CloudUpload style={{ marginRight: 10 }} size={20}></Icon.CloudUpload></Item>
                 </div> : null}
                 {(section == 3) ? <div>
                     <DropDown title='دستور'></DropDown>
                     <Button outline primary style={{ marginTop: 5 }}>ارسال به دستگاه</Button>
-                </div> : null}
-                {(section == 4) ? <div>
-                    <Input title={'عنوان'}></Input>
-                    <Input type={Basic.input.ipAddress} title={'آی‌پی'}></Input>
-                    <Button outline primary style={{ marginTop: 15 }}>ویرایش</Button>
                 </div> : null}
             </div>
         </div>

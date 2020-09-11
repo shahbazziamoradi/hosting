@@ -3,18 +3,17 @@ import './../../assets/fonts/fonts.css'
 import './styles/index.css'
 import * as Icon from 'react-bootstrap-icons';
 import { Layout, Loading, Popup, Toast } from '../layout/layout'
-import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 import { Button, Table, Basic } from '../../components/cute-ui/cuteUI';
 import { NewGate } from './partials/_newGate';
 import { Gate } from '../../models/models';
 import { Gates } from '../../controllers/controllers';
 import { TrafficList } from './../../views/gates/traffic';
 import { GateSettings } from './partials/_gateSettings';
+import { getEffectiveConstraintOfTypeParameter } from 'typescript';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [data, setData] = useState(Array<Gate>());
     useEffect(() => {
-        openSettings()
         Loading(true)
         var promise = Gates.getGates();
         promise.then(async (e: Array<Gate>) => {
@@ -96,13 +95,22 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         {/* <Button rounded type={Basic.type.danger} size={Basic.size.small}>
                                     <Icon.WifiOff size={21}></Icon.WifiOff>
                                 </Button> */}
-                                        {(gate.state) ?
-                                            <Button style={{ marginLeft: 2 }} type={Basic.type.danger} size={Basic.size.small}>
-                                                <Icon.X size={21}></Icon.X>
-                                            </Button> :
-                                            <Button style={{ marginLeft: 2 }} type={Basic.type.success} size={Basic.size.small}>
-                                                <Icon.Check size={21}></Icon.Check>
-                                            </Button>}
+
+                                        <Button style={{ marginLeft: 2 }} type={(gate.state) ? Basic.type.danger : Basic.type.success} size={Basic.size.small} onClick={() => {
+                                            Loading(true)
+                                            gate.toggle().then((e: boolean) => {
+                                                var temp = data;
+                                                temp[index].state = (e) ? Basic.status.active : Basic.status.deactive;
+                                                setData([...temp]);
+                                                Toast('عملیات موفق', Basic.type.success);
+                                            }).catch((e) => {
+                                                Toast(e.error.Message, Basic.type.danger);
+                                            }).finally(() => {
+                                                Loading(false)
+                                            });
+                                        }}>
+                                            {(gate.state) ? <Icon.X size={21}></Icon.X> : <Icon.Check size={21}></Icon.Check>}
+                                        </Button>
                                         <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
                                             <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
                                         </Button>

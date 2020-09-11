@@ -137,7 +137,7 @@ function ListPersons({ data, onDelete = (id: number) => { } }: { data: Array<Per
 function ListPlaces({ data }: { data: Array<Place> }) {
     return (
         <span>
-            <Button full primary outline style={{ marginBottom: 5 }}>الساق به محل جدید
+            <Button full primary outline style={{ marginBottom: 5 }}>الساق به مکان جدید
             <Icon.Paperclip style={{ marginRight: 10 }} size={20}></Icon.Paperclip>
             </Button>
             <Table.Table className={'text-small'} dark border>

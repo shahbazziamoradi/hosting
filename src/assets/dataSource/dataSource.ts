@@ -51,9 +51,6 @@ export default class dataSource {
     }
 
     static post(url: string, data?: any) {
-        console.log(JSON.stringify({
-            "json": data
-        }))
         var token = this.getToken();
         var postPromise = fetch(`${this.host()}/${url}`, {
             method: methodTypes.POST,
@@ -71,7 +68,7 @@ export default class dataSource {
     }
 
     static authentication(username: string, password: string) {
-        console.log(username, password)
+
         var postPromise = fetch(`${this.host()}/api/Account/Authenticate`, {
             method: 'POST',
             headers: {

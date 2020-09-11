@@ -38,7 +38,9 @@ type TableCellPropsType = {
     colSpan?: number,
     rowSpan?: number,
     textAlign?: Basic.textAlign,
-    width?: number
+    width?: number,
+    full?: boolean,
+    nowrap?: boolean
 }
 
 export function Table({ children,
@@ -92,13 +94,13 @@ export function Tr(props: TableRowPropsType) {
 export function Th(props: TableCellPropsType) {
 
     return (
-        <th colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-th ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, ...props.style }}>{props.children}</th>
+        <th colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-th ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, minWidth: props.width, ...props.style }}>{props.children}</th>
     )
 }
 
-export function Td(props: TableCellPropsType) {
+export function Td({ nowrap = true, ...props }: TableCellPropsType) {
 
     return (
-        <td colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-td ${props.className} ${(props.active) ? 'active' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, ...props.style }}>{props.children}</td>
+        <td colSpan={props.colSpan} rowSpan={props.rowSpan} className={`cute-ui-td ${props.className} ${(nowrap) ? 'nowrap' : ''} ${(props.active) ? 'active' : ''} ${(props.full) ? 'full' : ''} ${props.textAlign}`} style={{ width: props.width, maxWidth: props.width, minWidth: props.width, ...props.style }}>{props.children}</td>
     )
 }

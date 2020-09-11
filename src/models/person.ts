@@ -44,9 +44,9 @@ export class Person extends Base {
     public get id(): number {
         return this._id;
     }
-    public set id(v: number) {
-        this._id = v;
-    }
+    // public set id(v: number) {
+    //     this._id = v;
+    // }
 
     private _firstName!: string;
     public get firstName(): string {
@@ -94,5 +94,27 @@ export class Person extends Base {
     }
     public set user(v: User) {
         this._user = v;
+    }
+
+    createUser(): Promise<boolean> {
+        var promise = (resolve: (e: any) => {} | void, reject: (e: any) => {} | void): boolean | any => {
+            dataSource.post(`api/Account/CreateUser/${this.id}`).then(async (e) => {
+                switch (e.status) {
+                    case 200:
+                        var result = await e.json();
+                        resolve(result);
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+                resolve(true)
+            }).catch((e) => {
+            })
+        }
+        return new Promise(promise);
     }
 }
