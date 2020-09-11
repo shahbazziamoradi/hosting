@@ -29,21 +29,16 @@ function Details({ place, onClose = () => { } }: { place: Place, onClose?: () =>
         <div className='header bg-primary text-light'>
             <Icon.GeoAlt style={{ marginLeft: 5 }} size={25}></Icon.GeoAlt>
             <h3 title={place.pathText}>{place.pathText}</h3>
-            <Button rounded light outline style={{ width: 30, height: 30, padding: 0, marginLeft: 5 }} onClick={() => { }}>
-                <Icon.ArrowLeftRight size={25}></Icon.ArrowLeftRight>
-            </Button>
             {(place.type != 6) ? <Button rounded light outline style={{ width: 30, height: 30, padding: 0, marginLeft: 5 }} onClick={() => { }}>
                 <Icon.Pencil size={20}></Icon.Pencil>
             </Button> : null}
-            {(place.type == 6) ? <Button rounded light outline style={{ width: 30, height: 30, padding: 0, marginLeft: 5 }} onClick={() => { openSettings() }}>
-                <Icon.GearWideConnected size={20}></Icon.GearWideConnected>
-            </Button> : null}
+
             <Button rounded light outline style={{ width: 30, height: 30, padding: 0 }} onClick={() => { onClose() }}>
                 <Icon.X size={25}></Icon.X>
             </Button>
         </div>
         <div className='body'>
-            <TrafficList></TrafficList>
+            <TrafficList placeId={place.id}></TrafficList>
         </div>
     </div> : null
 }

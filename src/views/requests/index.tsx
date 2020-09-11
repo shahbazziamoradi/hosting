@@ -66,7 +66,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                     <Button size={Basic.size.small} type={Basic.type.secondary} onClick={() => {
                                         Popup('ثبت درخواست', <RequestDetails subject={request.subject} description={request.description}></RequestDetails>)
                                     }}>
-                                        <Icon.Eye size={20}></Icon.Eye>
+                                        <Icon.ChatSquareText size={20}></Icon.ChatSquareText>
                                     </Button>
                                 </span>
                             </Table.Td>
