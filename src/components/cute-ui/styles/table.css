@@ -9,6 +9,14 @@
 .cute-ui-table>.cute-ui-thead{
     color: #fff;
 }
+.cute-ui-table.fixed{
+  position: relative;
+  border-collapse: collapse; 
+}
+.cute-ui-table.fixed th{
+    position: sticky;
+    top: 0;
+}
 
 .cute-ui-table.primary>.cute-ui-thead{
     background-color: var(--primary);

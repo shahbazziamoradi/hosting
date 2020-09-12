@@ -7,6 +7,7 @@ import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persia
 import { Basic, Button, Table, DropDown, Item, Input } from '../../components/cute-ui/cuteUI';
 import { Request, RequestState, Person } from '../../models/models'
 import { Requests, Accounts } from '../../controllers/controllers';
+import { Account } from '../views';
 import { data } from 'jquery';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
@@ -90,7 +91,7 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
 
     const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
-    return <div>
+    return <div dir='rtl'>
         <select onChange={(e) => { setType(parseInt(e.target.value)) }} style={{ width: '100%', borderRadius: 3, height: 35, marginBottom: 10 }} value={type}>
             <option value={1}>درخواست ملاقات</option>
             <option value={2}>درخواست میهمان (درون سازمان)</option>
@@ -104,7 +105,7 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
         {(type == 1 || type == 2) ?
             <span>
                 <Button outline full type={Basic.type.primary} style={{ marginBottom: 10 }} onClick={() => {
-                    const [closer] = Popup('', <PersonList onSelect={(e: Person) => { setHost(e); closer() }}></PersonList>)
+                    const [closer] = Popup('', <Account.PersonList onSelect={(e: Person) => { setHost(e); closer() }}></Account.PersonList>)
                 }}>{`انتخاب ${(type == 1) ? 'میزبان' : 'میهمان'}`}</Button>
                 {(host.id) ? <Item full value={host.id} onAction={() => { setHost(new Person()) }} style={{ marginBottom: 10 }}>{host.firstName + ' ' + host.lastName}</Item> : null}
             </span>
@@ -144,45 +145,4 @@ function RequestDetails({ subject, description }: { subject?: string, descriptio
             {description}
         </p>
     </div>
-}
-
-function PersonList({ onSelect = (e: Person) => { } }: { onSelect: (e: Person) => {} | void }) {
-    const [people, setPeople] = useState(new Array<Person>())
-    useEffect(() => {
-        Loading(true);
-        Accounts.getPersons().then((e) => {
-            setPeople([...e]);
-        }).catch((e) => {
-            Toast(e.error.Message, Basic.type.danger);
-        }).finally(() => {
-            Loading(false)
-        })
-    }, [])
-    return <Table.Table className='text-small' border dark >
-        <Table.THead>
-            <Table.Tr>
-                <Table.Th width={30}>#</Table.Th>
-                <Table.Th textAlign={Basic.textAlign.right}>نام و نام خانوادگی</Table.Th>
-                <Table.Th width={90}>شماره پرسنلی</Table.Th>
-                <Table.Th width={90}>شماره تماس</Table.Th>
-                <Table.Th width={90}>کد ملی</Table.Th>
-                <Table.Td></Table.Td>
-            </Table.Tr>
-        </Table.THead>
-        <Table.TBody>
-            {people.map((person: Person, index: number) => {
-                return <Table.Tr key={index}>
-                    <Table.Td textAlign={Basic.textAlign.center}>{index + 1}</Table.Td>
-                    <Table.Td textAlign={Basic.textAlign.right}>{person.firstName + ' ' + person.lastName}</Table.Td>
-                    <Table.Td textAlign={Basic.textAlign.center}>{person.employeeCode}</Table.Td>
-                    <Table.Td textAlign={Basic.textAlign.center}>{person.mobile}</Table.Td>
-                    <Table.Td textAlign={Basic.textAlign.center}>{person.nationalId}</Table.Td>
-                    <Table.Td>
-                        <Button outline type={Basic.type.primary} size={Basic.size.small} onClick={() => { onSelect(person) }}>انتخاب</Button>
-                    </Table.Td>
-                </Table.Tr>
-            })}
-
-        </Table.TBody>
-    </Table.Table>
 }

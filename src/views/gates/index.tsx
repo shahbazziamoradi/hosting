@@ -29,10 +29,10 @@ export function Index({ authorize = false }: { authorize: boolean }) {
 
     return (
         <Layout isAuthenticated={authorize} title='گیت‌ها' icon={Icon.House} style={{ padding: 5 }}>
-            <Table.Table className={'text-small text-right'} border={true} dark>
+            <Table.Table center className={'text-small text-right'} border={true} dark>
                 <Table.THead>
                     <Table.Tr>
-                        <Table.Th width={30} textAlign={Basic.textAlign.center}>#</Table.Th>
+                        <Table.Th width={30} >#</Table.Th>
                         <Table.Th style={{ width: 30, minWidth: 30, paddingTop: 4, paddingBottom: 4 }}>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 {/* <Button theme={Basic.theme.outline} rounded type={Basic.type.light} size={Basic.size.small} >
@@ -41,7 +41,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                 <Icon.Wifi size={22}></Icon.Wifi>
                             </div>
                         </Table.Th>
-                        <Table.Th textAlign={Basic.textAlign.center} style={{ width: 120, minWidth: 120 }}>آی‌پی</Table.Th>
+                        <Table.Th style={{ width: 120, minWidth: 120 }}>آی‌پی</Table.Th>
                         <Table.Th style={{ width: 150 }}>عنوان</Table.Th>
                         <Table.Th>آدرس</Table.Th>
                         <Table.Th style={{ width: 70 }}>وضعیت</Table.Th>
@@ -64,17 +64,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                     {data.map((gate: Gate, index: number) => {
                         return (
                             <Table.Tr key={index}>
-                                <Table.Td textAlign={Basic.textAlign.center}>{index + 1}</Table.Td>
+                                <Table.Td >{index + 1}</Table.Td>
                                 <Table.Td>
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                        {/* <Icon.CircleFill style={{ color: 'var(--success)' }} size={20}></Icon.CircleFill> */}
                                         <CheckConnection ip={gate.ip} />
-                                        {/* <Icon.CircleFill style={{ color: 'var(--danger)' }} size={20}></Icon.CircleFill>
-                                <Icon.CircleFill style={{ color: 'var(--warning)' }} size={20}></Icon.CircleFill>
-                                <Icon.CircleFill style={{ color: 'var(--secondary)' }} size={20}></Icon.CircleFill> */}
                                     </div>
                                 </Table.Td>
-                                <Table.Td textAlign={Basic.textAlign.center}>{gate.ip}</Table.Td>
+                                <Table.Td >{gate.ip}</Table.Td>
                                 <Table.Td style={{ whiteSpace: 'nowrap', minWidth: 150 }}>{gate.title}</Table.Td>
                                 <Table.Td style={{ width: '100%' }}>
                                     <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', alignItems: 'center', maxWidth: '100%', overflow: 'hidden' }}>
@@ -83,19 +79,9 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         })}
                                     </div>
                                 </Table.Td>
-                                <Table.Td textAlign={Basic.textAlign.center} style={{ whiteSpace: 'nowrap', minWidth: 70 }}>{(gate.state) ? 'فعال' : 'غیر فعال'}</Table.Td>
+                                <Table.Td style={{ whiteSpace: 'nowrap', minWidth: 70 }}>{(gate.state) ? 'فعال' : 'غیر فعال'}</Table.Td>
                                 <Table.Td style={{ paddingTop: 2.5, paddingBottom: 2.5, width: 70 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        {/* <Button rounded type={Basic.type.primary} size={Basic.size.small}>
-                                    <Icon.CloudUpload size={21}></Icon.CloudUpload>
-                                </Button>
-                                <Button rounded type={Basic.type.success} size={Basic.size.small}>
-                                    <Icon.Wifi size={21}></Icon.Wifi>
-                                </Button> */}
-                                        {/* <Button rounded type={Basic.type.danger} size={Basic.size.small}>
-                                    <Icon.WifiOff size={21}></Icon.WifiOff>
-                                </Button> */}
-
                                         <Button style={{ marginLeft: 2 }} type={(gate.state) ? Basic.type.danger : Basic.type.success} size={Basic.size.small} onClick={() => {
                                             Loading(true)
                                             gate.toggle().then((e: boolean) => {
@@ -111,10 +97,15 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         }}>
                                             {(gate.state) ? <Icon.X size={21}></Icon.X> : <Icon.Check size={21}></Icon.Check>}
                                         </Button>
-                                        <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={openTrafficList}>
+                                        <Button style={{ marginLeft: 2 }} type={Basic.type.secondary} size={Basic.size.small} onClick={() => { openTrafficList(gate.parent) }}>
                                             <Icon.ArrowLeftRight size={21}></Icon.ArrowLeftRight>
                                         </Button>
-                                        <Button type={Basic.type.info} size={Basic.size.small} onClick={() => { openSettings(gate) }}>
+                                        <Button type={Basic.type.info} size={Basic.size.small} onClick={() => {
+                                            openSettings(gate, (e) => {
+                                                data[index] = e;
+                                                setData([...data])
+                                            })
+                                        }}>
                                             <Icon.GearWideConnected size={21}></Icon.GearWideConnected>
                                         </Button>
                                     </div>
@@ -131,8 +122,8 @@ function openNewGate() {
     const [closer] = Popup('افزودن گیت جدید', <NewGate onSubmit={() => { closer(); }} />);
 }
 
-function openSettings(gate: Gate) {
-    const [closer] = Popup('پارامترها', <GateSettings gate={gate}></GateSettings>);
+function openSettings(gate: Gate, onSubmit: (e: Gate) => {} | void) {
+    const [closer] = Popup('پارامترها', <GateSettings gate={gate} onSubmit={onSubmit} ></GateSettings>);
 }
 
 function CheckConnection({ ip }: { ip: string }) {
@@ -177,6 +168,6 @@ function openCheckConnection() {
     // const [closer] = Popup('تست ارتباط', <CheckConnection />);
 }
 
-function openTrafficList() {
-    const [closer] = Popup('لیست تردد', <TrafficList />);
+function openTrafficList(placeId: number) {
+    const [closer] = Popup('لیست تردد', <TrafficList placeId={placeId} />);
 }

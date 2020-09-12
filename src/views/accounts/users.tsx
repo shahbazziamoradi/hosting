@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './styles/users.css'
 import * as Icon from 'react-bootstrap-icons';
-import { Layout, Loading, Toast, Popup } from '../layout/layout'
+import { Layout, Loading, Toast, Popup, Confirm } from '../layout/layout'
 import { Button, Table, Basic } from '../../components/cute-ui/cuteUI';
 import { Accounts } from '../../controllers/controllers';
 import { Person, AccessMode } from '../../models/models';
@@ -124,7 +124,7 @@ const showAccessModes = (person: Person) => {
 function AccessModesList({ list, person }: { list: Array<AccessMode> | null, person: Person }) {
     const [data, setData] = useState(list)
     return (
-        <span>
+        <span dir='rtl'>
             <Button full primary outline style={{ marginBottom: 10 }} onClick={() => {
                 Popup('لطفا کارت خود را به دستگاه نزدیک کنید', <AddNewAccessCard person={person}></AddNewAccessCard>)
             }}>
@@ -163,19 +163,21 @@ function AccessModesList({ list, person }: { list: Array<AccessMode> | null, per
                                         {(!value.active) ? <Icon.Check size={20}></Icon.Check> : <Icon.X size={20}></Icon.X>}
                                     </Button>
                                     <Button size={Basic.size.small} danger onClick={() => {
-                                        Loading(true);
-                                        value.delete().then((e) => {
-                                            if (e) {
-                                                data.splice(index, 1);
-                                                setData([...data]);
-                                                Toast('عملیات موفق', Basic.type.success);
-                                            } else {
-                                                Toast('عملیات ناموفق', Basic.type.warning);
-                                            }
-                                        }).catch((e) => {
-                                            Toast(e.error.Message, Basic.type.danger);
-                                        }).finally(() => {
-                                            Loading(false)
+                                        Confirm('حذف کارت اعتبار سنجی را تایید میکنید', Basic.type.danger, () => {
+                                            Loading(true);
+                                            value.delete().then((e) => {
+                                                if (e) {
+                                                    data.splice(index, 1);
+                                                    setData([...data]);
+                                                    Toast('عملیات موفق', Basic.type.success);
+                                                } else {
+                                                    Toast('عملیات ناموفق', Basic.type.warning);
+                                                }
+                                            }).catch((e) => {
+                                                Toast(e.error.Message, Basic.type.danger);
+                                            }).finally(() => {
+                                                Loading(false)
+                                            })
                                         })
                                     }}>
                                         <Icon.Trash size={20}></Icon.Trash>
@@ -211,7 +213,7 @@ function AddNewAccessCard({ person }: { person: Person }) {
         run()
     }, [])
     return (
-        <span style={{ height: 150, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
+        <span dir='rtl' style={{ height: 150, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
             <span style={{ display: 'flex', justifyContent: 'center' }}>
                 {wait ? <Icon.HourglassSplit size={50} color={Basic.colors.secondary}></Icon.HourglassSplit> : null}
                 {ok ? <Icon.CheckCircleFill size={50} color={Basic.colors.success}></Icon.CheckCircleFill> : null}
@@ -223,4 +225,47 @@ function AddNewAccessCard({ person }: { person: Person }) {
             </span>
         </span>
     )
+}
+
+
+
+export function PersonList({ onSelect = (e: Person) => { } }: { onSelect: (e: Person) => {} | void }) {
+    const [people, setPeople] = useState(new Array<Person>())
+    useEffect(() => {
+        Loading(true);
+        Accounts.getPersons().then((e) => {
+            setPeople([...e]);
+        }).catch((e) => {
+            Toast(e.error.Message, Basic.type.danger);
+        }).finally(() => {
+            Loading(false)
+        })
+    }, [])
+    return <Table.Table className='text-small' border dark >
+        <Table.THead>
+            <Table.Tr>
+                <Table.Th width={30}>#</Table.Th>
+                <Table.Th textAlign={Basic.textAlign.right}>نام و نام خانوادگی</Table.Th>
+                <Table.Th width={90}>شماره پرسنلی</Table.Th>
+                <Table.Th width={90}>شماره تماس</Table.Th>
+                <Table.Th width={90}>کد ملی</Table.Th>
+                <Table.Td></Table.Td>
+            </Table.Tr>
+        </Table.THead>
+        <Table.TBody>
+            {people.map((person: Person, index: number) => {
+                return <Table.Tr key={index}>
+                    <Table.Td textAlign={Basic.textAlign.center}>{index + 1}</Table.Td>
+                    <Table.Td textAlign={Basic.textAlign.right}>{person.firstName + ' ' + person.lastName}</Table.Td>
+                    <Table.Td textAlign={Basic.textAlign.center}>{person.employeeCode}</Table.Td>
+                    <Table.Td textAlign={Basic.textAlign.center}>{person.mobile}</Table.Td>
+                    <Table.Td textAlign={Basic.textAlign.center}>{person.nationalId}</Table.Td>
+                    <Table.Td>
+                        <Button outline type={Basic.type.primary} size={Basic.size.small} onClick={() => { onSelect(person) }}>انتخاب</Button>
+                    </Table.Td>
+                </Table.Tr>
+            })}
+
+        </Table.TBody>
+    </Table.Table>
 }

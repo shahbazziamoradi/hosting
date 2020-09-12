@@ -60,6 +60,9 @@ export class Place {
     public get pathText(): string {
         return this._pathText;
     }
+    public set pathText(v: string) {
+        this._pathText = v;
+    }
 
     private _list!: List;
     public get list(): List {

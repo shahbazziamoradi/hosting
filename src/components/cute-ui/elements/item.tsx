@@ -65,7 +65,7 @@ export default function Item({
                 onClick={() => { onClick() }}>
                 {children}
             </Button>
-            <Button className='item-remove' primary={primary}
+            <Button className='item-remove' size={size} primary={primary}
                 success={success}
                 info={info}
                 warning={warning}

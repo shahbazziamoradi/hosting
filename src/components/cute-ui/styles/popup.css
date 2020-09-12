@@ -8,10 +8,13 @@
 }
 .cute-ui-popup>.box{
     min-width: 350px;
+    max-height: 80%;
     width: auto;
     background-color: #fff;
     border-radius: 3px;
     border: 2px solid #eee;
+    display: flex;
+    flex-direction: column;
 }
 
 .cute-ui-popup>.box>.header{
@@ -46,7 +49,7 @@
 }
 .cute-ui-popup>.box>.content{
     padding:10px;
-    direction: rtl;
+    overflow-y: auto;
 }
 .cute-ui-alert>.box>.content{
     min-height: 70px;

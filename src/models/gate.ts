@@ -127,7 +127,7 @@ export class Gate extends Base {
             })
 
             promise.catch((e) => {
-                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
         }
         return new Promise(resultPromise);
@@ -151,13 +151,13 @@ export class Gate extends Base {
                         reject({ error: await e.json(), code: e.status })
                         break;
                     default:
-                        reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
                         break;
                 }
             })
 
             promise.catch((e) => {
-                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
 
         }
@@ -182,13 +182,13 @@ export class Gate extends Base {
                         reject({ error: await e.json(), code: e.status })
                         break;
                     default:
-                        reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
                         break;
                 }
             })
 
             promise.catch((e) => {
-                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
 
         }
@@ -209,13 +209,39 @@ export class Gate extends Base {
                         reject({ error: await e.json(), code: e.status })
                         break;
                     default:
-                        reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
                         break;
                 }
             })
 
             promise.catch((e) => {
-                reject({ error: { message: 'خطا در ارتباط با سرور' }, code: e.status })
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+            })
+
+        }
+        return new Promise(resultPromise);
+    }
+
+    save(): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/gates/save/`, this);
+
+            promise.then(async (e: Response) => {
+                switch (e.status) {
+                    case 200:
+                        resolve();
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
 
         }

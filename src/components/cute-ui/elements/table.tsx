@@ -19,7 +19,8 @@ type TablePropsType = {
     light?: boolean,
     right?: boolean,
     center?: boolean,
-    left?: boolean
+    left?: boolean,
+    fixed?: boolean
 }
 type TableSectionPropsType = {
     active?: boolean,
@@ -54,6 +55,7 @@ export function Table({ children,
     striped,
     style,
     border,
+    fixed = false,
     primary = false,
     success = false,
     info = false,
@@ -65,6 +67,7 @@ export function Table({ children,
 
     return (
         <table className={`cute-ui-table ${className} ${(border) ? 'border' : ''}
+            ${(fixed) ? ' fixed ' : ''}
             ${(primary) ? ' primary ' : ''}
             ${(success) ? ' success ' : ''}
             ${(info) ? ' info ' : ''}

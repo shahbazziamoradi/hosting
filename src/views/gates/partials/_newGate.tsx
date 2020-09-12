@@ -12,7 +12,7 @@ export function NewGate({ onSubmit = () => { } }: { onSubmit?: (e?: any) => {} |
     const [ip, setIp] = useState('');
     const [title, setTitle] = useState('');
     return (
-        <div>
+        <div dir='rtl'>
             <Button full theme={Basic.theme.outline} type={Basic.type.primary} onClick={() => {
                 const [closer] = Popup('', <div style={{ direction: 'ltr' }}><PlacesTree type={viewType.selectable} onSelect={(e: any) => {
                     setSrc(e); closer();

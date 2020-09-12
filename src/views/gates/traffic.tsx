@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './../../assets/fonts/fonts.css'
-import './styles/index.css'
+import './styles/traffic.css'
 import * as Icon from 'react-bootstrap-icons';
 import { Layout, Loading, Toast } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
@@ -11,9 +11,9 @@ export function Traffic({ authorize = false }: { authorize: boolean }) {
 
     return (
         <Layout isAuthenticated={authorize} title='تردد‌ها' icon={Icon.House} style={{ padding: 5 }}>
-            <div>
-                <TrafficList></TrafficList>
-            </div>
+
+            <TrafficList></TrafficList>
+
         </Layout>
     )
 }
@@ -31,7 +31,7 @@ export function TrafficList({ placeId = 0 }: { placeId?: number }) {
             Loading(false)
         })
     }, [])
-    return <Table.Table className='text-small' border dark>
+    return <Table.Table className='text-small' border dark fixed>
         <Table.THead>
             <Table.Tr>
                 <Table.Th width={30}>#</Table.Th>

@@ -1,0 +1,7 @@
+.gate-settings-main .edit-box{
+    /* display: flexbox; */
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: center;
+}
