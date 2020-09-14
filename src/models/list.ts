@@ -94,9 +94,9 @@ export class List extends Base {
         this._status = v;
     }
 
-    deletePerson(personId: number): Promise<void> {
+    deletePerson(person: Person): Promise<void> {
         var resultPromise = (resolve: any, reject: any): void => {
-            var promise = dataSource.post(`api/lists/deletePerson/${personId}/${this.id}`);
+            var promise = dataSource.post(`api/lists/deletePerson/${person.id}/${this.id}`);
 
             promise.then(async (e: Response) => {
                 console.log(e)
@@ -117,4 +117,102 @@ export class List extends Base {
         return new Promise(resultPromise);
     }
 
+    addPerson(person: Person): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/lists/addPerson/${person.id}/${this.id}`);
+
+            promise.then(async (e: Response) => {
+                console.log(e)
+                switch (e.status) {
+                    case 200:
+                        resolve();
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject(e);
+            })
+        }
+        return new Promise(resultPromise);
+    }
+
+    deletePlace(place: Place): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/lists/deletePlace/${place.id}/${this.id}`);
+
+            promise.then(async (e: Response) => {
+                console.log(e)
+                switch (e.status) {
+                    case 200:
+                        resolve();
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject(e);
+            })
+        }
+        return new Promise(resultPromise);
+    }
+
+    addPlace(place: Place): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/lists/addPlace/${place.id}/${this.id}`);
+
+            promise.then(async (e: Response) => {
+                console.log(e)
+                switch (e.status) {
+                    case 200:
+                        resolve();
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject(e);
+            })
+        }
+        return new Promise(resultPromise);
+    }
+
+    toggle(): Promise<boolean> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/lists/toggle/${this.id}`);
+
+            promise.then(async (e: Response) => {
+                switch (e.status) {
+                    case 200:
+                        var result = await e.json();
+                        resolve(result);
+                        break;
+                    case 500:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    case 501:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                    default:
+                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+            })
+
+        }
+        return new Promise(resultPromise);
+    }
 }

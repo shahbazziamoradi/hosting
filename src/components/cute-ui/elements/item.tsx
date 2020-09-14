@@ -18,7 +18,7 @@ type itemProps = {
     full?: boolean,
     value?: any,
     size?: Basic.size,
-    icon?: Icon.IconType,
+    icon?: any,
     primary?: boolean,
     success?: boolean,
     info?: boolean,

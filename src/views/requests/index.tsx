@@ -6,9 +6,8 @@ import { Layout, Loading, Popup, Toast } from '../layout/layout'
 import { PersianCalendar } from '../../components/cute-ui/persianCalendar/persianCalendar';
 import { Basic, Button, Table, DropDown, Item, Input } from '../../components/cute-ui/cuteUI';
 import { Request, RequestState, Person } from '../../models/models'
-import { Requests, Accounts } from '../../controllers/controllers';
+import { Requests } from '../../controllers/controllers';
 import { Account } from '../views';
-import { data } from 'jquery';
 
 export function Index({ authorize = false }: { authorize: boolean }) {
     const [requests, setRequests] = useState(new Array<Request>())
@@ -23,16 +22,17 @@ export function Index({ authorize = false }: { authorize: boolean }) {
     }, [])
     return (
         <Layout isAuthenticated={authorize} title='درخواست‌ها' icon={Icon.House} style={{ padding: 5 }}>
-            <Table.Table className={'text-small text-right'} dark border>
+            <Table.Table className={'text-small'} dark border center>
                 <Table.THead>
                     <Table.Tr>
-                        <Table.Th textAlign={Basic.textAlign.center} width={30}>#</Table.Th>
-                        <Table.Th textAlign={Basic.textAlign.center} width={80}>کد درخواست</Table.Th>
-                        <Table.Th textAlign={Basic.textAlign.center} width={80}>نوع درخواست</Table.Th>
-                        <Table.Th textAlign={Basic.textAlign.center} width={140}>زمان درخواست</Table.Th>
-                        <Table.Th>میزبان/میهمان</Table.Th>
-                        <Table.Th textAlign={Basic.textAlign.center} width={140}>زمان آخرین وضعیت</Table.Th>
-                        <Table.Th textAlign={Basic.textAlign.center} width={100}>آخرین وضعیت</Table.Th>
+                        <Table.Th width={30}>#</Table.Th>
+                        <Table.Th width={80}>کد درخواست</Table.Th>
+                        <Table.Th width={80}>نوع درخواست</Table.Th>
+                        <Table.Th width={140}>زمان درخواست</Table.Th>
+                        <Table.Th right>میزبان/میهمان</Table.Th>
+                        <Table.Th width={140}>زمان آخرین وضعیت</Table.Th>
+                        <Table.Th width={100}>آخرین وضعیت</Table.Th>
+                        <Table.Th width={150}>کاربر ثبت کننده</Table.Th>
                         <Table.Th width={80}>
                             <Button full size={Basic.size.small} type={Basic.type.light} outline onClick={() => {
                                 const [closer] = Popup('ثبت درخواست', <NewRequest onSubmit={() => { closer() }}></NewRequest>)
@@ -46,13 +46,20 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                 <Table.TBody>
                     {requests.map((request: Request, index: number) => {
                         return <Table.Tr key={index}>
-                            <Table.Td textAlign={Basic.textAlign.center}>{index + 1}</Table.Td>
-                            <Table.Td textAlign={Basic.textAlign.center}>{request.code}</Table.Td>
-                            <Table.Td textAlign={Basic.textAlign.center}>{(request.type == 1) ? 'میزبان' : 'میهمان'}</Table.Td>
-                            <Table.Td textAlign={Basic.textAlign.center}>{new Date(request.requestedDate).toLocaleString('fa-IR')}</Table.Td>
-                            <Table.Td>{(request.type == 1) ? request.guest.firstName + ' ' + request.guest.lastName : request.host.firstName + ' ' + request.host.lastName}</Table.Td>
-                            <Table.Td textAlign={Basic.textAlign.center}></Table.Td>
-                            <Table.Td textAlign={Basic.textAlign.center}></Table.Td>
+                            <Table.Td>{index + 1}</Table.Td>
+                            <Table.Td>{request.code}</Table.Td>
+                            <Table.Td>{(request.type == 1) ? 'میزبان' : 'میهمان'}</Table.Td>
+                            <Table.Td>{new Date(request.requestedDate).toLocaleString('fa-IR')}</Table.Td>
+                            <Table.Td right>{(request.type == 1) ? request.guest.firstName + ' ' + request.guest.lastName : request.host.firstName + ' ' + request.host.lastName}</Table.Td>
+                            <Table.Td>
+                                {/* {request.lastState.state} */}
+                            </Table.Td>
+                            <Table.Td>
+                                {/* {request.lastState.date} */}
+                            </Table.Td>
+                            <Table.Td>
+                                {/* {request.lastState.person.firstName + ' ' + request.lastState.person.lastName} */}
+                            </Table.Td>
                             <Table.Td>
                                 <span style={{ display: 'flex' }}>
                                     <Button size={Basic.size.small} type={Basic.type.danger} style={{ marginLeft: 2 }} disabled>
@@ -61,11 +68,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                     <Button size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }} disabled>
                                         <Icon.Pencil size={20}></Icon.Pencil>
                                     </Button>
-                                    <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }}>
+                                    <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }} onClick={() => {
+                                        Popup('َمراحل', <RequestActions request={request}></RequestActions>)
+                                    }}>
                                         <Icon.ListCheck size={20}></Icon.ListCheck>
                                     </Button>
                                     <Button size={Basic.size.small} type={Basic.type.secondary} onClick={() => {
-                                        Popup('ثبت درخواست', <RequestDetails subject={request.subject} description={request.description}></RequestDetails>)
+                                        Popup('َشرح درخواست', <RequestDetails subject={request.subject} description={request.description}></RequestDetails>)
                                     }}>
                                         <Icon.ChatSquareText size={20}></Icon.ChatSquareText>
                                     </Button>
@@ -137,12 +146,41 @@ function NewRequest({ onSubmit = (e: Array<Request>) => { } }: { onSubmit: (e: A
 }
 
 function RequestDetails({ subject, description }: { subject?: string, description?: string }) {
-    return <div>
-        <h4>
-            {subject}
-        </h4>
-        <p>
+    return <div className='requests request-details'>
+        <fieldset>
+            <legend>{subject}</legend>
             {description}
-        </p>
+        </fieldset>
+    </div>
+}
+
+function RequestActions({ request }: { request: Request }) {
+    return <div className='requests request-details'>
+        <Table.Table className='text-small' dark center>
+            <Table.THead>
+                <Table.Tr>
+                    <Table.Th>#</Table.Th>
+                    <Table.Th>وضعیت</Table.Th>
+                    <Table.Th>زمان</Table.Th>
+                    <Table.Th>کاربر</Table.Th>
+                </Table.Tr>
+            </Table.THead>
+            {(request.states) ?
+                <Table.TBody>
+                    {
+                        request.states.map((state, index) => {
+                            return (
+                                <Table.Tr>
+                                    <Table.Td>#</Table.Td>
+                                    <Table.Td>وضعیت</Table.Td>
+                                    <Table.Td>زمان</Table.Td>
+                                    <Table.Td>کاربر</Table.Td>
+                                </Table.Tr>
+                            )
+                        })
+                    }
+                </Table.TBody>
+                : null}
+        </Table.Table>
     </div>
 }

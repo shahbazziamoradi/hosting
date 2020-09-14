@@ -31,11 +31,11 @@ export function TrafficList({ placeId = 0 }: { placeId?: number }) {
             Loading(false)
         })
     }, [])
-    return <Table.Table className='text-small' border dark fixed>
+    return <Table.Table className='text-small' border dark fixed center>
         <Table.THead>
             <Table.Tr>
                 <Table.Th width={30}>#</Table.Th>
-                <Table.Th>نام و نام خانوادگی</Table.Th>
+                <Table.Th right>نام و نام خانوادگی</Table.Th>
                 <Table.Th width={120}>زمان تردد</Table.Th>
                 <Table.Th width={100}>نحوه شناسایی</Table.Th>
                 <Table.Th width={200}>خروج از</Table.Th>
@@ -50,7 +50,7 @@ export function TrafficList({ placeId = 0 }: { placeId?: number }) {
                 return (
                     <Table.Tr key={index}>
                         <Table.Td>{index + 1}</Table.Td>
-                        <Table.Td>{row.PPRS_FUL_NAM_GST}</Table.Td>
+                        <Table.Td right>{row.PPRS_FUL_NAM_GST}</Table.Td>
                         <Table.Td>{row.TIM + ' ' + row.DAT}</Table.Td>
                         <Table.Td>{row.AMOD_TTL}</Table.Td>
                         <Table.Td>{row.APLC_SRC_TTL}</Table.Td>

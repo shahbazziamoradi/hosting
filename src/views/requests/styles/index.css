@@ -1,0 +1,19 @@
+.requests.request-details{
+    min-width: 500px;
+    direction: rtl;
+}
+
+.requests.request-details>fieldset{
+border-radius: 3px;
+border: 1px solid var(--secondary);
+box-shadow: none;
+min-height: 200px;
+}
+
+.requests.request-details>fieldset>legend{
+font-size: 13px;
+padding: 5px 10px;
+border-radius: 3px;
+color: #fff;
+background-color: var(--secondary);
+}
