@@ -21,4 +21,5 @@
 .cute-ui.item-block>.item-remove
 {
     border-radius: 3px 0px 0px 3px;
+    height: 100%;
 }

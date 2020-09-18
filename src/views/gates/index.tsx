@@ -126,7 +126,7 @@ function openSettings(gate: Gate, onSubmit: (e: Gate) => {} | void) {
     const [closer] = Popup('پارامترها', <GateSettings gate={gate} onSubmit={onSubmit} ></GateSettings>);
 }
 
-function CheckConnection({ ip }: { ip: string }) {
+export function CheckConnection({ ip, className }: { ip: string, className?: string }) {
     const [ind, setInd] = useState(0)
     const [ok, setOk] = useState(false)
     const [notOk, setNotOk] = useState(false)
@@ -153,7 +153,7 @@ function CheckConnection({ ip }: { ip: string }) {
         checking()
     }, []);
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className={className}>
             <Button theme={Basic.theme.outline} type={Basic.type.light} size={Basic.size.small} onClick={() => { checking() }} >
                 {(ind % 4 == 1) ? <Icon.Wifi1 size={22} color={Basic.colors.secondary}></Icon.Wifi1> : null}
                 {(ind % 4 == 2) ? <Icon.Wifi2 size={22} color={Basic.colors.secondary}></Icon.Wifi2> : null}
@@ -164,6 +164,7 @@ function CheckConnection({ ip }: { ip: string }) {
         </div>
     )
 }
+
 function openCheckConnection() {
     // const [closer] = Popup('تست ارتباط', <CheckConnection />);
 }

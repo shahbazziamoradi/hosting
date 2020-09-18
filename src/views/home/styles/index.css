@@ -1,0 +1,7 @@
+.home-inde-body{
+    direction: rtl;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 10px;
+}

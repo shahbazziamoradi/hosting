@@ -61,7 +61,6 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                                     <Table.Th>کاربر</Table.Th>
                                     <Table.Th>تعداد رکورد</Table.Th>
                                     <Table.Th>ثبت شده</Table.Th>
-                                    <Table.Th>تکراری</Table.Th>
                                 </Table.Tr>
                             </Table.THead>
                         </Table.Table>
@@ -94,8 +93,8 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                         </Table.TBody>
                     </Table.Table>
                     <span style={{ display: 'flex', flex: 1, justifyContent: 'space-between' }}>
-                        <Item size={Basic.size.small} primary icon={Icon.Folder2Open}>به روزرسانی
-                        <Icon.CloudUpload style={{ marginRight: 10 }} size={20}></Icon.CloudUpload></Item>
+                        {/* <Item size={Basic.size.small} primary icon={Icon.Folder2Open}>به روزرسانی
+                        <Icon.CloudUpload style={{ marginRight: 10 }} size={20}></Icon.CloudUpload></Item> */}
                         <span style={{ display: 'flex' }}>
                             {(gate.title != title || gate.ip != ip) ?
                                 <Button style={{ marginLeft: 5 }} size={Basic.size.small} outline danger disabled={title == '' || ip == '' || (gate.title == title && gate.ip == ip)} onClick={() => {

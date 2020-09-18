@@ -53,7 +53,7 @@ export default function Item({
     light = false
 }: itemProps) {
     return (
-        <div className={`cute-ui item-block ${full ? 'full' : ''}`} style={style}>
+        <div className={`cute-ui item-block ${full ? 'full' : ''} ${className}`} style={style}>
             <Button className='item-title' size={size} primary={primary}
                 success={success}
                 info={info}
