@@ -10,7 +10,6 @@ export default class Requests {
                     case 200:
                         var result = new Array<Request>();
                         var data = await e.json();
-                        console.log(data)
                         data.forEach((row: any) => {
                             result.push(new Request(row));
                         });

@@ -52,13 +52,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                             <Table.Td>{new Date(request.requestedDate).toLocaleString('fa-IR')}</Table.Td>
                             <Table.Td right>{(request.type == 1) ? request.guest.firstName + ' ' + request.guest.lastName : request.host.firstName + ' ' + request.host.lastName}</Table.Td>
                             <Table.Td>
-                                {/* {request.lastState.state} */}
+                                {request.lastState.newStateDescription}
                             </Table.Td>
                             <Table.Td>
-                                {/* {request.lastState.date} */}
+                                {request.lastState.date}
                             </Table.Td>
                             <Table.Td>
-                                {/* {request.lastState.person.firstName + ' ' + request.lastState.person.lastName} */}
+                                {request.lastState.person.firstName + ' ' + request.lastState.person.lastName}
                             </Table.Td>
                             <Table.Td>
                                 <span style={{ display: 'flex' }}>
@@ -160,7 +160,8 @@ function RequestActions({ request }: { request: Request }) {
             <Table.THead>
                 <Table.Tr>
                     <Table.Th>#</Table.Th>
-                    <Table.Th>وضعیت</Table.Th>
+                    <Table.Th>وضعیت قبلی</Table.Th>
+                    <Table.Th>وضعیت جدید</Table.Th>
                     <Table.Th>زمان</Table.Th>
                     <Table.Th>کاربر</Table.Th>
                 </Table.Tr>
@@ -172,9 +173,11 @@ function RequestActions({ request }: { request: Request }) {
                             return (
                                 <Table.Tr>
                                     <Table.Td>#</Table.Td>
-                                    <Table.Td>وضعیت</Table.Td>
-                                    <Table.Td>زمان</Table.Td>
-                                    <Table.Td>کاربر</Table.Td>
+                                    <Table.Td>{state.oldStateDescription}</Table.Td>
+                                    <Table.Td>{state.newStateDescription}</Table.Td>
+                                    <Table.Td>{state.date}</Table.Td>
+                                    <Table.Td>
+                                        {state.person.firstName + ' ' + state.person.lastName}</Table.Td>
                                 </Table.Tr>
                             )
                         })

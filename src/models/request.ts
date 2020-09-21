@@ -22,7 +22,7 @@ export class Request extends Base {
         MRQS_HOST: any,
         MRQS_INS_DTE: Date,
         MRQS_RQS: number,
-        MRQS_RSTPS: any,
+        MRQS_RSTPS: Array<any>,
         MRQS_SBJ: string,
         MRQS_ST: number,
         MRQS_UPD_DTE: Date,
@@ -41,6 +41,10 @@ export class Request extends Base {
             this._subject = data.MRQS_SBJ;
             this._year = data.MRQS_YER;
             this._type = data.MRQS_TYP
+            this._states = new Array<RequestState>()
+            data.MRQS_RSTPS.forEach(state => {
+                this._states.push(new RequestState(state));
+            });
         }
     }
 
@@ -139,16 +143,26 @@ export class Request extends Base {
 
     private _lastState!: RequestState;
     public get lastState(): RequestState {
-        return this._lastState;
-    }
-    public set lastState(v: RequestState) {
-        this._lastState = v;
+        if (this._states) {
+            return this._states[this._states.length - 1];
+        } else {
+            return new RequestState();
+        }
     }
 }
 
 export class RequestState extends Base {
-    constructor() {
+    constructor(data?: { RSTP_STP: number, RSTP_ST_OLD: number, RSTP_ST_OLD_DESC: string, RSTP_ST_NEW: number, RSTP_ST_NEW_DESC: string, RSTP_INS_DTE: Date, RSTP_PPRS: any }) {
         super()
+        if (data) {
+            this._id = data.RSTP_STP
+            this._oldState = data.RSTP_ST_OLD
+            this._oldStateDescription = data.RSTP_ST_OLD_DESC
+            this._newStateDescription = data.RSTP_ST_NEW_DESC
+            this._newState = data.RSTP_ST_NEW
+            this._date = data.RSTP_INS_DTE
+            this.person = (data.RSTP_PPRS) ? new Person(JSON.parse(data.RSTP_PPRS)) : new Person()
+        }
     }
 
     private _id!: number;
@@ -159,12 +173,36 @@ export class RequestState extends Base {
         this._id = v;
     }
 
-    private _state!: requestStateTypes;
-    public get state(): requestStateTypes {
-        return this._state;
+    private _newState!: number;
+    public get newState(): number {
+        return this._newState;
     }
-    public set state(v: requestStateTypes) {
-        this._state = v;
+    public set newState(v: number) {
+        this._newState = v;
+    }
+
+    private _newStateDescription!: string;
+    public get newStateDescription(): string {
+        return this._newStateDescription;
+    }
+    public set newStateDescription(v: string) {
+        this._newStateDescription = v;
+    }
+
+    private _oldState!: number;
+    public get oldState(): number {
+        return this._oldState;
+    }
+    public set oldState(v: number) {
+        this._oldState = v;
+    }
+
+    private _oldStateDescription!: string;
+    public get oldStateDescription(): string {
+        return this._oldStateDescription;
+    }
+    public set oldStateDescription(v: string) {
+        this._oldStateDescription = v;
     }
 
     private _date!: Date;
