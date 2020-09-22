@@ -8,6 +8,7 @@
 }
 .gate-settings-main>.left-side{
     padding-right: 10px;
+    min-height: 170px;
     flex-grow: 1;
 }
 .gate-settings-main>.left-side .info-tab{

@@ -49,13 +49,13 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                             <Table.Td>{index + 1}</Table.Td>
                             <Table.Td>{request.code}</Table.Td>
                             <Table.Td>{(request.type == 1) ? 'میزبان' : 'میهمان'}</Table.Td>
-                            <Table.Td>{new Date(request.requestedDate).toLocaleString('fa-IR')}</Table.Td>
+                            <Table.Td style={{ direction: 'ltr' }}>{new Date(request.requestedDate).toLocaleString('fa-IR').split('،').join(' - ')}</Table.Td>
                             <Table.Td right>{(request.type == 1) ? request.guest.firstName + ' ' + request.guest.lastName : request.host.firstName + ' ' + request.host.lastName}</Table.Td>
                             <Table.Td>
                                 {request.lastState.newStateDescription}
                             </Table.Td>
-                            <Table.Td>
-                                {request.lastState.date}
+                            <Table.Td style={{ direction: 'ltr' }}>
+                                {new Date(request.lastState.date).toLocaleString('fa-IR').split('،').join(' - ')}
                             </Table.Td>
                             <Table.Td>
                                 {request.lastState.person.firstName + ' ' + request.lastState.person.lastName}
@@ -69,7 +69,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                         <Icon.Pencil size={20}></Icon.Pencil>
                                     </Button>
                                     <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }} onClick={() => {
-                                        Popup('َمراحل', <RequestActions request={request}></RequestActions>)
+                                        Popup('اقدامات', <RequestActions request={request}></RequestActions>)
                                     }}>
                                         <Icon.ListCheck size={20}></Icon.ListCheck>
                                     </Button>
@@ -172,10 +172,10 @@ function RequestActions({ request }: { request: Request }) {
                         request.states.map((state, index) => {
                             return (
                                 <Table.Tr>
-                                    <Table.Td>#</Table.Td>
+                                    <Table.Td>{index + 1}</Table.Td>
                                     <Table.Td>{state.oldStateDescription}</Table.Td>
                                     <Table.Td>{state.newStateDescription}</Table.Td>
-                                    <Table.Td>{state.date}</Table.Td>
+                                    <Table.Td style={{ direction: 'ltr' }}>{new Date(state.date).toLocaleString('fa-IR').split('،').join(' - ')}</Table.Td>
                                     <Table.Td>
                                         {state.person.firstName + ' ' + state.person.lastName}</Table.Td>
                                 </Table.Tr>
@@ -185,5 +185,11 @@ function RequestActions({ request }: { request: Request }) {
                 </Table.TBody>
                 : null}
         </Table.Table>
+        <div style={{ display: 'flex' }}>
+            <Button size={Basic.size.small} success outline style={{ marginLeft: 5 }}>تایید {request.lastState.newStateDescription}</Button>
+            <Button size={Basic.size.small} danger>
+                <Icon.X size={20}></Icon.X>
+            </Button>
+        </div>
     </div>
 }

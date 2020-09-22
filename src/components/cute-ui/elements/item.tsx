@@ -55,6 +55,7 @@ export default function Item({
     return (
         <div className={`cute-ui item-block ${full ? 'full' : ''} ${className}`} style={style}>
             <Button className='item-title' size={size} primary={primary}
+                disabled={disabled}
                 success={success}
                 info={info}
                 warning={warning}
@@ -73,6 +74,7 @@ export default function Item({
                 secondary={secondary}
                 dark={dark}
                 light={light}
+                disabled={disabled}
                 onClick={() => { onAction() }}>
                 <ActionIcon size={21}></ActionIcon>
             </Button>

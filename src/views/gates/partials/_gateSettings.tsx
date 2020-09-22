@@ -38,9 +38,9 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                 <Button sharp outline={!(section == 1)} secondary onClick={() => { setSection(1) }}>
                     <Icon.CloudDownload size={20}></Icon.CloudDownload>
                 </Button>
-                {/* <Button sharp outline={!(section == 3)} secondary onClick={() => { setSection(3) }}>
+                <Button sharp outline={!(section == 3)} secondary onClick={() => { setSection(3) }}>
                     <Icon.Command size={20}></Icon.Command>
-                </Button> */}
+                </Button>
                 <Button sharp outline={!(section == 2)} secondary onClick={() => { setSection(2) }}>
                     <Icon.InfoCircle size={20}></Icon.InfoCircle>
                 </Button>
@@ -73,7 +73,7 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                                 <Table.Td width={200} center>
                                     <input className='edit-box' value={title} onChange={(e) => { setTitle(e.target.value) }}></input>
                                 </Table.Td>
-                                <Table.Td width={30}>آی‌پی</Table.Td>
+                                <Table.Td width={30} center>آی‌پی</Table.Td>
                                 <Table.Td width={200} center>
                                     <input dir={'ltr'} className='edit-box' value={ip} onChange={(e) => { setIp(e.target.value) }}></input>
                                 </Table.Td>
@@ -93,8 +93,9 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                         </Table.TBody>
                     </Table.Table>
                     <span style={{ display: 'flex', flex: 1, justifyContent: 'space-between' }}>
-                        {/* <Item size={Basic.size.small} primary icon={Icon.Folder2Open}>به روزرسانی
-                        <Icon.CloudUpload style={{ marginRight: 10 }} size={20}></Icon.CloudUpload></Item> */}
+                        {/* <Item disabled size={Basic.size.small} primary icon={Icon.Folder2Open}>به روزرسانی
+                            <Icon.CloudUpload style={{ marginRight: 10 }} size={21}></Icon.CloudUpload>
+                        </Item> */}
                         <span style={{ display: 'flex' }}>
                             {(gate.title != title || gate.ip != ip) ?
                                 <Button style={{ marginLeft: 5 }} size={Basic.size.small} outline danger disabled={title == '' || ip == '' || (gate.title == title && gate.ip == ip)} onClick={() => {
