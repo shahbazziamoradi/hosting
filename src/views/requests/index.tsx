@@ -30,8 +30,8 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                         <Table.Th width={80}>نوع درخواست</Table.Th>
                         <Table.Th width={140}>زمان درخواست</Table.Th>
                         <Table.Th right>میزبان/میهمان</Table.Th>
-                        <Table.Th width={140}>زمان آخرین وضعیت</Table.Th>
                         <Table.Th width={100}>آخرین وضعیت</Table.Th>
+                        <Table.Th width={110}>زمان آخرین وضعیت</Table.Th>
                         <Table.Th width={150}>کاربر ثبت کننده</Table.Th>
                         <Table.Th width={80}>
                             <Button full size={Basic.size.small} type={Basic.type.light} outline onClick={() => {
@@ -52,7 +52,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                             <Table.Td style={{ direction: 'ltr' }}>{new Date(request.requestedDate).toLocaleString('fa-IR').split('،').join(' - ')}</Table.Td>
                             <Table.Td right>{(request.type == 1) ? request.guest.firstName + ' ' + request.guest.lastName : request.host.firstName + ' ' + request.host.lastName}</Table.Td>
                             <Table.Td>
-                                {request.lastState.newStateDescription}
+                                {request.lastState.oldStateDescription}
                             </Table.Td>
                             <Table.Td style={{ direction: 'ltr' }}>
                                 {new Date(request.lastState.date).toLocaleString('fa-IR').split('،').join(' - ')}
@@ -171,7 +171,7 @@ function RequestActions({ request }: { request: Request }) {
                     {
                         request.states.map((state, index) => {
                             return (
-                                <Table.Tr>
+                                <Table.Tr key={index}>
                                     <Table.Td>{index + 1}</Table.Td>
                                     <Table.Td>{state.oldStateDescription}</Table.Td>
                                     <Table.Td>{state.newStateDescription}</Table.Td>
@@ -186,10 +186,17 @@ function RequestActions({ request }: { request: Request }) {
                 : null}
         </Table.Table>
         <div style={{ display: 'flex' }}>
-            <Button size={Basic.size.small} success outline style={{ marginLeft: 5 }}>تایید {request.lastState.newStateDescription}</Button>
-            <Button size={Basic.size.small} danger>
-                <Icon.X size={20}></Icon.X>
-            </Button>
+            {request.actions.map((action, index) => {
+                return <Button key={index} size={Basic.size.small} success outline style={{ marginLeft: 5 }} onClick={() => {
+                    Loading(true);
+                    request.setState(action.type).then((e: Request) => {
+                        request = { ...e };
+                        Toast(action.title + ' با موفقیت انجام شد', Basic.type.success)
+                    }).catch((e: any) => {
+                        Toast(e.error.Message, Basic.type.danger)
+                    }).finally(() => { Loading(false) });
+                }}>{action.title}</Button>
+            })}
         </div>
     </div>
 }

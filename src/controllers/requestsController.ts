@@ -19,10 +19,11 @@ export default class Requests {
                         reject({ error: await e.json(), code: e.status })
                         break;
                     default:
-                        reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+                        reject({ error: await e.json(), code: e.status })
                         break;
                 }
             }).catch((e) => {
+                console.log(e)
                 reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
             })
         }

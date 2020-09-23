@@ -28,10 +28,12 @@ export class Request extends Base {
         MRQS_UPD_DTE: Date,
         MRQS_YER: number,
         MRQS_TYP: number,
+        ACTIONS: string,
     }) {
         super();
 
         if (data) {
+            this._id = data.MRQS_RQS;
             this._code = data.MRQS_COD;
             this._description = data.MRQS_DESC;
             this._requestedDate = data.MRQS_DTE;
@@ -40,17 +42,26 @@ export class Request extends Base {
             this._createDate = data.MRQS_INS_DTE;
             this._subject = data.MRQS_SBJ;
             this._year = data.MRQS_YER;
-            this._type = data.MRQS_TYP
-            this._states = new Array<RequestState>()
+            this._type = data.MRQS_TYP;
+            this._states = new Array<RequestState>();
             data.MRQS_RSTPS.forEach(state => {
                 this._states.push(new RequestState(state));
             });
+            this._actions = new Array<Action>();
+            if (data.ACTIONS) {
+                JSON.parse(data.ACTIONS).forEach((action: { ACTION_TITLE: string; NEXT_ACTION: number; } | undefined, index: any) => {
+                    this._actions.push(new Action(action));
+                });
+            }
         }
     }
 
     private _id!: number;
     public get id(): number {
         return this._id;
+    }
+    public set id(v: number) {
+        this._id = v;
     }
 
     private _subject!: string;
@@ -149,6 +160,46 @@ export class Request extends Base {
             return new RequestState();
         }
     }
+    public set lastState(v: RequestState) {
+        this._lastState = v;
+    }
+
+    private _actions!: Array<Action>;
+    public get actions(): Array<Action> {
+        return this._actions;
+    }
+
+    setState(type: number): Promise<Request> {
+        var resultPromise = (resolve: (e: Request) => {} | void, reject: any) => {
+            var result = new Request();
+            var promise = dataSource.post(`api/requests/setState/${this.id}/${type}`);
+
+            promise.then(async (e) => {
+
+                switch (e.status) {
+                    case 200:
+                        var json = await e.json();
+                        console.log(json);
+                        if (json.length) {
+                            result = new Request(json[0]);
+                        }
+                        resolve(result);
+                        break;
+                    case 401:
+                        reject({ error: { Message: 'صفحه منقضی شده است' }, code: e.status });
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject(e);
+            })
+        }
+        return new Promise(resultPromise);
+    }
 }
 
 export class RequestState extends Base {
@@ -221,4 +272,24 @@ export class RequestState extends Base {
         this._person = v;
     }
 
+}
+
+export class Action extends Base {
+    constructor(data?: { ACTION_TITLE: string, NEXT_ACTION: number }) {
+        super()
+        if (data) {
+            this._type = data.NEXT_ACTION;
+            this._title = data.ACTION_TITLE;
+        }
+    }
+
+    private _type!: number;
+    public get type(): number {
+        return this._type;
+    }
+
+    private _title!: string;
+    public get title(): string {
+        return this._title;
+    }
 }
