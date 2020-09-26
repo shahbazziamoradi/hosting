@@ -61,15 +61,20 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                 {request.lastState.person.firstName + ' ' + request.lastState.person.lastName}
                             </Table.Td>
                             <Table.Td>
-                                <span style={{ display: 'flex' }}>
-                                    <Button size={Basic.size.small} type={Basic.type.danger} style={{ marginLeft: 2 }} disabled>
+                                <span style={{ display: 'flex', justifyContent: 'center' }}>
+                                    {/* <Button size={Basic.size.small} type={Basic.type.danger} style={{ marginLeft: 2 }} disabled>
                                         <Icon.Trash size={20}></Icon.Trash>
                                     </Button>
                                     <Button size={Basic.size.small} type={Basic.type.info} style={{ marginLeft: 2 }} disabled>
                                         <Icon.Pencil size={20}></Icon.Pencil>
-                                    </Button>
+                                    </Button> */}
                                     <Button size={Basic.size.small} type={Basic.type.secondary} style={{ marginLeft: 2 }} onClick={() => {
-                                        Popup('اقدامات', <RequestActions request={request}></RequestActions>)
+                                        var [closer] = Popup('اقدامات', <RequestActions request={request} onSubmit={(e: Request) => {
+                                            var temp = requests;
+                                            temp[index] = e;
+                                            setRequests([...temp]);
+                                            closer();
+                                        }}></RequestActions>)
                                     }}>
                                         <Icon.ListCheck size={20}></Icon.ListCheck>
                                     </Button>
@@ -154,7 +159,7 @@ function RequestDetails({ subject, description }: { subject?: string, descriptio
     </div>
 }
 
-function RequestActions({ request }: { request: Request }) {
+function RequestActions({ request, onSubmit = (e) => { } }: { request: Request, onSubmit: (e: Request) => {} | void }) {
     return <div className='requests request-details'>
         <Table.Table className='text-small' dark center>
             <Table.THead>
@@ -190,7 +195,7 @@ function RequestActions({ request }: { request: Request }) {
                 return <Button key={index} size={Basic.size.small} success outline style={{ marginLeft: 5 }} onClick={() => {
                     Loading(true);
                     request.setState(action.type).then((e: Request) => {
-                        request = { ...e };
+                        onSubmit(e)
                         Toast(action.title + ' با موفقیت انجام شد', Basic.type.success)
                     }).catch((e: any) => {
                         Toast(e.error.Message, Basic.type.danger)

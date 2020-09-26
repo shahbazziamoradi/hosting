@@ -1,9 +1,10 @@
+import { Shield } from 'react-bootstrap-icons';
 import dataSource, { storage } from '../assets/dataSource/dataSource';
 import { Basic } from '../components/cute-ui/cuteUI';
 import { Base } from '../controllers/baseController';
 
 export class Gate extends Base {
-    constructor(data?: { AGAT_GAT: number, AGAT_SRC_ZONE: number, SRC_PATH: string, AGAT_DIST_ZONE: number, DIST_PATH: string, AGAT_IP: string, AGAT_TTL: string, AGAT_STAT: Basic.status, AGAT_STAT_DESC: string }) {
+    constructor(data?: { AGAT_GAT: number, AGAT_SRC_ZONE: number, SRC_PATH: string, AGAT_DIST_ZONE: number, DIST_PATH: string, AGAT_IP: string, AGAT_TTL: string, AGAT_STAT: Basic.status, AGAT_STAT_DESC: string, AGAT_FHSTS: any }) {
         super();
         if (data) {
             this._id = data.AGAT_GAT;
@@ -15,6 +16,12 @@ export class Gate extends Base {
             this._sourcePath = data.SRC_PATH;
             this._destinationPath = data.DIST_PATH;
             this._state = data.AGAT_STAT
+            this._history = new Array<FetchHistory>();
+            // JSON.parse(data.AGAT_FHSTS)
+            if (data.AGAT_FHSTS)
+                data.AGAT_FHSTS.forEach((element: { FHST_HST: number; FHST_DTE: Date; FHST_TOT_ROW: number; FHST_AFC_ROW: number; }) => {
+                    this._history.push(new FetchHistory(element));
+                });
         }
     }
 
@@ -113,6 +120,15 @@ export class Gate extends Base {
     public set softwareVersion(v: string) {
         this._softwareVersion = v;
     }
+
+    private _history!: Array<FetchHistory>;
+    public get history(): Array<FetchHistory> {
+        return this._history;
+    }
+    public set history(v: Array<FetchHistory>) {
+        this._history = v;
+    }
+
 
     static checkConnection(ip: string): Promise<boolean> {
         var resultPromise = (resolve: any, reject: any) => {
@@ -247,4 +263,71 @@ export class Gate extends Base {
         }
         return new Promise(resultPromise);
     }
+
+
+    getData(): Promise<void> {
+        var resultPromise = (resolve: any, reject: any): void => {
+            var promise = dataSource.post(`api/gates/getData/${this._id}`);
+
+            promise.then(async (e: Response) => {
+                switch (e.status) {
+                    case 200:
+                        resolve();
+                        break;
+                    default:
+                        reject({ error: await e.json(), code: e.status })
+                        break;
+                }
+            })
+
+            promise.catch((e) => {
+                reject({ error: { Message: 'خطا در ارتباط با سرور' }, code: e.status })
+            })
+
+        }
+        return new Promise(resultPromise);
+    }
+}
+
+
+export class FetchHistory {
+    constructor(data: { FHST_HST: number, FHST_DTE: Date, FHST_TOT_ROW: number, FHST_AFC_ROW: number }) {
+        this._id = data.FHST_HST;
+        this._date = data.FHST_DTE;
+        this._totalRows = data.FHST_TOT_ROW;
+        this._affectedRows = data.FHST_AFC_ROW;
+    }
+
+    private _id!: number;
+    public get id(): number {
+        return this._id;
+    }
+    public set id(v: number) {
+        this._id = v;
+    }
+
+    private _date!: Date;
+    public get date(): Date {
+        return this._date;
+    }
+    public set date(v: Date) {
+        this._date = v;
+    }
+
+    private _totalRows!: number;
+    public get totalRows(): number {
+        return this._totalRows;
+    }
+    public set totalRows(v: number) {
+        this._totalRows = v;
+    }
+
+    private _affectedRows!: number;
+    public get affectedRows(): number {
+        return this._affectedRows;
+    }
+    public set affectedRows(v: number) {
+        this._affectedRows = v;
+    }
+
 }

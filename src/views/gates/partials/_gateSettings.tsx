@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
+import $ from 'jquery'
 import * as Icon from 'react-bootstrap-icons';
 import { Basic, Button, DropDown, Item } from '../../../components/cute-ui/cuteUI';
 import { Table } from '../../../components/cute-ui/cuteUI';
-import { Gate } from '../../../models/models';
-import './styles/gateSettings.css'
-
-import '../styles/gateSettings.css'
+import { Gate, FetchHistory } from '../../../models/models';
 import { Loading, Toast } from '../../layout/layout';
+import './styles/gateSettings.css';
+import '../styles/gateSettings.css'
+
 // type buttonProps = {
 //     style?: React.CSSProperties | undefined,
 //     className?: string,
@@ -50,7 +51,14 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                 </div> : null}
                 {(section == 1) ?
                     <div>
-                        <Button primary style={{ marginBottom: 5 }}>تخلیه اطلاعات
+                        <Button primary style={{ marginBottom: 5 }} onClick={() => {
+                            Loading(true)
+                            gate.getData().then(() => {
+                                Toast('اطلاعات با موفقیت استخراج شد', Basic.type.success)
+                            }).catch((e) => {
+                                Toast(e.error.Message, Basic.type.danger)
+                            }).finally(() => { Loading(false) });
+                        }}>تخلیه اطلاعات
                         <Icon.CloudDownload style={{ marginRight: 10 }} size={20}></Icon.CloudDownload>
                         </Button>
                         <Table.Table className={'text-small'} dark>
@@ -58,11 +66,22 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                                 <Table.Tr>
                                     <Table.Th>#</Table.Th>
                                     <Table.Th>زمان</Table.Th>
-                                    <Table.Th>کاربر</Table.Th>
+                                    {/* <Table.Th>کاربر</Table.Th> */}
                                     <Table.Th>تعداد رکورد</Table.Th>
                                     <Table.Th>ثبت شده</Table.Th>
                                 </Table.Tr>
                             </Table.THead>
+                            <Table.TBody>
+                                {gate.history.map((row: FetchHistory, index: number) => {
+                                    return <Table.Tr>
+                                        <Table.Td center width={30}>{index + 1}</Table.Td>
+                                        <Table.Td center style={{ direction: 'ltr' }}>{new Date(row.date).toLocaleString('fa-IR').split('،').join(' - ')}</Table.Td>
+                                        {/* <Table.Td></Table.Td> */}
+                                        <Table.Td center width={70}>{row.totalRows}</Table.Td>
+                                        <Table.Td center width={70}>{row.affectedRows}</Table.Td>
+                                    </Table.Tr>
+                                })}
+                            </Table.TBody>
                         </Table.Table>
                     </div> : null}
                 {(section == 2) ? <div className='info-tab'>
@@ -93,9 +112,10 @@ export function GateSettings({ gate, onSubmit = () => { } }: { gate: Gate, onSub
                         </Table.TBody>
                     </Table.Table>
                     <span style={{ display: 'flex', flex: 1, justifyContent: 'space-between' }}>
-                        {/* <Item disabled size={Basic.size.small} primary icon={Icon.Folder2Open}>به روزرسانی
+                        <input hidden id='fileUpload' type='file'></input>
+                        <Item disabled size={Basic.size.small} primary icon={Icon.Folder2Open} onAction={() => { $('#fileUpload').click() }}>به روزرسانی
                             <Icon.CloudUpload style={{ marginRight: 10 }} size={21}></Icon.CloudUpload>
-                        </Item> */}
+                        </Item>
                         <span style={{ display: 'flex' }}>
                             {(gate.title != title || gate.ip != ip) ?
                                 <Button style={{ marginLeft: 5 }} size={Basic.size.small} outline danger disabled={title == '' || ip == '' || (gate.title == title && gate.ip == ip)} onClick={() => {

@@ -11,7 +11,7 @@ export default class dataSource {
             // return 'http://10.0.2.2:5000'
             return 'http://localhost:62302'
         } else {
-            return (false) ? 'http://172.27.172.29:55555' : '';
+            return (true) ? 'http://192.168.1.101:55555' : '';
         }
     }
 

@@ -43,7 +43,7 @@ export function Index({ authorize = false }: { authorize: boolean }) {
                                 }}></NewList>)
                             }}>
                                 <Icon.Plus size={20}></Icon.Plus>
-                                لیست جدید
+                                لیست
                             </Button>
                         </Table.Th>
                     </Table.Tr>

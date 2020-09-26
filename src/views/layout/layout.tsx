@@ -139,7 +139,7 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
             <div className='layout-footer-cells options'>
                 {(isAuthenticated) ? (
                     <div>
-                        <Route render={({ history }) => (
+                        {/* <Route render={({ history }) => (
                             <button className='layout-options-button' onClick={() => {
                                 history.push('/settings');
                             }}>
@@ -147,7 +147,7 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
                     تنظیمات
                             </button>
                         )}
-                        />
+                        /> */}
                         <Route render={({ history }) => (
                             <button style={{
                                 borderLeftColor: '#1f3d4b', borderLeftWidth: 1, borderLeftStyle: 'solid'
@@ -180,7 +180,7 @@ function Footer({ style, children, isAuthenticated, access, title, icon: PageIco
                     const [closer] = Popup('تقویم', <PersianCalendar onChange={(e) => { }}></PersianCalendar>)
                 }}>
                     <Icon.Calendar3 fontSize={20} />
-                    <label dir='ltr'>{now}</label>
+                    <label dir='ltr'>{now.split('،').join(' - ')}</label>
                 </button>
             </div>
         </div>
